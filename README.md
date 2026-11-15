@@ -27,6 +27,4 @@ commit queue are the same as the FYP's.
 
 ## Status
 
-Not started. Blocked on the licence question (goals.md, decision 1): the Open3DBench repository has no LICENSE file.
-
-Files: `goals.md` (what to do next, in order), `ambitions.md` (the most this could become).
+Not started. Blocked on the licence question: the Open3DBench repository has no LICENSE file.
