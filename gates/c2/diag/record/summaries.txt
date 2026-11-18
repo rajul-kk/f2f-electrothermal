@@ -1,0 +1,50 @@
+== c2diag.py summary f1/svt_SSG_m40C --prefix ''
+failed           21
+gmin stepping    199
+newton           356
+source stepping  2
+transient op     122
+== c2diag.py summary f1/svt_SSG_m40C/nodeset --prefix 'p2_'
+failed           16
+gmin stepping    21
+newton           23
+transient op     83
+== c2diag.py summary f1/svt_SSG_m40C/pivtol --prefix 'h_'
+failed           22
+transient op     121
+== c2diag.py summary f1/svt_SSG_m40C/itl --prefix 'i50k_'
+failed           6
+gmin stepping    7
+newton           120
+transient op     10
+== c2diag.py summary f1/svt_SSG_m40C/gmin14 --prefix ''
+failed           52
+gmin stepping    11
+newton           626
+transient op     11
+== c2diag.py summary f1/svt_SSG_m40C/options --prefix 'itl_h_'
+gmin stepping    3
+newton           18
+transient op     3
+== c2diag.py summary f1/svt_SSG_m40C/options --prefix 'abs16_h_'
+gmin stepping    8
+newton           8
+transient op     8
+== grep -l 'Transient op finished successfully' ../runs/*/*.log | wc -l
+53
+== f2 currents
+f2/lvt_aoi33_x1/gmin_1e-15.log:i(vdd327) = -1.82541e-11
+f2/lvt_aoi33_x1/nodeset_high.log:i(vdd327) = -1.82540e-11
+f2/lvt_aoi33_x1/nodeset_low.log:i(vdd327) = -1.82540e-11
+f2/lvt_aoi33_x1/registered.log:i(vdd327) = -1.82539e-11
+f2/lvt_aoi33_x1/tight_reltol.log:i(vdd327) = -1.82540e-11
+f2/svt_aoi22_x1/gmin_1e-15.log:i(vdd215) = -2.78662e-12
+f2/svt_aoi22_x1/nodeset_high.log:i(vdd215) = -2.78653e-12
+f2/svt_aoi22_x1/nodeset_low.log:i(vdd215) = -2.78657e-12
+f2/svt_aoi22_x1/registered.log:i(vdd215) = -2.78660e-12
+f2/svt_aoi22_x1/tight_reltol.log:i(vdd215) = -2.78659e-12
+f2/svt_aoi33_x1/gmin_1e-15.log:i(vdd327) = -1.68009e-12
+f2/svt_aoi33_x1/nodeset_high.log:i(vdd327) = -1.68008e-12
+f2/svt_aoi33_x1/nodeset_low.log:i(vdd327) = -1.68003e-12
+f2/svt_aoi33_x1/registered.log:i(vdd327) = -1.68008e-12
+f2/svt_aoi33_x1/tight_reltol.log:i(vdd327) = -1.68008e-12
