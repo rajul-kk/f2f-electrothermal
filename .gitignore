@@ -7,6 +7,7 @@ runs/
 goals.md
 ambitions.md
 tasks.json
+context.md
 dry/c1/*.inc
 dry/c1/*.lib
 dry/c1/*.cdl
