@@ -1,0 +1,16 @@
+library                  Liberty W     SPICE W   missing A
+GT_A5_lvt_FFG_125C       2.328e-08   2.328e-08  -2.729e-12
+GT_A5_lvt_FFG_m40C       4.636e-12   4.631e-12   7.013e-15
+GT_A5_lvt_SSG_125C       2.677e-09   2.677e-09  -3.571e-14
+GT_A5_lvt_SSG_m40C       1.196e-13   1.147e-13   7.002e-15
+GT_A5_lvt_TTG_25C        6.700e-11   6.699e-11   7.000e-15
+GT_A5_svt_FFG_125C       2.811e-09   2.811e-09  -3.857e-14
+GT_A5_svt_FFG_m40C       1.295e-13   1.246e-13   7.002e-15
+GT_A5_svt_SSG_125C       3.224e-10   3.224e-10   6.429e-15
+GT_A5_svt_SSG_m40C       7.987e-15   3.089e-15   6.996e-15
+GT_A5_svt_TTG_25C        3.970e-12   3.965e-12   7.009e-15
+GT_A5_ulvt_FFG_125C      6.730e-08   6.732e-08  -2.247e-11
+GT_A5_ulvt_FFG_m40C      2.869e-11   2.869e-11   6.986e-15
+GT_A5_ulvt_SSG_125C      7.783e-09   7.784e-09  -2.571e-13
+GT_A5_ulvt_SSG_m40C      7.154e-13   7.105e-13   6.999e-15
+GT_A5_ulvt_TTG_25C       2.788e-10   2.788e-10   7.143e-15
