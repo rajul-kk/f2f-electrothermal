@@ -1,0 +1,16 @@
+Amendment 2 cost probe, 18 Nov 2026: svt SSG -40 C (the hardest library), run 3's exact decks and options
+(leak.py deck at Amendment 2, one deck per state, .option gmin=1e-18 abstol=1e-18 reltol=1e-5 itl1=50000
+gminsteps=200 srcsteps=200), ngspice 45.2 in opentsense:g93a via diag/run_decks.sh, cap 120 s per deck, one container,
+laptop under a light slot.
+
+decks 756; wall time 1052 s (1.39 s per deck); no deck hit the 120 s cap (no exit 124)
+exit codes: 0 x 727, 1 x 29
+convergence (leak.method): newton 692, gmin stepping 18, transient op 17, failed 29
+invalid under V1 as amended: 46 (17 transient op + 29 failed); every one has Liberty <= 2.74e-14 W, below the floor
+cut 4.9e-13 W (the whole library is below the cut)
+cells with invalid states: aoi33 8, ao33 7, oai33 6, oai31 3, oai32 3, ha 2, oa33 2, xnor2 2, and3, ao211, ao31,
+aoi211, nand2 x1/x2/x4, nand3, nor2_x4, oa211, oa32, oai211, xor2 1 each
+failed logs: "Timestep too small", "The operating point could not be simulated successfully",
+"Transient op failed, timestep too small"
+
+Run 3 upper bound: 15 libraries x 1052 s = 4.4 h (the other libraries converged more easily in runs 1-2).

@@ -93,3 +93,44 @@ check). Run 2 reruns all 15 libraries; nothing from run 1 is reused.
 
 VOID again on V1 (five -40 C libraries have non-converged cells). No further rerun under this registration until the
 cause is found (task c2-diag); see README.md for the findings.
+
+## Amendment 2 (18 Nov 2026, after run 2 and the diagnosis `diag/FINDINGS.md`; post-run)
+
+The question is unchanged. The student chose (18 Nov) to measure device leakage: gmin stays 1e-18, and the floor the
+kit's Liberty carries is stated and cut out of the scoring (option A of the three the student was shown). Changes,
+each from a diagnosis finding:
+
+1. **One deck per state** (`s<i>.cir`), was one per cell. Run 2's per-cell decks fell back to the transient op where
+   the same states alone converged (finding 2).
+2. **Options:** `.option gmin=1e-18 abstol=1e-18 reltol=1e-5 itl1=50000 gminsteps=200 srcsteps=200`; only the
+   iteration limits are raised (finding 1: 120 of 143 hard svt SSG -40 C states then converge by Newton, and 30 states
+   that already converged keep their currents).
+3. **V1 also requires a DC point:** a case is invalid unless its log shows Newton, gmin stepping or source stepping
+   (`leak.method`, the one classifier, also used by `diag/c2diag.py`). "Transient op finished" is invalid even with
+   exit 0 (finding 2: 53 run-2 decks passed V1 that way).
+4. **Floor cut:** the kit's Liberty is 7.0e-15 A per off PMOS above SPICE at 25 and -40 C (finding 3). A state is
+   scored only if its Liberty value is at least 100 x 7.0e-15 A x VDD (4.9e-13 W at 0.7 V): the floor is then at most
+   1% of it per off PMOS. States below are listed with their ratios in `summary.json` (`below_floor`), not scored.
+   - EXACT and DEVICE OFFSET apply to the scored states, bars unchanged. An rN or rP whose inv_x1 state is below the
+     cut is not a reference: that library can then be EXACT or FAIL, not DEVICE OFFSET.
+   - A library with no state above the cut is **LISTED ONLY**: it neither passes nor fails C2, and the result says so.
+   - V4 counts cells with a valid comparison, scored or listed (the cut is a scoring rule, not a coverage loss).
+   - Share listed, from run 2's cases (`diag/threshold_share.py runs`, of 756 per library): svt SSG -40 C 756 (100%),
+     lvt SSG -40 C 731 (96.7%), svt FFG -40 C 592 (78.3%), ulvt SSG -40 C 54 (7.1%), none in the other 11. So C2
+     says nothing scored about svt SSG -40 C, and little about lvt SSG and svt FFG at -40 C.
+   - The c3 temperature check uses only rN and rP above the cut.
+5. **V1 and V2 cover states at or above the cut** (decided by the student on 18 Nov after the cost probe below, so
+   not blind to it): a state below the cut that does not reach a DC point is named in `invalid_below_floor`, not
+   voiding, and so is a below-cut state whose output misses V2 (`out_err_below_floor`). Reason: such a state carries
+   no claim under 4. The probe (`diag/record/a2_cost_svt_SSG_m40C.txt`, run 3's
+   exact decks at svt SSG -40 C): 710 of 756 reach a DC point; 46 do not (17 transient op, 29 failed), all with Liberty
+   at most 2.74e-14 W; 1052 s for the library.
+
+Decision, amended: C2 passes if V1-V4 hold (V1 and V2 as in 5) and no library FAILs; LISTED ONLY libraries and invalid
+states below the cut are named in the result.
+Everything else is unchanged: cells, skip rules, V2, V3, references, cards, image and pinned hashes.
+
+Seen before run 3, so not unseen: at svt SSG -40 C, the 143 hard states at these options and 700 states at gmin 1e-14
+(diagnosis), then all 756 at exactly run 3's decks and options (this amendment's cost probe,
+`diag/record/a2_cost_svt_SSG_m40C.txt`); svt aoi33_x1's all-low state and lvt aoi33_x1's and svt aoi22_x1's all-low
+states at TT 25 C; all of run 2's values. Run 3 reruns all 15 libraries.
