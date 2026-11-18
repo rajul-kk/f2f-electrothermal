@@ -46,9 +46,11 @@ finish() {   # always: the script's exit status, whatever install tree exists, i
   kill "$MEMPID" 2>/dev/null
   log "exit status $rc"
   echo "$rc" > "$R/exit_status.txt"
-  if [ -d "$B/orfs/tools/install" ]; then
+  if [ -d "$B/orfs/tools/install" ] || [ -d "$B/orfs/dependencies" ]; then
+    # the binaries and the libraries setup.sh's -common step installed for them (both needed to run the flow);
     # inside the reserve, with time left to log and hash (a cut tarball is logged as tar rc 124, not hashed)
-    timeout -k 30 $(( TAR_RESERVE_S - 300 )) tar -czf "$OUT/orfs_install.tgz" -C "$B/orfs" tools/install
+    local parts=(); for d in tools/install dependencies; do [ -d "$B/orfs/$d" ] && parts+=("$d"); done
+    timeout -k 30 $(( TAR_RESERVE_S - 300 )) tar -czf "$OUT/orfs_install.tgz" -C "$B/orfs" "${parts[@]}"
     local trc=$?
     log "tar rc=$trc"
     [ $trc -eq 0 ] && sha256sum "$OUT/orfs_install.tgz" > "$R/tarball.sha256"
@@ -103,7 +105,10 @@ step clone_pin3d git clone "$PIN3D_URL" "$B/pin3d" && echo "TaiWei-Pin-3D $(git 
   >> "$R/commits.txt"
 
 # dependencies and build (ORFS's own scripts, unchanged)
-step setup bash -c "cd '$B/orfs' && ./setup.sh" || exit 1
+# setup.sh must be started through sudo: it reads $SUDO_USER (set -u) as the user for `DependencyInstaller.sh -common`
+# and the submodule update. The session is root, so that user is root (S1 v1 stopped here: "SUDO_USER: unbound").
+echo "setup.sh run with SUDO_USER=root (it expects to be started via sudo; the session is root)" >> "$R/shims.txt"
+step setup bash -c "cd '$B/orfs' && SUDO_USER=root ./setup.sh" || exit 1
 step build bash -c "cd '$B/orfs' && ./build_openroad.sh --local --threads $(nproc)" || exit 1
 
 # what was built: both binaries must exist and run
