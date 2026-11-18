@@ -1,0 +1,11 @@
+[2026-11-17T16:45:58Z] start clone (at most 37757s)
+[2026-11-17T16:47:16Z] end clone rc=0 after 78s
+[2026-11-17T16:47:16Z] start checkout (at most 37679s)
+[2026-11-17T16:51:24Z] end checkout rc=0 after 248s
+[2026-11-17T16:51:25Z] start clone_pin3d (at most 37430s)
+[2026-11-17T16:51:33Z] end clone_pin3d rc=0 after 8s
+[2026-11-17T16:51:33Z] start setup (at most 37422s)
+[2026-11-17T16:55:50Z] end setup rc=1 after 257s
+[2026-11-17T16:55:50Z] exit status 1
+[2026-11-17T16:55:50Z] no install tree to save
+peak machine memory in use MiB 8671

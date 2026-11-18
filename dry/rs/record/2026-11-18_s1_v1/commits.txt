@@ -1,0 +1,23 @@
+ORFS-Research 568eb04da9173695d6bfc1b10ba868e0b6b8a9fa
+ 305d3ba2ddfd00591924cc586ad408179f566afe tools/OpenROAD (305d3ba2dd)
+ 12683d645cefcc51bdffe36ba2e870d462fada21 tools/OpenROAD/src/sta (v2.2.0-1859-g12683d64)
+ 6e7951358fd896e2abed7887196b6871aac9f2f8 tools/OpenROAD/subfolder/GKlib (METIS-v5.1.1-DistDGL-0.5-28-g6e79513)
+ a6e6a2cfa92f93a3ee2971ebc9ddfc3b0b581ab2 tools/OpenROAD/subfolder/METIS (v5.2.1-9-ga6e6a2c)
+ 17cadca080b33edc5a13c8e6e8e8092f8c350b25 tools/OpenROAD/third-party/abc (17cadca08)
+ 2c0f78e7483333dd0d5340cbb3567f96dd290d53 tools/kepler-formal (2c0f78e)
+ 7f887abba7cf13636a5ac2d28653668a20a91b25 tools/kepler-formal/thirdparty/glucose (4.2.1-6-g7f887ab)
+ fdf658ab6e40701e57b33d1509aa775e1b71f0f1 tools/kepler-formal/thirdparty/naja (fdf658ab)
+ 3db8da80111171c219ab5839905771386bee06b3 tools/kepler-formal/thirdparty/naja/thirdparty/cpptrace (v0.1-987-g3db8da8)
+ 52eb8108c5bdec04579160ae17225d66034bd723 tools/kepler-formal/thirdparty/naja/thirdparty/googletest (release-1.8.0-3544-g52eb8108)
+ 27ea776a0c3022fea0c29ccd14a4fb7daea941f0 tools/kepler-formal/thirdparty/naja/thirdparty/naja-if (27ea776)
+ 1ebb4ba7469e0522c647edeb0db9975119062a79 tools/kepler-formal/thirdparty/naja/thirdparty/naja-verilog (v1.2.0-11-g1ebb4ba)
+ 52eb8108c5bdec04579160ae17225d66034bd723 tools/kepler-formal/thirdparty/naja/thirdparty/naja-verilog/thirdparty/googletest (release-1.8.0-3544-g52eb8108)
+ a83cd31548b19d50f3f983b069dceb4f4d50756d tools/kepler-formal/thirdparty/yaml-cpp (0.8.0-78-ga83cd31)
+ 77005b69a2f693425294dab62c49164edb15bf10 tools/yosys (0.45-2562-g77005b69a)
+ 799ba632239b2a4db2bacda81de4e6efdc486b0c tools/yosys/abc (v0.61)
+ 4bf61f08697b110d9e3991864650a405b3dd515d tools/yosys/libs/cxxopts (v3.2.1)
+ 64b44616a3798f07453b14ea03e4ac8a16b77313 tools/yosys-slang (2026-07-07~100)
+ 553ec11ec06fbe0beebfbb45f9dc3c9eabd83d28 tools/yosys-slang/third_party/fmt (11.2.0-57-g553ec11e)
+ d7888c90a048e47384e530fef9863e65952c9e3c tools/yosys-slang/third_party/slang (v9.0-171-gd7888c90a)
+bundled OpenROAD 305d3ba2ddfd00591924cc586ad408179f566afe (README tested 305d3ba2ddfd00591924cc586ad408179f566afe): match
+TaiWei-Pin-3D 51a19d6ffa8e4483a1a3357fb69c5038d720b0b8
