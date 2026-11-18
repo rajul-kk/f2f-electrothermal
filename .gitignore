@@ -7,3 +7,11 @@ runs/
 goals.md
 ambitions.md
 tasks.json
+dry/c1/*.inc
+dry/c1/*.lib
+dry/c1/*.cdl
+dry/c1/*.osdi
+dry/c1/*.log
+dry/c1/*.cir
+dry/c1/.spiceinit
+dry/c1/t.cir
