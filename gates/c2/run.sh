@@ -35,8 +35,8 @@ for L in $LIBS; do
   [ "$(tr -d '\r' < "runs/$L/.spiceinit")" = "osdi /osdi/bsimcmg_111_2_1.osdi" ] || { echo "bad .spiceinit in $L"; exit 1; }
 done
 sha256sum runs/*/*.cir runs/*/models.inc runs/*/cases.json runs/*/.spiceinit >> record/sha256.txt
-# one deck per cell; its exit code goes to runs/<lib>/<cell>.rc (missing = failed; 124 = over the 2 min cap, where a
-# cell alone takes about a second); leak.py compare marks a nonzero one invalid (V1)
+# one deck per state (Amendment 2); its exit code goes to runs/<lib>/s<i>.rc (missing = failed; 124 = over the 2 min
+# cap); leak.py compare marks a nonzero one, or a log without a DC point (transient op), invalid (V1)
 MSYS_NO_PATHCONV=1 docker run --rm --memory 1g -v "$(pwd -W)/runs:/runs" -v "$EXT/osdi:/osdi:ro" "$IMG" \
   bash -c 'for d in /runs/*/; do cd "$d" || continue; for f in *.cir; do
              timeout 120 ngspice -b "$f" > "${f%.cir}.log" 2>&1; echo $? > "${f%.cir}.rc"; done; done' \

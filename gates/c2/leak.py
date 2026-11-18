@@ -3,11 +3,12 @@ OSDI) against the kit's own Liberty, at that Liberty's temperature and voltage.
 
   python leak.py deck <card .inc> <bsimcmg_parameters.include> <svt cdl dir> <liberty .lib> <osdi path in container>
                       <out dir> all|<cell> ...
-  python leak.py compare <out dir>       (reads <out>/cases.json and each <cell>.log and <cell>.rc, writes
+  python leak.py compare <out dir>       (reads <out>/cases.json and each s<i>.log and s<i>.rc, writes
                                          <out>/result.json)
 
-One deck per cell (<out>/<cell>.cir, sharing <out>/models.inc): ngspice's gmin and source stepping act on the whole
-matrix, so in one deck per library a single state that does not converge loses all 756 (C2 run 1, lvt FFG -40 C).
+One deck per state (<out>/s<i>.cir for case i, sharing <out>/models.inc; Amendment 2): ngspice's gmin and source
+stepping and its transient-op fallback act on the whole matrix, so one state that does not converge took a whole
+library down in run 1 and moved its cell's other states to a transient op in run 2 (diag/FINDINGS.md, finding 2).
 
 Combinational cells only: a cell is skipped, with its reason listed, if its Liberty has an ff or latch group, it has
 no svt CDL or no input, or a leakage state cannot be set from its input ports. Other Vt flavours reuse the svt
@@ -24,7 +25,25 @@ UNITS = {"1uW": 1e-6, "1nW": 1e-9, "1pW": 1e-12}
 # BSIM-CMG adds V(e, di) * gmin to the junction current when BULKMOD != 0 (bsimcmg_body.include:2823): the PMOS cards
 # have bulkmod = 1, so ngspice's default gmin (1e-12 S) adds 0.7 pA to every off PMOS (dry c1: +12%). The smallest
 # states are ~1e-15 A, so gmin and abstol go to 1e-18; tighter settings did not converge.
-OPTIONS = ".option gmin=1e-18 abstol=1e-18 reltol=1e-5"
+# Amendment 2: the iteration limits raised (diag finding 1: -40 C states need them; converged values unchanged).
+OPTIONS = ".option gmin=1e-18 abstol=1e-18 reltol=1e-5 itl1=50000 gminsteps=200 srcsteps=200"
+DC_METHODS = ("newton", "gmin stepping", "source stepping")
+
+
+def method(log, rc):
+    """How ngspice reached its operating point: one of DC_METHODS, 'transient op' (exits 0 but is not a DC point),
+    or 'failed'. Later fallbacks win: a log that tried gmin stepping and then the transient op is 'transient op'.
+    The one classifier of ngspice logs (code lint L52); diag/c2diag.py imports it."""
+    t = log.lower()
+    if rc != "0":
+        return "failed"
+    if "transient op finished successfully" in t:
+        return "transient op"
+    if "source stepping completed" in t:
+        return "source stepping"
+    if "gmin stepping completed" in t:
+        return "gmin stepping"
+    return "newton"
 # the skip reasons registration.md allows; any other skip (an unreadable cell) voids the run in evaluate.py
 SKIP_RULES = ("sequential", "no VDD leakage state", "no svt CDL", "no input or supply", "state not settable")
 
@@ -142,10 +161,9 @@ def deck(card_path, params_include, cdl_dir, lib, osdi, out, *names):
             skipped[name] = got
             continue
         netlist, ports, inputs, terms = got
-        lines, first = [], len(cases)
         for when, ref, lit in terms:
             i = len(cases)
-            nodes = []
+            lines, nodes = [], []
             for p in ports:
                 if p == "VDD":
                     nodes.append(f"vdd{i}")
@@ -159,33 +177,31 @@ def deck(card_path, params_include, cdl_dir, lib, osdi, out, *names):
             lines += [f"vdd{i} vdd{i} 0 {vdd}", f"x{i} {' '.join(nodes)} {name}"]
             outs = {p: v for p, v in lit.items() if p not in inputs}
             cases.append({"cell": name, "when": when, "lit": lit, "outs": outs, "liberty_w": ref})
-        prints = [f"print i(vdd{i})" + "".join(f" v(o{i}_{p})" for p in cases[i]["outs"])
-                  for i in range(first, len(cases))]
-        open(f"{out}/{name}.cir", "w").write("\n".join(
-            [f"* leakage per state, {name}, {lib}", f".temp {temp}", OPTIONS, ".include models.inc", netlist]
-            + lines + [".control", "op"] + prints + [".endc", ".end"]) + "\n")
+            prt = f"print i(vdd{i})" + "".join(f" v(o{i}_{p})" for p in outs)
+            open(f"{out}/s{i:04d}.cir", "w").write("\n".join(
+                [f"* leakage of one state, {name} {when}, {lib}", f".temp {temp}", OPTIONS, ".include models.inc",
+                 netlist] + lines + [".control", "op", prt, ".endc", ".end"]) + "\n")
     json.dump({"temp": temp, "vdd": vdd, "vt": vt, "dropped": sorted(dropped), "skipped": skipped, "cases": cases},
               open(f"{out}/cases.json", "w"), indent=1)
     print(f"{len(cases)} cases from {len({c['cell'] for c in cases})} cells; skipped {skipped}")
 
 
 def compare(out):
-    """SPICE power per case. A case is invalid (V1) if its cell's ngspice did not exit 0 (`<out>/<cell>.rc`, missing
-    counts as failed), its current or an output voltage is missing or not finite, or its supply does not source
-    current. A state with several product terms is scored as the mean of its terms against the Liberty's one value."""
+    """SPICE power per case. A case is invalid (V1) if its deck's ngspice did not exit 0 (`<out>/s<i>.rc`, missing
+    counts as failed), did not reach a DC point (`method`: the transient op exits 0 but is not one; Amendment 2), its
+    current or an output voltage is missing or not finite, or its supply does not source current. A state with several
+    product terms is scored as the mean of its terms against the Liberty's one value."""
     meta = json.load(open(f"{out}/cases.json"))
-    read = lambda f, none: open(f).read() if os.path.exists(f) else none
-    rcs, vals = {}, {}
-    for cell in {c["cell"] for c in meta["cases"]}:
-        rcs[cell] = read(f"{out}/{cell}.rc", "missing").strip()
-        vals.update({k.lower(): float(v) for k, v in
-                     re.findall(r"^\s*([iv]\([\w.]+\))\s*=\s*(\S+)", read(f"{out}/{cell}.log", ""), re.M)})
+    read = lambda f, none: open(f, encoding="utf-8", errors="replace").read() if os.path.exists(f) else none
     vdd = meta["vdd"]
     for i, c in enumerate(meta["cases"]):
-        rc = rcs[c["cell"]]
+        log, rc = read(f"{out}/s{i:04d}.log", ""), read(f"{out}/s{i:04d}.rc", "missing").strip()
+        vals = {k.lower(): float(v) for k, v in re.findall(r"^\s*([iv]\([\w.]+\))\s*=\s*(\S+)", log, re.M)}
+        c["method"] = method(log, rc)
         cur = vals.get(f"i(vdd{i})")
         volts = [vals.get(f"v(o{i}_{p.lower()})") for p in c["outs"]]
         c["invalid"] = (f"ngspice exit code {rc}" if rc != "0" else
+                        f"no DC point ({c['method']})" if c["method"] not in DC_METHODS else
                         "no current" if cur is None or None in volts else
                         "not finite" if not all(map(math.isfinite, [cur] + volts)) else
                         "supply sinks current" if cur >= 0 else None)

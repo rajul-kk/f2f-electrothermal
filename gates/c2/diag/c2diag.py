@@ -2,6 +2,8 @@
 
 Every deck is built from run 2's own files (`../runs/<lib>/`: models.inc, .spiceinit, the cell's subcircuit, option
 and stimulus lines), so a variant differs from run 2 only in what its name says. ngspice runs through `run_decks.sh`.
+`states` and `f2` read run 1-2's one-deck-per-cell layout (<cell>.cir/.log/.rc), not run 3's s<i> decks.
+`ratio` repeats leak.compare's value checks for single decks; it is diagnosis-only and not used by the gate.
 
   python c2diag.py states  <lib dir> <out dir> [--cells C ...]   one deck per state (default: cells whose run 2 deck
                                                                  did not exit 0 or used the transient op)
@@ -20,31 +22,19 @@ import math
 import os
 import re
 import shutil
+import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from leak import DC_METHODS, method  # noqa: E402,F401  (the gate's one log classifier, code lint L52)
 
 CURRENT = re.compile(r"^\s*i\((vdd\d+)\)\s*=\s*(\S+)", re.M | re.I)
 VOLT = re.compile(r"^\s*v\(([\w.]+)\)\s*=\s*(\S+)", re.M | re.I)
 REG_OPTION = re.compile(r"^\.option .*$", re.M)
-DC_METHODS = ("newton", "gmin stepping", "source stepping")
 OUT_TOL = 0.10           # V2: an output within 10% of VDD of its literal
 
 
 # ---------- reading ngspice logs ----------
-
-def method(log, rc):
-    """How ngspice reached its operating point: one of DC_METHODS, 'transient op' (exits 0 but is not a DC point),
-    or 'failed'. Later fallbacks win: a log that tried gmin stepping and then the transient op is 'transient op'."""
-    t = log.lower()
-    if rc != "0":
-        return "failed"
-    if "transient op finished successfully" in t:
-        return "transient op"
-    if "source stepping completed" in t:
-        return "source stepping"
-    if "gmin stepping completed" in t:
-        return "gmin stepping"
-    return "newton"
-
 
 def values(log):
     """{name: float} of every printed current and voltage, names lower case (ngspice prints them lower case)."""
