@@ -16,3 +16,20 @@ dry/c1/*.log
 dry/c1/*.cir
 dry/c1/.spiceinit
 dry/c1/t.cir
+# c4 export: large files stay local (sha256 in each record's large_files.sha256)
+dry/c4/record/*/geom_*.tsv
+dry/c4/record/*/iterms_*.tsv
+dry/c4/record/*/inst_power.tsv
+dry/c4/record/*/pg_*.sp
+dry/c4/record/*/v_*.csv
+dry/c4/export_run.log
+gates/c2/run3.log
+dry/c4/explore_run.log
+dry/c4/records_run.log
+# rs-dry records: clone/checkout/apt logs and the Kaggle kernel log stay local
+dry/rs/record/*/clone.log
+dry/rs/record/*/clone_pin3d.log
+dry/rs/record/*/checkout.log
+dry/rs/record/*/apt_time.log
+dry/rs/record/*/kernel.log
+dry/rs/record/*/shims.txt
