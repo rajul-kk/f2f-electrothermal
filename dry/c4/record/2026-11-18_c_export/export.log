@@ -1,0 +1,246 @@
+OpenROAD unknown 
+Features included (+) or not (-): -GPU +GUI -Python
+This program is licensed under the BSD-3 license. See the LICENSE file for details.
+Components of this program may be licensed under more restrictive licenses which must be honored.
+[WARNING ORD-0012] Hierarchical flow (-hier) is currently in development and may cause multiple issues. Do not use in production environments.
+[WARNING STA-1212] /OpenROAD-flow-scripts/flow/platforms/asap7/lib/NLDM/asap7sc7p5t_SIMPLE_RVT_TT_nldm_211120.lib.gz line 13178, timing group from output port.
+[WARNING STA-1212] /OpenROAD-flow-scripts/flow/platforms/asap7/lib/NLDM/asap7sc7p5t_SIMPLE_RVT_TT_nldm_211120.lib.gz line 13211, timing group from output port.
+[WARNING STA-1212] /OpenROAD-flow-scripts/flow/platforms/asap7/lib/NLDM/asap7sc7p5t_SIMPLE_RVT_TT_nldm_211120.lib.gz line 13244, timing group from output port.
+[WARNING STA-1212] /OpenROAD-flow-scripts/flow/platforms/asap7/lib/NLDM/asap7sc7p5t_SIMPLE_RVT_TT_nldm_211120.lib.gz line 13277, timing group from output port.
+[WARNING STA-1212] /OpenROAD-flow-scripts/flow/platforms/asap7/lib/NLDM/asap7sc7p5t_SIMPLE_RVT_TT_nldm_211120.lib.gz line 13310, timing group from output port.
+[WARNING STA-1212] /OpenROAD-flow-scripts/flow/platforms/asap7/lib/NLDM/asap7sc7p5t_SIMPLE_RVT_TT_nldm_211120.lib.gz line 13343, timing group from output port.
+[WARNING STA-1212] /OpenROAD-flow-scripts/flow/platforms/asap7/lib/NLDM/asap7sc7p5t_SIMPLE_RVT_TT_nldm_211120.lib.gz line 13376, timing group from output port.
+[WARNING STA-1212] /OpenROAD-flow-scripts/flow/platforms/asap7/lib/NLDM/asap7sc7p5t_SIMPLE_RVT_TT_nldm_211120.lib.gz line 14772, timing group from output port.
+[WARNING STA-1212] /OpenROAD-flow-scripts/flow/platforms/asap7/lib/NLDM/asap7sc7p5t_SIMPLE_RVT_TT_nldm_211120.lib.gz line 14805, timing group from output port.
+[WARNING STA-1212] /OpenROAD-flow-scripts/flow/platforms/asap7/lib/NLDM/asap7sc7p5t_SIMPLE_RVT_TT_nldm_211120.lib.gz line 14838, timing group from output port.
+Annotated 68306 pin activities.
+Group                      Internal      Switching        Leakage          Total
+                              Power          Power          Power          Power (Watts)
+--------------------------------------------------------------------------------
+Sequential           1.75717438e-03 2.21968348e-05 5.48928654e-07 1.77992007e-03  40.0%
+Combinational        3.92268761e-04 7.11857167e-04 1.71128340e-06 1.10583729e-03  24.9%
+Clock                9.13749624e-04 6.47334091e-04 9.73329648e-08 1.56118104e-03  35.1%
+Macro                0.00000000e+00 0.00000000e+00 0.00000000e+00 0.00000000e+00   0.0%
+Pad                  0.00000000e+00 0.00000000e+00 0.00000000e+00 0.00000000e+00   0.0%
+--------------------------------------------------------------------------------
+Total                3.06318770e-03 1.38138700e-03 2.35755715e-06 4.44693258e-03 100.0%
+                              68.9%          31.1%           0.1%
+DBU 1000
+NET VDD bterms 1 iterms 48798 swires 1
+ANALYZE VDD:
+[INFO PSM-0040] All shapes on net VDD are connected.
+Layer resistance:
+  LVTN: 0 Ohm per cut
+  LVTP: 0 Ohm per cut
+  RVTN: 0 Ohm per cut
+  RVTP: 0 Ohm per cut
+  SLVTN: 0 Ohm per cut
+  SLVTP: 0 Ohm per cut
+  nwell: 0 Ohm per cut
+  pwell: 0 Ohm per cut
+  Gate: 0 Ohm per cut
+  Active: 0 Ohm per cut
+  V0: 0 Ohm per cut
+  M1: 1.2675150032001674 Ohm per square
+  V1: 17.2 Ohm per cut
+  M2: 0.5348286013503124 Ohm per square
+  V2: 17.2 Ohm per cut
+  M3: 0.5631660014218575 Ohm per square
+  V3: 17.2 Ohm per cut
+  M4: 0.4328760010929068 Ohm per square
+  V4: 11.799999999999999 Ohm per cut
+  M5: 0.45584400115089546 Ohm per square
+  V5: 11.799999999999999 Ohm per cut
+  M6: 0.38014720095977944 Ohm per square
+  V6: 8.200000000000001 Ohm per cut
+  M7: 0.4003072010106785 Ohm per square
+  V7: 8.200000000000001 Ohm per cut
+  M8: 0.3379060008531306 Ohm per square
+  V8: 6.3 Ohm per cut
+  M9: 0.35582240089836514 Ohm per square
+  V9: 6.3 Ohm per cut
+  Pad: 0 Ohm per square
+Layer resistance:
+  LVTN: 0 Ohm per cut
+  LVTP: 0 Ohm per cut
+  RVTN: 0 Ohm per cut
+  RVTP: 0 Ohm per cut
+  SLVTN: 0 Ohm per cut
+  SLVTP: 0 Ohm per cut
+  nwell: 0 Ohm per cut
+  pwell: 0 Ohm per cut
+  Gate: 0 Ohm per cut
+  Active: 0 Ohm per cut
+  V0: 0 Ohm per cut
+  M1: 1.2675150032001674 Ohm per square
+  V1: 17.2 Ohm per cut
+  M2: 0.5348286013503124 Ohm per square
+  V2: 17.2 Ohm per cut
+  M3: 0.5631660014218575 Ohm per square
+  V3: 17.2 Ohm per cut
+  M4: 0.4328760010929068 Ohm per square
+  V4: 11.799999999999999 Ohm per cut
+  M5: 0.45584400115089546 Ohm per square
+  V5: 11.799999999999999 Ohm per cut
+  M6: 0.38014720095977944 Ohm per square
+  V6: 8.200000000000001 Ohm per cut
+  M7: 0.4003072010106785 Ohm per square
+  V7: 8.200000000000001 Ohm per cut
+  M8: 0.3379060008531306 Ohm per square
+  V8: 6.3 Ohm per cut
+  M9: 0.35582240089836514 Ohm per square
+  V9: 6.3 Ohm per cut
+  Pad: 0 Ohm per square
+########## IR report #################
+Net              : VDD
+Corner           : default
+Total power      : 4.45e-03 W
+Supply voltage   : 7.00e-01 V
+Worstcase voltage: 6.99e-01 V
+Average voltage  : 7.00e-01 V
+Average IR drop  : 1.75e-04 V
+Worstcase IR drop: 1.37e-03 V
+Percentage drop  : 0.20 %
+######################################
+SPICE VDD:
+Layer resistance:
+  LVTN: 0 Ohm per cut
+  LVTP: 0 Ohm per cut
+  RVTN: 0 Ohm per cut
+  RVTP: 0 Ohm per cut
+  SLVTN: 0 Ohm per cut
+  SLVTP: 0 Ohm per cut
+  nwell: 0 Ohm per cut
+  pwell: 0 Ohm per cut
+  Gate: 0 Ohm per cut
+  Active: 0 Ohm per cut
+  V0: 0 Ohm per cut
+  M1: 1.2675150032001674 Ohm per square
+  V1: 17.2 Ohm per cut
+  M2: 0.5348286013503124 Ohm per square
+  V2: 17.2 Ohm per cut
+  M3: 0.5631660014218575 Ohm per square
+  V3: 17.2 Ohm per cut
+  M4: 0.4328760010929068 Ohm per square
+  V4: 11.799999999999999 Ohm per cut
+  M5: 0.45584400115089546 Ohm per square
+  V5: 11.799999999999999 Ohm per cut
+  M6: 0.38014720095977944 Ohm per square
+  V6: 8.200000000000001 Ohm per cut
+  M7: 0.4003072010106785 Ohm per square
+  V7: 8.200000000000001 Ohm per cut
+  M8: 0.3379060008531306 Ohm per square
+  V8: 6.3 Ohm per cut
+  M9: 0.35582240089836514 Ohm per square
+  V9: 6.3 Ohm per cut
+  Pad: 0 Ohm per square
+NET VSS bterms 1 iterms 48798 swires 1
+ANALYZE VSS:
+[INFO PSM-0040] All shapes on net VSS are connected.
+Layer resistance:
+  LVTN: 0 Ohm per cut
+  LVTP: 0 Ohm per cut
+  RVTN: 0 Ohm per cut
+  RVTP: 0 Ohm per cut
+  SLVTN: 0 Ohm per cut
+  SLVTP: 0 Ohm per cut
+  nwell: 0 Ohm per cut
+  pwell: 0 Ohm per cut
+  Gate: 0 Ohm per cut
+  Active: 0 Ohm per cut
+  V0: 0 Ohm per cut
+  M1: 1.2675150032001674 Ohm per square
+  V1: 17.2 Ohm per cut
+  M2: 0.5348286013503124 Ohm per square
+  V2: 17.2 Ohm per cut
+  M3: 0.5631660014218575 Ohm per square
+  V3: 17.2 Ohm per cut
+  M4: 0.4328760010929068 Ohm per square
+  V4: 11.799999999999999 Ohm per cut
+  M5: 0.45584400115089546 Ohm per square
+  V5: 11.799999999999999 Ohm per cut
+  M6: 0.38014720095977944 Ohm per square
+  V6: 8.200000000000001 Ohm per cut
+  M7: 0.4003072010106785 Ohm per square
+  V7: 8.200000000000001 Ohm per cut
+  M8: 0.3379060008531306 Ohm per square
+  V8: 6.3 Ohm per cut
+  M9: 0.35582240089836514 Ohm per square
+  V9: 6.3 Ohm per cut
+  Pad: 0 Ohm per square
+Layer resistance:
+  LVTN: 0 Ohm per cut
+  LVTP: 0 Ohm per cut
+  RVTN: 0 Ohm per cut
+  RVTP: 0 Ohm per cut
+  SLVTN: 0 Ohm per cut
+  SLVTP: 0 Ohm per cut
+  nwell: 0 Ohm per cut
+  pwell: 0 Ohm per cut
+  Gate: 0 Ohm per cut
+  Active: 0 Ohm per cut
+  V0: 0 Ohm per cut
+  M1: 1.2675150032001674 Ohm per square
+  V1: 17.2 Ohm per cut
+  M2: 0.5348286013503124 Ohm per square
+  V2: 17.2 Ohm per cut
+  M3: 0.5631660014218575 Ohm per square
+  V3: 17.2 Ohm per cut
+  M4: 0.4328760010929068 Ohm per square
+  V4: 11.799999999999999 Ohm per cut
+  M5: 0.45584400115089546 Ohm per square
+  V5: 11.799999999999999 Ohm per cut
+  M6: 0.38014720095977944 Ohm per square
+  V6: 8.200000000000001 Ohm per cut
+  M7: 0.4003072010106785 Ohm per square
+  V7: 8.200000000000001 Ohm per cut
+  M8: 0.3379060008531306 Ohm per square
+  V8: 6.3 Ohm per cut
+  M9: 0.35582240089836514 Ohm per square
+  V9: 6.3 Ohm per cut
+  Pad: 0 Ohm per square
+########## IR report #################
+Net              : VSS
+Corner           : default
+Total power      : 4.45e-03 W
+Supply voltage   : 0.00e+00 V
+Worstcase voltage: 1.24e-03 V
+Average voltage  : 1.75e-04 V
+Average IR drop  : 1.75e-04 V
+Worstcase IR drop: 1.24e-03 V
+Percentage drop  : 0.18 %
+######################################
+SPICE VSS:
+Layer resistance:
+  LVTN: 0 Ohm per cut
+  LVTP: 0 Ohm per cut
+  RVTN: 0 Ohm per cut
+  RVTP: 0 Ohm per cut
+  SLVTN: 0 Ohm per cut
+  SLVTP: 0 Ohm per cut
+  nwell: 0 Ohm per cut
+  pwell: 0 Ohm per cut
+  Gate: 0 Ohm per cut
+  Active: 0 Ohm per cut
+  V0: 0 Ohm per cut
+  M1: 1.2675150032001674 Ohm per square
+  V1: 17.2 Ohm per cut
+  M2: 0.5348286013503124 Ohm per square
+  V2: 17.2 Ohm per cut
+  M3: 0.5631660014218575 Ohm per square
+  V3: 17.2 Ohm per cut
+  M4: 0.4328760010929068 Ohm per square
+  V4: 11.799999999999999 Ohm per cut
+  M5: 0.45584400115089546 Ohm per square
+  V5: 11.799999999999999 Ohm per cut
+  M6: 0.38014720095977944 Ohm per square
+  V6: 8.200000000000001 Ohm per cut
+  M7: 0.4003072010106785 Ohm per square
+  V7: 8.200000000000001 Ohm per cut
+  M8: 0.3379060008531306 Ohm per square
+  V8: 6.3 Ohm per cut
+  M9: 0.35582240089836514 Ohm per square
+  V9: 6.3 Ohm per cut
+  Pad: 0 Ohm per square
+EXPORT DONE
+rc=0 after 127 s
