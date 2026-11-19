@@ -1,0 +1,16 @@
+[2026-11-17T17:01:38Z] start clone (at most 37757s)
+[2026-11-17T17:03:03Z] end clone rc=0 after 85s
+[2026-11-17T17:03:03Z] start checkout (at most 37672s)
+[2026-11-17T17:07:23Z] end checkout rc=0 after 260s
+[2026-11-17T17:07:24Z] start clone_pin3d (at most 37411s)
+[2026-11-17T17:07:34Z] end clone_pin3d rc=0 after 10s
+[2026-11-17T17:07:34Z] start setup (at most 37401s)
+[2026-11-17T18:08:41Z] end setup rc=0 after 3667s
+[2026-11-17T18:08:41Z] start build (at most 33734s)
+[2026-11-17T21:20:42Z] end build rc=0 after 11521s
+[2026-11-17T21:20:42Z] start versions (at most 22213s)
+[2026-11-17T21:20:42Z] end versions rc=0 after 0s
+[2026-11-17T21:20:42Z] build ok
+[2026-11-17T21:20:42Z] exit status 0
+[2026-11-17T21:21:44Z] tar rc=0
+peak machine memory in use MiB 24966
