@@ -1,0 +1,17 @@
+{
+ "net": "VDD",
+ "pin_mode": "spread",
+ "nodes": 587592,
+ "edges": 859646,
+ "sources": 196,
+ "instances_compared": 48798,
+ "only_ours": 0,
+ "only_pdnsim": 0,
+ "pdnsim_worst_mv": 1.3719999999999288,
+ "ours_worst_mv": 1.5465180934703948,
+ "ours_at_pdnsim_worst_instance_mv": 1.5433279518729526,
+ "max_abs_diff_mv": 0.21143673945667185,
+ "p99_abs_diff_mv": 0.06783351777852495,
+ "median_abs_diff_mv": 0.005493951076296355,
+ "relative_worst_drop_error": 0.1271997765819789
+}

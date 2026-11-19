@@ -1,0 +1,12 @@
+{
+ "net": "VDD",
+ "dbu": 1000,
+ "nodes": 144053,
+ "edges": 229604,
+ "terminals_matched": 48798,
+ "terminals_unmatched": 0,
+ "coincident_pin_nodes": 0,
+ "max_abs_diff_v": 6.272652814942603e-07,
+ "pdnsim_worst_v": 0.698628,
+ "ours_worst_v": 0.6986279407975291
+}
