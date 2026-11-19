@@ -1,4 +1,4 @@
-# open3d-thermal
+# f2f-electrothermal
 
 An open electrothermal evaluation for face-to-face 3D ICs. Given a two-tier design placed and routed by an open 3D
 flow and a set of real programs, it reports per-tier power from simulated activity, temperature from three
