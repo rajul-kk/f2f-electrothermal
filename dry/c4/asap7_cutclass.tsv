@@ -1,0 +1,22 @@
+# LEF58_CUTCLASS rules of ASAP7's tech LEF as G97's image holds it: platforms/asap7/lef/asap7_tech_1x_201209.lef
+# (TECH_LEF in platforms/asap7/config.mk), sha256 7694bf4f8ef2f9745e4579f454788a0cf048e8605320f32d1d83ec540ed4ca41.
+# Width and length in um; cuts empty where the rule gives none (PDNSim then counts that shape as 1 cut).
+layer	class	width_um	length_um	cuts
+V3	V3	0.018	0.024	1
+V3	V3_0p480	0.018	0.12	4
+V3	V3_0p864	0.018	0.216	8
+V4	Vx	0.024	0.024
+V4	Vx_0p480	0.024	0.12	4
+V4	Vx_0p864	0.024	0.216	8
+V4	Vx_1p248	0.024	0.312	12
+V4	Vx_1p632	0.024	0.408	16
+V5	Vx	0.024	0.032
+V5	Vx_0p480	0.024	0.16	4
+V5	Vx_0p864	0.024	0.288	8
+V5	Vx_1p248	0.024	0.416	12
+V5	Vx_1p632	0.024	0.544	16
+V6	Vx	0.032	0.032
+V6	Vx_0p640	0.032	0.16	4
+V6	Vx_1p152	0.032	0.288	8
+V6	Vx_1p664	0.032	0.416	12
+V6	Vx_2p176	0.032	0.544	16
