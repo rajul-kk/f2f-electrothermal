@@ -11,7 +11,14 @@ import json
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-SESSIONS = {"s1_build": {"slug": "open3d-rs-s1-build", "title": "open3d-rs-s1-build", "internet": True}}
+SESSIONS = {   # libs: files the script sources, shipped beside it; kernels: earlier sessions' outputs attached
+    "s1_build": {"slug": "open3d-rs-s1-build", "title": "open3d-rs-s1-build", "internet": True, "libs": [],
+                 "kernels": []},
+    "s2_gcd": {"slug": "open3d-rs-s2-gcd", "title": "open3d-rs-s2-gcd", "internet": True, "libs": ["rs_lib.sh"],
+               "kernels": ["open3d-rs-s1-build"]},
+    "s3_ibex": {"slug": "open3d-rs-s3-ibex", "title": "open3d-rs-s3-ibex", "internet": True, "libs": ["rs_lib.sh"],
+                "kernels": ["open3d-rs-s1-build"]},
+}
 
 
 def script_text(path):
@@ -21,13 +28,17 @@ def script_text(path):
     return data.decode("utf-8"), hashlib.sha256(data).hexdigest()
 
 
-def notebook(script_name, text, sha):
+def notebook(script_name, text, sha, libs=()):
+    """libs: [(name, text, sha)] written beside the script (it sources them); every hash goes in script.sha256."""
+    files = {script_name: text, **{n: t for n, t, _ in libs}}
+    hashes = "".join(f"{h}  {n}\n" for n, h in [(script_name, sha)] + [(n, h) for n, _, h in libs])
     code = (f"import pathlib, subprocess\n"
-            f"SCRIPT = {text!r}\n"
+            f"FILES = {files!r}\n"
+            f"for name, body in FILES.items():\n"
+            f"    pathlib.Path('/kaggle/working', name).write_text(body)\n"
             f"p = pathlib.Path('/kaggle/working/{script_name}')\n"
-            f"p.write_text(SCRIPT)\n"
             f"pathlib.Path('/kaggle/working/record').mkdir(parents=True, exist_ok=True)\n"
-            f"pathlib.Path('/kaggle/working/record/script.sha256').write_text('{sha}  {script_name}\\n')\n"
+            f"pathlib.Path('/kaggle/working/record/script.sha256').write_text({hashes!r})\n"
             f"print('script sha256 {sha}')\n"
             f"rc = subprocess.run(['bash', str(p)]).returncode\n"
             f"pathlib.Path('/kaggle/working/record/notebook_exit_code.txt').write_text(f'{{rc}}\\n')\n"
@@ -51,14 +62,16 @@ def main():
     a = ap.parse_args()
     for name, s in SESSIONS.items():
         text, sha = script_text(HERE / f"{name}.sh")
-        nb, _ = notebook(f"{name}.sh", text, sha)
+        libs = [(n, *script_text(HERE / n)) for n in s["libs"]]
+        nb, _ = notebook(f"{name}.sh", text, sha, libs)
         k = Path(a.parent) / s["slug"]
         k.mkdir(parents=True, exist_ok=True)
         (k / f"{name}.ipynb").write_text(json.dumps(nb, indent=1), encoding="utf-8")
         (k / "kernel-metadata.json").write_text(json.dumps({
             "id": f"{a.owner}/{s['slug']}", "title": s["title"], "code_file": f"{name}.ipynb", "language": "python",
             "kernel_type": "notebook", "is_private": True, "enable_gpu": False, "enable_tpu": False,
-            "enable_internet": s["internet"], "dataset_sources": [], "competition_sources": [], "kernel_sources": []},
+            "enable_internet": s["internet"], "dataset_sources": [], "competition_sources": [],
+            "kernel_sources": [f"{a.owner}/{src}" for src in s["kernels"]]},
             indent=1), encoding="utf-8")
         print(k, sha)
 

@@ -1,6 +1,6 @@
 # S2 v1 (18 Nov 2026, Kaggle CPU, `rajulkabir/open3d-rs-s2-gcd` version 1): toolchain ok, gcd fails in placement
 
-Scripts: `dry/rs/s2_gcd.sh` b14844ed..., `dry/rs/rs_lib.sh` 3b2cf4d9... (`script.sha256`).
+Scripts: `dry/rs/s2_gcd.sh` b14844ed..., `dry/rs/rs_lib.sh` 3b2cf4d9... (`script.sha256`). The download kept only log/txt/json/sha256/md files, so GNU time's `<step>.time` reports are not here; Kaggle keeps only a kernel's latest version, and v2 replaced them.
 
 - **The S1 build restores** (`build_identity.txt`): the attached tarball's sha256 equals S1 v2's (b003f6fc...), and
   openroad and yosys hash as in S1. Before ORFS's `setup.sh` the two binaries lacked 6 system libraries
@@ -17,8 +17,8 @@ Scripts: `dry/rs/s2_gcd.sh` b14844ed..., `dry/rs/rs_lib.sh` 3b2cf4d9... (`script
   (`platforms/asap7_3D/config.mk` at 51a19d6f). Cause not shown; the likely one is that the upper tier's mirrored
   stack puts M1_m (where upper-tier cell pins are) above M2_m, outside the routing range.
 - **The run reported success.** `run_experiments.py` exited 0 and printed `[STATUS] failed=1` (`gcd.log`, last
-  lines), so the script logged "gcd ok". `rs_lib.sh` now passes a run only if the log ends with "All experiments
-  completed" and the last status line names no running or bad state (A13).
+  lines), so the script logged "gcd ok". `rs_lib.sh` now passes a run only if "All experiments completed" follows the last status line and that
+  line is exactly "ok=N" with N > 0 (an allow-list; A13).
 - Stage times (`flow_logs.tgz`, `flow_logs/.../*.log`): the 15 stages with a GNU time line took 2-8 s each, the largest peak among them
   495,760 KiB (`3_place_upper`). `2_tritonpart` and `1_0_synth_env` print no such line; tritonpart's own timestamps
   run 22:52:30 to 22:56:02, about 212 s of the 301 s gcd step, and its memory is not measured. Machine-wide peak in
