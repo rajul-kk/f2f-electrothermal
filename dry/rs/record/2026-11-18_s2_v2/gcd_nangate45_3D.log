@@ -1,0 +1,45 @@
+[MAIN] repo_root=/tmp/rs/pin3d
+[MAIN] flows=['ord'] techs=['nangate45_3D'] cases=['gcd'] jobs=9
+[MAIN] stages: run=True eval=True
+[MAIN] shard=0/1
+[MAIN] total_tasks=1 logs under run_logs/<tech>/<flow>/...
+[MAIN] live status files under /tmp/rs/pin3d/run_logs/status
+[submit] 8f57fe1b0222 ord/nangate45_3D/gcd job=task.1077812.1794958968128 status=running phase=run
+[STATUS] running=1
+[TASK] HOST         TASK                 STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG
+[TASK] -----------------------------------------------------------------------------------------------------------
+[TASK] 8f57fe1b0222 ord/nangate45_3D/gcd running run   running  task.1077812.1794958968128 1077822 True  -        
+[STATUS] running=1
+[TASK] HOST         TASK                 STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG           
+[TASK] ----------------------------------------------------------------------------------------------------------------------
+[TASK] 8f57fe1b0222 ord/nangate45_3D/gcd running run   running  task.1077812.1794958968128 1077822 True  2_tritonpart.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK                 STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG           
+[TASK] ----------------------------------------------------------------------------------------------------------------------
+[TASK] 8f57fe1b0222 ord/nangate45_3D/gcd running run   running  task.1077812.1794958968128 1077822 True  2_tritonpart.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK                 STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG           
+[TASK] ----------------------------------------------------------------------------------------------------------------------
+[TASK] 8f57fe1b0222 ord/nangate45_3D/gcd running run   running  task.1077812.1794958968128 1077822 True  2_tritonpart.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK                 STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG           
+[TASK] ----------------------------------------------------------------------------------------------------------------------
+[TASK] 8f57fe1b0222 ord/nangate45_3D/gcd running run   running  task.1077812.1794958968128 1077822 True  2_tritonpart.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK                 STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG           
+[TASK] ----------------------------------------------------------------------------------------------------------------------
+[TASK] 8f57fe1b0222 ord/nangate45_3D/gcd running run   running  task.1077812.1794958968128 1077822 True  2_tritonpart.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK                 STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG           
+[TASK] ----------------------------------------------------------------------------------------------------------------------
+[TASK] 8f57fe1b0222 ord/nangate45_3D/gcd running run   running  task.1077812.1794958968128 1077822 True  2_tritonpart.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK                 STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG           
+[TASK] ----------------------------------------------------------------------------------------------------------------------
+[TASK] 8f57fe1b0222 ord/nangate45_3D/gcd running run   running  task.1077812.1794958968128 1077822 True  2_tritonpart.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK                 STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG           
+[TASK] ----------------------------------------------------------------------------------------------------------------------
+[TASK] 8f57fe1b0222 ord/nangate45_3D/gcd running run   running  task.1077812.1794958968128 1077822 True  3_place_init.log.tmp
+[STATUS] failed=1
+[MAIN] All experiments completed.
