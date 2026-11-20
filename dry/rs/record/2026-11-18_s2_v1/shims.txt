@@ -1,0 +1,1 @@
+setup.sh run with SUDO_USER=root (it expects to be started via sudo; the session is root)
