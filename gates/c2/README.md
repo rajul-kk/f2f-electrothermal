@@ -1,9 +1,21 @@
-# C2: MATRIX-A5 cell leakage, SPICE against the kit's Liberty · VOID (runs 1 and 2)
+# C2: MATRIX-A5 cell leakage, SPICE against the kit's Liberty · VOID (runs 1-3), run 4 under Amendment 3
 
-Registered 16 Nov 2026 (`registration.md`, Amendment 1 after run 1). Neither run gives a verdict: V1 (every case
-converges) fails at -40 C in both. Records: `record-run1/`, `record/` (run 2).
+Registered 16 Nov 2026 (`registration.md`, Amendments 1-3). No run has given a verdict yet: V1 (every case reaches
+a DC point) fails in each. Records: `record-run1/`, `record-run2/`, `record-run3/`; `record/` holds the latest run.
 
-## Run 2 (one deck per cell, Amendment 1)
+## Run 3 (one deck per state, Amendment 2)
+
+VOID in 13 of 15 libraries (`record-run3/summary.md`). 636 states have no DC point, 495 of them above the floor cut,
+including 111 in svt SSG 125 C and 44 in svt TTG 25 C, which converged in run 2. ulvt FFG -40 C is EXACT (ratios
+0.9998-1.0000) and svt SSG -40 C is LISTED ONLY. Cause, from the probe (`diag/a3_probe.py`, `diag/a3/report.json`):
+Amendment 2's `gminsteps=200 srcsteps=200`. Rerunning run 3's decks without both options, 602 of the 636 states
+reach a DC point, every state above the cut among them, and 150 states that already converged keep their current
+exactly. Amendment 3 removes the two options, and run 4 reruns all 15 libraries.
+The probe's limit: of run 3's 11,340 states, 10,517 reached their DC point by Newton, which the change cannot affect,
+and 187 by gmin stepping with `gminsteps=200`. Only 5 of those 187 were among the probe's controls (145 of the 150
+were Newton states). Run 4 is the first test of the other 182 under ngspice's default stepping.
+
+## Run 2 (one deck per cell, Amendment 1; `record-run2/`)
 
 | Library | Cells compared | rN | rP | Ratio range | Class |
 |---|---|---|---|---|---|
@@ -23,7 +35,7 @@ converges) fails at -40 C in both. Records: `record-run1/`, `record/` (run 2).
 | lvt FFG -40 C | 63 converged | | | | VOID (V1) |
 | ulvt SSG -40 C | 54 converged | | | | VOID (V1) |
 
-(`record/summary.md`; decks that exited 0 per library in `record/ngspice_rc.txt`.)
+(`record-run2/summary.md`; decks that exited 0 per library in `record-run2/ngspice_rc.txt`.)
 
 ## Findings, not a verdict
 
