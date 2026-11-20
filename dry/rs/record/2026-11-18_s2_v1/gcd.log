@@ -1,0 +1,49 @@
+[MAIN] repo_root=/tmp/rs/pin3d
+[MAIN] flows=['ord'] techs=['asap7_3D'] cases=['gcd'] jobs=9
+[MAIN] stages: run=True eval=True
+[MAIN] shard=0/1
+[MAIN] total_tasks=1 logs under run_logs/<tech>/<flow>/...
+[MAIN] live status files under /tmp/rs/pin3d/run_logs/status
+[submit] 324aa0ad447b ord/asap7_3D/gcd job=task.25652.1794955934133 status=running phase=run
+[STATUS] running=1
+[TASK] HOST         TASK             STATUS  PHASE DISPATCH JOB                        PID ALIVE STAGE_LOG
+[TASK] ---------------------------------------------------------------------------------------------------
+[TASK] 324aa0ad447b ord/asap7_3D/gcd running run   running  task.25652.1794955934133 25662 True  -        
+[STATUS] running=1
+[TASK] HOST         TASK             STATUS  PHASE DISPATCH JOB                        PID ALIVE STAGE_LOG           
+[TASK] --------------------------------------------------------------------------------------------------------------
+[TASK] 324aa0ad447b ord/asap7_3D/gcd running run   running  task.25652.1794955934133 25662 True  2_tritonpart.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK             STATUS  PHASE DISPATCH JOB                        PID ALIVE STAGE_LOG           
+[TASK] --------------------------------------------------------------------------------------------------------------
+[TASK] 324aa0ad447b ord/asap7_3D/gcd running run   running  task.25652.1794955934133 25662 True  2_tritonpart.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK             STATUS  PHASE DISPATCH JOB                        PID ALIVE STAGE_LOG           
+[TASK] --------------------------------------------------------------------------------------------------------------
+[TASK] 324aa0ad447b ord/asap7_3D/gcd running run   running  task.25652.1794955934133 25662 True  2_tritonpart.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK             STATUS  PHASE DISPATCH JOB                        PID ALIVE STAGE_LOG           
+[TASK] --------------------------------------------------------------------------------------------------------------
+[TASK] 324aa0ad447b ord/asap7_3D/gcd running run   running  task.25652.1794955934133 25662 True  2_tritonpart.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK             STATUS  PHASE DISPATCH JOB                        PID ALIVE STAGE_LOG           
+[TASK] --------------------------------------------------------------------------------------------------------------
+[TASK] 324aa0ad447b ord/asap7_3D/gcd running run   running  task.25652.1794955934133 25662 True  2_tritonpart.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK             STATUS  PHASE DISPATCH JOB                        PID ALIVE STAGE_LOG           
+[TASK] --------------------------------------------------------------------------------------------------------------
+[TASK] 324aa0ad447b ord/asap7_3D/gcd running run   running  task.25652.1794955934133 25662 True  2_tritonpart.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK             STATUS  PHASE DISPATCH JOB                        PID ALIVE STAGE_LOG           
+[TASK] --------------------------------------------------------------------------------------------------------------
+[TASK] 324aa0ad447b ord/asap7_3D/gcd running run   running  task.25652.1794955934133 25662 True  2_tritonpart.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK             STATUS  PHASE DISPATCH JOB                        PID ALIVE STAGE_LOG               
+[TASK] ------------------------------------------------------------------------------------------------------------------
+[TASK] 324aa0ad447b ord/asap7_3D/gcd running run   running  task.25652.1794955934133 25662 True  2_3_floorplan_3d.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK             STATUS  PHASE DISPATCH JOB                        PID ALIVE STAGE_LOG                      
+[TASK] -------------------------------------------------------------------------------------------------------------------------
+[TASK] 324aa0ad447b ord/asap7_3D/gcd running run   running  task.25652.1794955934133 25662 True  2_6_floorplan_pdn_upper.log.tmp
+[STATUS] failed=1
+[MAIN] All experiments completed.
