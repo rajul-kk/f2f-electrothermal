@@ -28,7 +28,7 @@ start_memory() {
 step() {
   local name=$1; shift
   local budget; budget=$(left)
-  if [ "$budget" -le 60 ]; then log "skip $name: deadline reached"; echo "$name deadline" >> "$R/rc.txt"; return 124; fi
+  if [ "$budget" -le 60 ]; then log "skip $name: deadline reached"; echo "$name skipped" >> "$R/rc.txt"; return 98; fi
   log "start $name (at most ${budget}s)"
   local m0; m0=$(date +%s)
   local tv=(); [ -x /usr/bin/time ] && tv=(/usr/bin/time -v -o "$R/$name.time")
@@ -96,19 +96,60 @@ prepare_pin3d() {
 }
 
 # pin3d NAME ARGS...: a run_experiments.py call from Pin-3D's folder with its env.sh sourced. run_experiments.py exits 0
-# even when a run fails (S2 v1: "[STATUS] failed=1", rc 0), so it passes only if the log ends its runs ("All experiments
-# completed.") and the last status line names no running or bad state; anything else, a missing line included, is rc 3.
-# --list prints no status line, so callers pass LIST=1 for it. Arguments go in as "$@", never re-split by the inner shell.
+# even when a run fails (S2 v1: "[STATUS] failed=1", rc 0). Its status line counts tasks by state (queued, running, ok,
+# failed, unknown; print_status_summary_from_payloads at 51a19d6f), so a call passes only if the log ends its runs
+# ("All experiments completed.", after the last status line) and that last status line is exactly "ok=N" with N > 0:
+# a run with no tasks, or any task not ok, is rc 3. The "ok" key is read from the source; no passing run has been
+# logged yet, so the first one (S3) must be checked by hand against this rule. --list prints no status line, so
+# callers pass LIST=1 for it. Arguments go in as "$@", never re-split by the inner shell.
+# Pin-3D starts each flow job in its own session and leaves it running when its monitor is killed, so on a deadline
+# (timeout's 124, or 137 when it had to KILL) the jobs are stopped with its own --kill-running for the same filters
+# (at most 120 s), then any openroad or yosys process left. A step skipped at the deadline (98) never started.
 pin3d() {
   local name=$1; shift
-  step "$name" bash -c 'cd "$1" && export ORFS_DIR="$2" NUM_CORES=$(nproc) && source env.sh && shift 2 \
-    && python3 run_experiments.py "$@"' _ "$B/pin3d" "$B/orfs" "$@" || return $?
+  local run=(bash -c 'cd "$1" && export ORFS_DIR="$2" NUM_CORES=$(nproc) && source env.sh && shift 2 \
+    && python3 run_experiments.py "$@"' _ "$B/pin3d" "$B/orfs")
+  step "$name" "${run[@]}" "$@"
+  local rc=$?
+  if [ $rc -eq 124 ] || [ $rc -eq 137 ]; then
+    local filters=(); local a
+    for a in "$@"; do case $a in --list|--run-only|--eval-only) ;; *) filters+=("$a") ;; esac; done
+    timeout -k 10 120 "${run[@]}" "${filters[@]}" --kill-running >> "$R/$name.kill.log" 2>&1
+    pkill -TERM -x openroad; pkill -TERM -x yosys; sleep 20; pkill -KILL -x openroad; pkill -KILL -x yosys
+    log "$name: deadline (rc $rc); stopped its flow jobs (log $name.kill.log)"
+  fi
+  [ $rc -eq 0 ] || return $rc
   [ "${LIST:-0}" = 1 ] && return 0
   local status; status=$(grep '^\[STATUS\]' "$R/$name.log" | tail -1)
-  if ! grep -q '^\[MAIN\] All experiments completed' "$R/$name.log" || [ -z "$status" ] \
-     || echo "$status" | grep -Eq 'running=|failed=[1-9]|timeout|error|killed|lost'; then
+  local s_line m_line
+  s_line=$(grep -n '^\[STATUS\]' "$R/$name.log" | tail -1 | cut -d: -f1)
+  m_line=$(grep -n '^\[MAIN\] All experiments completed' "$R/$name.log" | tail -1 | cut -d: -f1)
+  if [ -z "$m_line" ] || [ -z "$s_line" ] || [ "$m_line" -lt "$s_line" ] \
+     || ! echo "$status" | grep -Eq '^\[STATUS\] ok=[1-9][0-9]*[[:space:]]*$'; then
     log "$name: run_experiments.py last status '${status:-none}'"; echo "$name status-failed" >> "$R/rc.txt"; return 3
   fi
+}
+
+# session_start: the common head of every S2+ session script (after OUT/B/BUDGET_S/TAR_RESERVE_S are set)
+session_start() {
+  trap 'finish_common $?' EXIT
+  start_memory
+  machine_and_tools
+  prepare_toolchain || exit $?
+  prepare_pin3d || exit 1
+}
+
+# run_case CASE TECH...: Pin-3D's OpenROAD run (--run-only: its eval phase calls a Cadence target) of CASE on each
+# TECH in turn, each whatever the others did; returns the number of techs that failed
+run_case() {
+  local case=$1; shift
+  local failed=0 tech
+  for tech in "$@"; do
+    if pin3d "${case}_$tech" --flow ord --tech "$tech" --case "$case" --run-only; then log "$case $tech ok"
+    else failed=$((failed + 1)); fi
+  done
+  log "$case failed in $failed of $# techs"
+  return $failed
 }
 
 # copies Pin-3D's logs and reports (small) into the record and tars its results and objects into the output
