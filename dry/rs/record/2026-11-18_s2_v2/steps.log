@@ -1,0 +1,25 @@
+[2026-11-17T23:01:02Z] start clone (at most 37785s)
+[2026-11-17T23:02:13Z] end clone rc=0 after 71s
+[2026-11-17T23:02:13Z] start checkout (at most 37714s)
+[2026-11-17T23:06:05Z] end checkout rc=0 after 232s
+[2026-11-17T23:06:19Z] start setup (at most 37468s)
+[2026-11-17T23:14:26Z] end setup rc=0 after 487s
+[2026-11-17T23:14:37Z] start versions (at most 36970s)
+[2026-11-17T23:14:37Z] end versions rc=0 after 0s
+[2026-11-17T23:14:37Z] start clone_pin3d (at most 36970s)
+[2026-11-17T23:14:46Z] end clone_pin3d rc=0 after 9s
+[2026-11-17T23:14:46Z] start list (at most 36961s)
+[2026-11-17T23:14:46Z] end list rc=0 after 0s
+[2026-11-17T23:14:46Z] start gcd_asap7_3D (at most 36961s)
+[2026-11-17T23:19:47Z] end gcd_asap7_3D rc=0 after 301s
+[2026-11-17T23:19:47Z] gcd_asap7_3D: run_experiments.py reported [STATUS] failed=1
+[2026-11-17T23:19:47Z] start gcd_asap7_nangate45_3D (at most 36660s)
+[2026-11-17T23:42:47Z] end gcd_asap7_nangate45_3D rc=0 after 1380s
+[2026-11-17T23:42:47Z] gcd_asap7_nangate45_3D: run_experiments.py reported [STATUS] failed=1
+[2026-11-17T23:42:47Z] start gcd_nangate45_3D (at most 35280s)
+[2026-11-17T23:47:18Z] end gcd_nangate45_3D rc=0 after 271s
+[2026-11-17T23:47:18Z] gcd_nangate45_3D: run_experiments.py reported [STATUS] failed=1
+[2026-11-17T23:47:18Z] gcd failed in 3 of 3 techs
+[2026-11-17T23:47:18Z] exit status 1
+[2026-11-17T23:47:21Z] results tar rc=0
+peak machine memory in use MiB 19550
