@@ -1,0 +1,473 @@
+{
+ "GT_A5_lvt_FFG_125C": {
+  "nosrc": {
+   "hard": 17,
+   "hard_reaching_dc": 17,
+   "hard_methods": {
+    "source stepping": 17
+   },
+   "valid": 10,
+   "valid_max_rel_change": 0.0
+  },
+  "nogmin": {
+   "hard": 17,
+   "hard_reaching_dc": 17,
+   "hard_methods": {
+    "gmin stepping": 17
+   },
+   "valid": 10,
+   "valid_max_rel_change": 0.0
+  },
+  "neither": {
+   "hard": 17,
+   "hard_reaching_dc": 17,
+   "hard_methods": {
+    "gmin stepping": 17
+   },
+   "valid": 10,
+   "valid_max_rel_change": 0.0
+  }
+ },
+ "GT_A5_lvt_FFG_m40C": {
+  "nosrc": {
+   "hard": 8,
+   "hard_reaching_dc": 8,
+   "hard_methods": {
+    "source stepping": 8
+   },
+   "valid": 10,
+   "valid_max_rel_change": 0.0
+  },
+  "nogmin": {
+   "hard": 8,
+   "hard_reaching_dc": 7,
+   "hard_methods": {
+    "transient op": 1,
+    "gmin stepping": 7
+   },
+   "valid": 10,
+   "valid_max_rel_change": 0.0
+  },
+  "neither": {
+   "hard": 8,
+   "hard_reaching_dc": 8,
+   "hard_methods": {
+    "source stepping": 1,
+    "gmin stepping": 7
+   },
+   "valid": 10,
+   "valid_max_rel_change": 0.0
+  }
+ },
+ "GT_A5_lvt_SSG_125C": {
+  "nosrc": {
+   "hard": 106,
+   "hard_reaching_dc": 106,
+   "hard_methods": {
+    "source stepping": 106
+   },
+   "valid": 10,
+   "valid_max_rel_change": 0.0
+  },
+  "nogmin": {
+   "hard": 106,
+   "hard_reaching_dc": 106,
+   "hard_methods": {
+    "gmin stepping": 106
+   },
+   "valid": 10,
+   "valid_max_rel_change": 0.0
+  },
+  "neither": {
+   "hard": 106,
+   "hard_reaching_dc": 106,
+   "hard_methods": {
+    "gmin stepping": 106
+   },
+   "valid": 10,
+   "valid_max_rel_change": 0.0
+  }
+ },
+ "GT_A5_lvt_SSG_m40C": {
+  "nosrc": {
+   "hard": 58,
+   "hard_reaching_dc": 45,
+   "hard_methods": {
+    "source stepping": 45,
+    "transient op": 10,
+    "failed": 3
+   },
+   "valid": 10,
+   "valid_max_rel_change": 0.0
+  },
+  "nogmin": {
+   "hard": 58,
+   "hard_reaching_dc": 30,
+   "hard_methods": {
+    "transient op": 27,
+    "gmin stepping": 30,
+    "failed": 1
+   },
+   "valid": 10,
+   "valid_max_rel_change": 0.0
+  },
+  "neither": {
+   "hard": 58,
+   "hard_reaching_dc": 46,
+   "hard_methods": {
+    "source stepping": 16,
+    "transient op": 9,
+    "gmin stepping": 30,
+    "failed": 3
+   },
+   "valid": 10,
+   "valid_max_rel_change": 0.0
+  }
+ },
+ "GT_A5_lvt_TTG_25C": {
+  "nosrc": {
+   "hard": 31,
+   "hard_reaching_dc": 31,
+   "hard_methods": {
+    "source stepping": 31
+   },
+   "valid": 10,
+   "valid_max_rel_change": 0.0
+  },
+  "nogmin": {
+   "hard": 31,
+   "hard_reaching_dc": 31,
+   "hard_methods": {
+    "gmin stepping": 31
+   },
+   "valid": 10,
+   "valid_max_rel_change": 0.0
+  },
+  "neither": {
+   "hard": 31,
+   "hard_reaching_dc": 31,
+   "hard_methods": {
+    "gmin stepping": 31
+   },
+   "valid": 10,
+   "valid_max_rel_change": 0.0
+  }
+ },
+ "GT_A5_svt_FFG_125C": {
+  "nosrc": {
+   "hard": 83,
+   "hard_reaching_dc": 83,
+   "hard_methods": {
+    "source stepping": 83
+   },
+   "valid": 10,
+   "valid_max_rel_change": 0.0
+  },
+  "nogmin": {
+   "hard": 83,
+   "hard_reaching_dc": 83,
+   "hard_methods": {
+    "gmin stepping": 83
+   },
+   "valid": 10,
+   "valid_max_rel_change": 0.0
+  },
+  "neither": {
+   "hard": 83,
+   "hard_reaching_dc": 83,
+   "hard_methods": {
+    "gmin stepping": 83
+   },
+   "valid": 10,
+   "valid_max_rel_change": 0.0
+  }
+ },
+ "GT_A5_svt_FFG_m40C": {
+  "nosrc": {
+   "hard": 56,
+   "hard_reaching_dc": 40,
+   "hard_methods": {
+    "source stepping": 40,
+    "failed": 7,
+    "transient op": 9
+   },
+   "valid": 10,
+   "valid_max_rel_change": 0.0
+  },
+  "nogmin": {
+   "hard": 56,
+   "hard_reaching_dc": 29,
+   "hard_methods": {
+    "transient op": 21,
+    "gmin stepping": 29,
+    "failed": 6
+   },
+   "valid": 10,
+   "valid_max_rel_change": 0.0
+  },
+  "neither": {
+   "hard": 56,
+   "hard_reaching_dc": 46,
+   "hard_methods": {
+    "source stepping": 17,
+    "gmin stepping": 29,
+    "failed": 6,
+    "transient op": 4
+   },
+   "valid": 10,
+   "valid_max_rel_change": 0.0
+  }
+ },
+ "GT_A5_svt_SSG_125C": {
+  "nosrc": {
+   "hard": 111,
+   "hard_reaching_dc": 111,
+   "hard_methods": {
+    "source stepping": 111
+   },
+   "valid": 10,
+   "valid_max_rel_change": 0.0
+  },
+  "nogmin": {
+   "hard": 111,
+   "hard_reaching_dc": 111,
+   "hard_methods": {
+    "gmin stepping": 111
+   },
+   "valid": 10,
+   "valid_max_rel_change": 0.0
+  },
+  "neither": {
+   "hard": 111,
+   "hard_reaching_dc": 111,
+   "hard_methods": {
+    "gmin stepping": 111
+   },
+   "valid": 10,
+   "valid_max_rel_change": 0.0
+  }
+ },
+ "GT_A5_svt_SSG_m40C": {
+  "nosrc": {
+   "hard": 46,
+   "hard_reaching_dc": 17,
+   "hard_methods": {
+    "source stepping": 17,
+    "transient op": 24,
+    "failed": 5
+   },
+   "valid": 10,
+   "valid_max_rel_change": 0.0
+  },
+  "nogmin": {
+   "hard": 46,
+   "hard_reaching_dc": 33,
+   "hard_methods": {
+    "gmin stepping": 33,
+    "transient op": 10,
+    "failed": 3
+   },
+   "valid": 10,
+   "valid_max_rel_change": 0.0
+  },
+  "neither": {
+   "hard": 46,
+   "hard_reaching_dc": 34,
+   "hard_methods": {
+    "gmin stepping": 33,
+    "transient op": 11,
+    "failed": 1,
+    "source stepping": 1
+   },
+   "valid": 10,
+   "valid_max_rel_change": 0.0
+  }
+ },
+ "GT_A5_svt_TTG_25C": {
+  "nosrc": {
+   "hard": 44,
+   "hard_reaching_dc": 44,
+   "hard_methods": {
+    "source stepping": 44
+   },
+   "valid": 10,
+   "valid_max_rel_change": 0.0
+  },
+  "nogmin": {
+   "hard": 44,
+   "hard_reaching_dc": 44,
+   "hard_methods": {
+    "gmin stepping": 44
+   },
+   "valid": 10,
+   "valid_max_rel_change": 0.0
+  },
+  "neither": {
+   "hard": 44,
+   "hard_reaching_dc": 44,
+   "hard_methods": {
+    "gmin stepping": 44
+   },
+   "valid": 10,
+   "valid_max_rel_change": 0.0
+  }
+ },
+ "GT_A5_ulvt_FFG_125C": {
+  "nosrc": {
+   "hard": 7,
+   "hard_reaching_dc": 7,
+   "hard_methods": {
+    "source stepping": 7
+   },
+   "valid": 10,
+   "valid_max_rel_change": 0.0
+  },
+  "nogmin": {
+   "hard": 7,
+   "hard_reaching_dc": 7,
+   "hard_methods": {
+    "gmin stepping": 7
+   },
+   "valid": 10,
+   "valid_max_rel_change": 0.0
+  },
+  "neither": {
+   "hard": 7,
+   "hard_reaching_dc": 7,
+   "hard_methods": {
+    "gmin stepping": 7
+   },
+   "valid": 10,
+   "valid_max_rel_change": 0.0
+  }
+ },
+ "GT_A5_ulvt_FFG_m40C": {
+  "nosrc": {
+   "hard": 0,
+   "hard_reaching_dc": 0,
+   "hard_methods": {},
+   "valid": 10,
+   "valid_max_rel_change": 0.0
+  },
+  "nogmin": {
+   "hard": 0,
+   "hard_reaching_dc": 0,
+   "hard_methods": {},
+   "valid": 10,
+   "valid_max_rel_change": 0.0
+  },
+  "neither": {
+   "hard": 0,
+   "hard_reaching_dc": 0,
+   "hard_methods": {},
+   "valid": 10,
+   "valid_max_rel_change": 0.0
+  }
+ },
+ "GT_A5_ulvt_SSG_125C": {
+  "nosrc": {
+   "hard": 35,
+   "hard_reaching_dc": 35,
+   "hard_methods": {
+    "source stepping": 35
+   },
+   "valid": 10,
+   "valid_max_rel_change": 0.0
+  },
+  "nogmin": {
+   "hard": 35,
+   "hard_reaching_dc": 35,
+   "hard_methods": {
+    "gmin stepping": 35
+   },
+   "valid": 10,
+   "valid_max_rel_change": 0.0
+  },
+  "neither": {
+   "hard": 35,
+   "hard_reaching_dc": 35,
+   "hard_methods": {
+    "gmin stepping": 35
+   },
+   "valid": 10,
+   "valid_max_rel_change": 0.0
+  }
+ },
+ "GT_A5_ulvt_SSG_m40C": {
+  "nosrc": {
+   "hard": 15,
+   "hard_reaching_dc": 15,
+   "hard_methods": {
+    "source stepping": 15
+   },
+   "valid": 10,
+   "valid_max_rel_change": 0.0
+  },
+  "nogmin": {
+   "hard": 15,
+   "hard_reaching_dc": 14,
+   "hard_methods": {
+    "transient op": 1,
+    "gmin stepping": 14
+   },
+   "valid": 10,
+   "valid_max_rel_change": 0.0
+  },
+  "neither": {
+   "hard": 15,
+   "hard_reaching_dc": 15,
+   "hard_methods": {
+    "source stepping": 1,
+    "gmin stepping": 14
+   },
+   "valid": 10,
+   "valid_max_rel_change": 0.0
+  }
+ },
+ "GT_A5_ulvt_TTG_25C": {
+  "nosrc": {
+   "hard": 19,
+   "hard_reaching_dc": 19,
+   "hard_methods": {
+    "source stepping": 19
+   },
+   "valid": 10,
+   "valid_max_rel_change": 0.0
+  },
+  "nogmin": {
+   "hard": 19,
+   "hard_reaching_dc": 19,
+   "hard_methods": {
+    "gmin stepping": 19
+   },
+   "valid": 10,
+   "valid_max_rel_change": 0.0
+  },
+  "neither": {
+   "hard": 19,
+   "hard_reaching_dc": 19,
+   "hard_methods": {
+    "gmin stepping": 19
+   },
+   "valid": 10,
+   "valid_max_rel_change": 0.0
+  }
+ },
+ "total": {
+  "nosrc": {
+   "hard": 636,
+   "hard_reaching_dc": 578,
+   "valid_max_rel_change": 0.0
+  },
+  "nogmin": {
+   "hard": 636,
+   "hard_reaching_dc": 566,
+   "valid_max_rel_change": 0.0
+  },
+  "neither": {
+   "hard": 636,
+   "hard_reaching_dc": 602,
+   "valid_max_rel_change": 0.0
+  }
+ }
+}

@@ -33,3 +33,8 @@ dry/rs/record/*/checkout.log
 dry/rs/record/*/apt_time.log
 dry/rs/record/*/kernel.log
 dry/rs/record/*/shims.txt
+# c5 generated grids and local logs
+dry/c5/gen/
+dry/c5/run_c5.log
+gates/c2/run4.log
+gates/c2/diag/a3/GT_A5_*/
