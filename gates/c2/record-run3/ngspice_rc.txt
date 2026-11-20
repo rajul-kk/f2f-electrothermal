@@ -1,0 +1,15 @@
+GT_A5_lvt_FFG_125C decks 756, exit 0: 739
+GT_A5_lvt_FFG_m40C decks 756, exit 0: 749
+GT_A5_lvt_SSG_125C decks 756, exit 0: 650
+GT_A5_lvt_SSG_m40C decks 756, exit 0: 725
+GT_A5_lvt_TTG_25C decks 756, exit 0: 725
+GT_A5_svt_FFG_125C decks 756, exit 0: 673
+GT_A5_svt_FFG_m40C decks 756, exit 0: 735
+GT_A5_svt_SSG_125C decks 756, exit 0: 645
+GT_A5_svt_SSG_m40C decks 756, exit 0: 727
+GT_A5_svt_TTG_25C decks 756, exit 0: 712
+GT_A5_ulvt_FFG_125C decks 756, exit 0: 749
+GT_A5_ulvt_FFG_m40C decks 756, exit 0: 756
+GT_A5_ulvt_SSG_125C decks 756, exit 0: 721
+GT_A5_ulvt_SSG_m40C decks 756, exit 0: 742
+GT_A5_ulvt_TTG_25C decks 756, exit 0: 737
