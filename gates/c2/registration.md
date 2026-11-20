@@ -134,3 +134,31 @@ Seen before run 3, so not unseen: at svt SSG -40 C, the 143 hard states at these
 (diagnosis), then all 756 at exactly run 3's decks and options (this amendment's cost probe,
 `diag/record/a2_cost_svt_SSG_m40C.txt`); svt aoi33_x1's all-low state and lvt aoi33_x1's and svt aoi22_x1's all-low
 states at TT 25 C; all of run 2's values. Run 3 reruns all 15 libraries.
+
+## Result of run 3 (18 Nov 2026, post-run)
+
+VOID (`record-run3/`): V1 fails in 13 of the 15 libraries. 636 states have no DC point, 495 of them above the floor
+cut, including 111 in svt SSG 125 C and 44 in svt TTG 25 C, where run 2 converged every state. ulvt FFG -40 C is
+EXACT and svt SSG -40 C is LISTED ONLY. The failures are new with Amendment 2's options: Newton goes to NaN, then
+gmin and source stepping both fail.
+
+## Amendment 3 (18 Nov 2026, after run 3 and the probe `diag/a3_probe.py`; post-run)
+
+The question, cells, bars, floor cut and validity rules are unchanged. One change:
+
+1. **Options:** `.option gmin=1e-18 abstol=1e-18 reltol=1e-5 itl1=50000`. `gminsteps=200 srcsteps=200` are removed,
+   and the raised Newton limit stays. The probe (`diag/a3/report.json`, `diag/a3_run.log`) reran run 3's own decks
+   for all 636 states without a DC point, plus 10 per library that had one, in three variants:
+
+   | Variant | States reaching a DC point | Above the cut, still without one | Valid controls' current change |
+   |---|---|---|---|
+   | without srcsteps | 578 / 636 | 1 | 0 |
+   | without gminsteps | 566 / 636 | 7 | 0 |
+   | **without both** | **602 / 636** | **0** | 0 |
+
+   The 34 states still without a DC point are all below the cut (lvt SSG -40 C 12, svt FFG -40 C 10, svt SSG -40 C
+   12). Under Amendment 2's item 5 they are named in the result and do not void it. The above/below split was counted
+   against run 3's `summary.json` lists (`below_floor`, `invalid_below_floor`).
+
+Seen before run 4, so not unseen: every value of run 3 (`record-run3/`), and the 602 + 150 probe states above. Run 4
+reruns all 15 libraries.

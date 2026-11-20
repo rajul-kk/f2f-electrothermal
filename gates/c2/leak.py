@@ -25,8 +25,9 @@ UNITS = {"1uW": 1e-6, "1nW": 1e-9, "1pW": 1e-12}
 # BSIM-CMG adds V(e, di) * gmin to the junction current when BULKMOD != 0 (bsimcmg_body.include:2823): the PMOS cards
 # have bulkmod = 1, so ngspice's default gmin (1e-12 S) adds 0.7 pA to every off PMOS (dry c1: +12%). The smallest
 # states are ~1e-15 A, so gmin and abstol go to 1e-18; tighter settings did not converge.
-# Amendment 2: the iteration limits raised (diag finding 1: -40 C states need them; converged values unchanged).
-OPTIONS = ".option gmin=1e-18 abstol=1e-18 reltol=1e-5 itl1=50000 gminsteps=200 srcsteps=200"
+# Amendment 2 raised the iteration limits (diag finding 1); Amendment 3 removes gminsteps and srcsteps again, since
+# together they make Newton states fail (diag/a3_probe.py: without both, every state above the floor cut converges).
+OPTIONS = ".option gmin=1e-18 abstol=1e-18 reltol=1e-5 itl1=50000"
 DC_METHODS = ("newton", "gmin stepping", "source stepping")
 
 
