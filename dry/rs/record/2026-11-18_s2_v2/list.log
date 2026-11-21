@@ -1,0 +1,24 @@
+[MAIN] repo_root=/tmp/rs/pin3d
+[MAIN] flows=['ord'] techs=['asap7_3D', 'asap7_nangate45_3D', 'nangate45_3D'] cases=['aes', 'gcd', 'ibex', 'jpeg', 'swerv_wrapper', 'picorv32', 'tpu'] jobs=9
+[MAIN] stages: run=True eval=True
+[MAIN] shard=0/1
+[MAIN] total_tasks=19 logs under run_logs/<tech>/<flow>/...
+000 ord asap7_3D aes
+001 ord asap7_3D gcd
+002 ord asap7_3D ibex
+003 ord asap7_3D jpeg
+004 ord asap7_3D picorv32
+005 ord asap7_3D swerv_wrapper
+006 ord asap7_3D tpu
+007 ord asap7_nangate45_3D aes
+008 ord asap7_nangate45_3D gcd
+009 ord asap7_nangate45_3D ibex
+010 ord asap7_nangate45_3D jpeg
+011 ord asap7_nangate45_3D swerv_wrapper
+012 ord nangate45_3D aes
+013 ord nangate45_3D gcd
+014 ord nangate45_3D ibex
+015 ord nangate45_3D jpeg
+016 ord nangate45_3D picorv32
+017 ord nangate45_3D swerv_wrapper
+018 ord nangate45_3D tpu
