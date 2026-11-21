@@ -156,12 +156,12 @@ def add_vias(mesh, geom, res, classes, dbu, group, info, use_cutclass=True):
             mesh.edge(mesh.node(bot, x, y), mesh.node(top, x, y), r_cut / sum(n_cuts))
 
 
-def add_pins(mesh, geom, pins, pin_mode):
+def add_pins(mesh, geom, pins, pin_mode, rail_layer="M1"):
     """{instance: [[nodes of pin 1], [nodes of pin 2], ...]}: a pin's nodes share its current equally, and the pin's
     voltage is their mean."""
     rails = collections.defaultdict(list)                    # rail centre y -> [(xlo, xhi, ylo, yhi)]
     for g in geom:
-        if g["kind"] == "wire" and g["layer"] == "M1":
+        if g["kind"] == "wire" and g["layer"] == rail_layer:
             xlo, ylo, xhi, yhi = rect(g)
             rails[(ylo + yhi) // 2].append((xlo, xhi, ylo, yhi))
     ys = np.array(sorted(rails))
@@ -170,10 +170,10 @@ def add_pins(mesh, geom, pins, pin_mode):
         x, y = (int(p["xlo"]) + int(p["xhi"])) // 2, (int(p["ylo"]) + int(p["yhi"])) // 2
         ry = int(ys[int(np.abs(ys - y).argmin())])
         if not any(xlo <= x <= xhi and ylo <= y <= yhi for xlo, xhi, ylo, yhi in rails[ry]):
-            raise ValueError(f"pin {p['inst']}/{p['pin']} at ({x}, {y}) is on no M1 rail")
-        placed.append((p, x, y, ry, mesh.node("M1", x, ry)))
+            raise ValueError(f"pin {p['inst']}/{p['pin']} at ({x}, {y}) is on no {rail_layer} rail")
+        placed.append((p, x, y, ry, mesh.node(rail_layer, x, ry)))
     index = collections.defaultdict(list)
-    for rx, ry, rn in mesh.on_layer["M1"]:
+    for rx, ry, rn in mesh.on_layer[rail_layer]:
         index[ry].append((rx, rn))
     xs = {}
     for ry in index:
@@ -239,8 +239,9 @@ def add_wires(mesh, geom, res, dbu):
                 mesh.edge(n0, n1, res[lay] * (p1 - p0) / dbu / width)
 
 
-def solve_mesh(export_dir, net, group=1, pin_mode="spread", use_cutclass=True):
-    """(mesh, node voltages, {instance: [[nodes of each pin]]}, info dict)."""
+def solve_mesh(export_dir, net, group=1, pin_mode="spread", use_cutclass=True, rail_layer="M1"):
+    """(mesh, node voltages, {instance: [[nodes of each pin]]}, info dict). rail_layer: the layer the cells' power
+    pins sit on (M1 on ASAP7; BPR on MATRIX-A5's backside grid, dry/c5)."""
     if net not in ("VDD", "VSS"):    # the polarity rules below (sources, sink sign, worst pin) know only these two
         raise ValueError(f"net {net}: only VDD (supply) and VSS (ground) are modelled")
     if pin_mode not in PIN_MODES:
@@ -252,7 +253,7 @@ def solve_mesh(export_dir, net, group=1, pin_mode="spread", use_cutclass=True):
     mesh = Mesh()
     add_vias(mesh, geom, res, cut_classes(dbu=dbu), dbu, group, info, use_cutclass)
     pins = [p for p in read_tsv(os.path.join(export_dir, f"iterms_{net}.tsv")) if p["placed"] == "1"]
-    pin_node = add_pins(mesh, geom, pins, pin_mode)
+    pin_node = add_pins(mesh, geom, pins, pin_mode, rail_layer)
     add_wires(mesh, geom, res, dbu)
     fixed = {}
     for g in geom:
