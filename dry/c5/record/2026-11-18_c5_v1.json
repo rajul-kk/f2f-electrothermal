@@ -1,0 +1,1147 @@
+{
+ "what": "c5 dry: MATRIX-A5 backside grid IR drop, mV per A/mm^2 (DESIGN.md)",
+ "kit": "D:/Work/open3d-thermal-ext/matrix-a5-lef/MATRIX_A5_CFET_base",
+ "load_a_per_mm2": 1.0,
+ "pin_mode": "spread",
+ "cases": [
+  {
+   "case": "ring_L25",
+   "grid": {
+    "side_um": 25,
+    "feed": "ring",
+    "bump_pitch_um": null,
+    "tsv_cuts_cap": 5,
+    "hotspot": false,
+    "bpr_rho_source": "ict",
+    "nets": {
+     "VDD": {
+      "shapes": {
+       "BSM2": 9,
+       "BSM3": 2,
+       "BPR": 174,
+       "BSM1": 13
+      },
+      "vias_and_cuts": {
+       "TSV": [
+        2262,
+        11310
+       ],
+       "BSV1": [
+        117,
+        169
+       ],
+       "BSV2": [
+        18,
+        18
+       ]
+      }
+     },
+     "VSS": {
+      "shapes": {
+       "BSM2": 9,
+       "BSM3": 2,
+       "BPR": 174,
+       "BSM1": 12
+      },
+      "vias_and_cuts": {
+       "TSV": [
+        2088,
+        10440
+       ],
+       "BSV1": [
+        108,
+        156
+       ],
+       "BSV2": [
+        18,
+        18
+       ]
+      }
+     }
+    },
+    "cells": 22208,
+    "total_current_a": 0.0006236006400001877
+   },
+   "nets": {
+    "VDD": {
+     "worst_mv": 0.12201126375754878,
+     "median_mv": 0.07273547134517555,
+     "worst_instance": "r189c33",
+     "worst_node_drop_by_layer_mv": {
+      "BSM1": 0.10899206931502814,
+      "BPR": 0.12201126375754878,
+      "BSM2": 0.10274279274680165,
+      "BSM3": 0.0
+     },
+     "seconds": 3.15,
+     "info": {
+      "pin_mode": "spread",
+      "group": 1,
+      "cut_classes": false,
+      "duplicate_vias": 0,
+      "overlapping_wires": 0,
+      "sources": 48,
+      "power_rows_used": 22208,
+      "powered_rows_without_pin": 0,
+      "total_current_a": 0.0006236006399999998,
+      "nodes": 15930,
+      "edges": 18129
+     }
+    },
+    "VSS": {
+     "worst_mv": 0.155012453278949,
+     "median_mv": 0.11073805227389566,
+     "worst_instance": "r168c31",
+     "worst_node_drop_by_layer_mv": {
+      "BSM1": 0.1421775031097008,
+      "BPR": 0.155012453278949,
+      "BSM2": 0.13534475534925958,
+      "BSM3": 0.0
+     },
+     "seconds": 2.95,
+     "info": {
+      "pin_mode": "spread",
+      "group": 1,
+      "cut_classes": false,
+      "duplicate_vias": 0,
+      "overlapping_wires": 0,
+      "sources": 46,
+      "power_rows_used": 22208,
+      "powered_rows_without_pin": 0,
+      "total_current_a": 0.0006236006399999998,
+      "nodes": 15564,
+      "edges": 17581
+     }
+    }
+   }
+  },
+  {
+   "case": "ring_L50",
+   "grid": {
+    "side_um": 50,
+    "feed": "ring",
+    "bump_pitch_um": null,
+    "tsv_cuts_cap": 5,
+    "hotspot": false,
+    "bpr_rho_source": "ict",
+    "nets": {
+     "VDD": {
+      "shapes": {
+       "BSM2": 17,
+       "BSM3": 2,
+       "BPR": 348,
+       "BSM1": 25
+      },
+      "vias_and_cuts": {
+       "TSV": [
+        8700,
+        43500
+       ],
+       "BSV1": [
+        425,
+        525
+       ],
+       "BSV2": [
+        34,
+        34
+       ]
+      }
+     },
+     "VSS": {
+      "shapes": {
+       "BSM2": 17,
+       "BSM3": 2,
+       "BPR": 347,
+       "BSM1": 25
+      },
+      "vias_and_cuts": {
+       "TSV": [
+        8675,
+        43375
+       ],
+       "BSV1": [
+        425,
+        525
+       ],
+       "BSV2": [
+        34,
+        34
+       ]
+      }
+     }
+    },
+    "cells": 88832,
+    "total_current_a": 0.002494402559996084
+   },
+   "nets": {
+    "VDD": {
+     "worst_mv": 0.4009059728523612,
+     "median_mv": 0.22299187805230325,
+     "worst_instance": "r327c64",
+     "worst_node_drop_by_layer_mv": {
+      "BSM1": 0.3872912698075215,
+      "BPR": 0.4009059728523612,
+      "BSM2": 0.38117361638578817,
+      "BSM3": 0.0
+     },
+     "seconds": 12.06,
+     "info": {
+      "pin_mode": "spread",
+      "group": 1,
+      "cut_classes": false,
+      "duplicate_vias": 0,
+      "overlapping_wires": 0,
+      "sources": 88,
+      "power_rows_used": 88832,
+      "powered_rows_without_pin": 0,
+      "total_current_a": 0.002494402559999999,
+      "nodes": 62862,
+      "edges": 71629
+     }
+    },
+    "VSS": {
+     "worst_mv": 0.46047240975962167,
+     "median_mv": 0.2835921082472198,
+     "worst_instance": "r346c61",
+     "worst_node_drop_by_layer_mv": {
+      "BSM1": 0.4479916251268339,
+      "BPR": 0.46047240975962167,
+      "BSM2": 0.4409269148751241,
+      "BSM3": 0.0
+     },
+     "seconds": 12.05,
+     "info": {
+      "pin_mode": "spread",
+      "group": 1,
+      "cut_classes": false,
+      "duplicate_vias": 0,
+      "overlapping_wires": 0,
+      "sources": 88,
+      "power_rows_used": 88832,
+      "powered_rows_without_pin": 0,
+      "total_current_a": 0.0024944025599999992,
+      "nodes": 62684,
+      "edges": 71427
+     }
+    }
+   }
+  },
+  {
+   "case": "ring_L100",
+   "grid": {
+    "side_um": 100,
+    "feed": "ring",
+    "bump_pitch_um": null,
+    "tsv_cuts_cap": 5,
+    "hotspot": false,
+    "bpr_rho_source": "ict",
+    "nets": {
+     "VDD": {
+      "shapes": {
+       "BSM2": 33,
+       "BSM3": 2,
+       "BPR": 695,
+       "BSM1": 50
+      },
+      "vias_and_cuts": {
+       "TSV": [
+        34750,
+        173750
+       ],
+       "BSV1": [
+        1650,
+        1850
+       ],
+       "BSV2": [
+        66,
+        66
+       ]
+      }
+     },
+     "VSS": {
+      "shapes": {
+       "BSM2": 32,
+       "BSM3": 2,
+       "BPR": 694,
+       "BSM1": 50
+      },
+      "vias_and_cuts": {
+       "TSV": [
+        34700,
+        173500
+       ],
+       "BSV1": [
+        1600,
+        1800
+       ],
+       "BSV2": [
+        64,
+        64
+       ]
+      }
+     }
+    },
+    "cells": 355328,
+    "total_current_a": 0.009977610240075872
+   },
+   "nets": {
+    "VDD": {
+     "worst_mv": 1.4780351635705902,
+     "median_mv": 0.785917471870401,
+     "worst_instance": "r681c130",
+     "worst_node_drop_by_layer_mv": {
+      "BSM1": 1.4657924432318614,
+      "BPR": 1.4780351635705902,
+      "BSM2": 1.4592127806759558,
+      "BSM3": 0.0
+     },
+     "seconds": 49.85,
+     "info": {
+      "pin_mode": "spread",
+      "group": 1,
+      "cut_classes": false,
+      "duplicate_vias": 0,
+      "overlapping_wires": 0,
+      "sources": 170,
+      "power_rows_used": 355328,
+      "powered_rows_without_pin": 0,
+      "total_current_a": 0.009977610239999992,
+      "nodes": 250852,
+      "edges": 286538
+     }
+    },
+    "VSS": {
+     "worst_mv": 1.5998860299236695,
+     "median_mv": 0.9075210746874305,
+     "worst_instance": "r702c128",
+     "worst_node_drop_by_layer_mv": {
+      "BSM1": 1.5858705257436092,
+      "BPR": 1.5998860299236695,
+      "BSM2": 1.5790457677523118,
+      "BSM3": 0.0
+     },
+     "seconds": 47.1,
+     "info": {
+      "pin_mode": "spread",
+      "group": 1,
+      "cut_classes": false,
+      "duplicate_vias": 0,
+      "overlapping_wires": 0,
+      "sources": 168,
+      "power_rows_used": 355328,
+      "powered_rows_without_pin": 0,
+      "total_current_a": 0.009977610239999992,
+      "nodes": 250392,
+      "edges": 285978
+     }
+    }
+   }
+  },
+  {
+   "case": "ring_L50_tsv1",
+   "grid": {
+    "side_um": 50,
+    "feed": "ring",
+    "bump_pitch_um": null,
+    "tsv_cuts_cap": 1,
+    "hotspot": false,
+    "bpr_rho_source": "ict",
+    "nets": {
+     "VDD": {
+      "shapes": {
+       "BSM2": 17,
+       "BSM3": 2,
+       "BPR": 348,
+       "BSM1": 25
+      },
+      "vias_and_cuts": {
+       "TSV": [
+        8700,
+        8700
+       ],
+       "BSV1": [
+        425,
+        525
+       ],
+       "BSV2": [
+        34,
+        34
+       ]
+      }
+     },
+     "VSS": {
+      "shapes": {
+       "BSM2": 17,
+       "BSM3": 2,
+       "BPR": 347,
+       "BSM1": 25
+      },
+      "vias_and_cuts": {
+       "TSV": [
+        8675,
+        8675
+       ],
+       "BSV1": [
+        425,
+        525
+       ],
+       "BSV2": [
+        34,
+        34
+       ]
+      }
+     }
+    },
+    "cells": 88832,
+    "total_current_a": 0.002494402559996084
+   },
+   "nets": {
+    "VDD": {
+     "worst_mv": 0.4061068427783088,
+     "median_mv": 0.22816694520150227,
+     "worst_instance": "r327c64",
+     "worst_node_drop_by_layer_mv": {
+      "BSM1": 0.387388960137347,
+      "BPR": 0.4061068427783088,
+      "BSM2": 0.3812698015956961,
+      "BSM3": 0.0
+     },
+     "seconds": 10.62,
+     "info": {
+      "pin_mode": "spread",
+      "group": 1,
+      "cut_classes": false,
+      "duplicate_vias": 0,
+      "overlapping_wires": 0,
+      "sources": 88,
+      "power_rows_used": 88832,
+      "powered_rows_without_pin": 0,
+      "total_current_a": 0.002494402559999999,
+      "nodes": 62862,
+      "edges": 71629
+     }
+    },
+    "VSS": {
+     "worst_mv": 0.46565244369615344,
+     "median_mv": 0.28876638087983497,
+     "worst_instance": "r346c61",
+     "worst_node_drop_by_layer_mv": {
+      "BSM1": 0.44809109346417897,
+      "BPR": 0.46565244369615344,
+      "BSM2": 0.4410257343572221,
+      "BSM3": 0.0
+     },
+     "seconds": 10.69,
+     "info": {
+      "pin_mode": "spread",
+      "group": 1,
+      "cut_classes": false,
+      "duplicate_vias": 0,
+      "overlapping_wires": 0,
+      "sources": 88,
+      "power_rows_used": 88832,
+      "powered_rows_without_pin": 0,
+      "total_current_a": 0.0024944025599999992,
+      "nodes": 62684,
+      "edges": 71427
+     }
+    }
+   }
+  },
+  {
+   "case": "ring_L50_bpr_itf",
+   "grid": {
+    "side_um": 50,
+    "feed": "ring",
+    "bump_pitch_um": null,
+    "tsv_cuts_cap": 5,
+    "hotspot": false,
+    "bpr_rho_source": "itf",
+    "nets": {
+     "VDD": {
+      "shapes": {
+       "BSM2": 17,
+       "BSM3": 2,
+       "BPR": 348,
+       "BSM1": 25
+      },
+      "vias_and_cuts": {
+       "TSV": [
+        8700,
+        43500
+       ],
+       "BSV1": [
+        425,
+        525
+       ],
+       "BSV2": [
+        34,
+        34
+       ]
+      }
+     },
+     "VSS": {
+      "shapes": {
+       "BSM2": 17,
+       "BSM3": 2,
+       "BPR": 347,
+       "BSM1": 25
+      },
+      "vias_and_cuts": {
+       "TSV": [
+        8675,
+        43375
+       ],
+       "BSV1": [
+        425,
+        525
+       ],
+       "BSV2": [
+        34,
+        34
+       ]
+      }
+     }
+    },
+    "cells": 88832,
+    "total_current_a": 0.002494402559996084
+   },
+   "nets": {
+    "VDD": {
+     "worst_mv": 0.399093295607833,
+     "median_mv": 0.22199983358089925,
+     "worst_instance": "r327c64",
+     "worst_node_drop_by_layer_mv": {
+      "BSM1": 0.38633138754873286,
+      "BPR": 0.399093295607833,
+      "BSM2": 0.38022664274428575,
+      "BSM3": 0.0
+     },
+     "seconds": 12.27,
+     "info": {
+      "pin_mode": "spread",
+      "group": 1,
+      "cut_classes": false,
+      "duplicate_vias": 0,
+      "overlapping_wires": 0,
+      "sources": 88,
+      "power_rows_used": 88832,
+      "powered_rows_without_pin": 0,
+      "total_current_a": 0.002494402559999999,
+      "nodes": 62862,
+      "edges": 71629
+     }
+    },
+    "VSS": {
+     "worst_mv": 0.4586671012574291,
+     "median_mv": 0.2825789541101959,
+     "worst_instance": "r346c61",
+     "worst_node_drop_by_layer_mv": {
+      "BSM1": 0.4470248075535945,
+      "BPR": 0.4586671012574291,
+      "BSM2": 0.4399823351034666,
+      "BSM3": 0.0
+     },
+     "seconds": 11.26,
+     "info": {
+      "pin_mode": "spread",
+      "group": 1,
+      "cut_classes": false,
+      "duplicate_vias": 0,
+      "overlapping_wires": 0,
+      "sources": 88,
+      "power_rows_used": 88832,
+      "powered_rows_without_pin": 0,
+      "total_current_a": 0.0024944025599999992,
+      "nodes": 62684,
+      "edges": 71427
+     }
+    }
+   }
+  },
+  {
+   "case": "ring_L50_hotspot",
+   "grid": {
+    "side_um": 50,
+    "feed": "ring",
+    "bump_pitch_um": null,
+    "tsv_cuts_cap": 5,
+    "hotspot": true,
+    "bpr_rho_source": "ict",
+    "nets": {
+     "VDD": {
+      "shapes": {
+       "BSM2": 17,
+       "BSM3": 2,
+       "BPR": 348,
+       "BSM1": 25
+      },
+      "vias_and_cuts": {
+       "TSV": [
+        8700,
+        43500
+       ],
+       "BSV1": [
+        425,
+        525
+       ],
+       "BSV2": [
+        34,
+        34
+       ]
+      }
+     },
+     "VSS": {
+      "shapes": {
+       "BSM2": 17,
+       "BSM3": 2,
+       "BPR": 347,
+       "BSM1": 25
+      },
+      "vias_and_cuts": {
+       "TSV": [
+        8675,
+        43375
+       ],
+       "BSV1": [
+        425,
+        525
+       ],
+       "BSV2": [
+        34,
+        34
+       ]
+      }
+     }
+    },
+    "cells": 88832,
+    "total_current_a": 0.0034077326399962198
+   },
+   "nets": {
+    "VDD": {
+     "worst_mv": 1.2078507583427323,
+     "median_mv": 0.3097431816928564,
+     "worst_instance": "r331c64",
+     "worst_node_drop_by_layer_mv": {
+      "BSM1": 1.0718789330547152,
+      "BPR": 1.2078507583427323,
+      "BSM2": 1.0297405752283106,
+      "BSM3": 0.0
+     },
+     "seconds": 11.5,
+     "info": {
+      "pin_mode": "spread",
+      "group": 1,
+      "cut_classes": false,
+      "duplicate_vias": 0,
+      "overlapping_wires": 0,
+      "sources": 88,
+      "power_rows_used": 88832,
+      "powered_rows_without_pin": 0,
+      "total_current_a": 0.0034077326399999997,
+      "nodes": 62862,
+      "edges": 71629
+     }
+    },
+    "VSS": {
+     "worst_mv": 1.3028497501045406,
+     "median_mv": 0.3915856940185058,
+     "worst_instance": "r346c61",
+     "worst_node_drop_by_layer_mv": {
+      "BSM1": 1.1758571107716391,
+      "BPR": 1.3028497501045406,
+      "BSM2": 1.1053606263017728,
+      "BSM3": 0.0
+     },
+     "seconds": 11.49,
+     "info": {
+      "pin_mode": "spread",
+      "group": 1,
+      "cut_classes": false,
+      "duplicate_vias": 0,
+      "overlapping_wires": 0,
+      "sources": 88,
+      "power_rows_used": 88832,
+      "powered_rows_without_pin": 0,
+      "total_current_a": 0.0034077326399999993,
+      "nodes": 62684,
+      "edges": 71427
+     }
+    }
+   }
+  },
+  {
+   "case": "area_L50_p10",
+   "grid": {
+    "side_um": 50,
+    "feed": "area",
+    "bump_pitch_um": 10,
+    "tsv_cuts_cap": 5,
+    "hotspot": false,
+    "bpr_rho_source": "ict",
+    "nets": {
+     "VDD": {
+      "shapes": {
+       "BSM2": 17,
+       "BSM3": 2,
+       "BPR": 348,
+       "BSM1": 25
+      },
+      "vias_and_cuts": {
+       "TSV": [
+        8700,
+        43500
+       ],
+       "BSV1": [
+        425,
+        525
+       ],
+       "BSV2": [
+        34,
+        34
+       ]
+      }
+     },
+     "VSS": {
+      "shapes": {
+       "BSM2": 17,
+       "BSM3": 2,
+       "BPR": 347,
+       "BSM1": 25
+      },
+      "vias_and_cuts": {
+       "TSV": [
+        8675,
+        43375
+       ],
+       "BSV1": [
+        425,
+        525
+       ],
+       "BSV2": [
+        34,
+        34
+       ]
+      }
+     }
+    },
+    "cells": 88832,
+    "total_current_a": 0.002494402559996084
+   },
+   "nets": {
+    "VDD": {
+     "worst_mv": 0.14688607002566467,
+     "median_mv": 0.08514026902195493,
+     "worst_instance": "r11c127",
+     "worst_node_drop_by_layer_mv": {
+      "BSM1": 0.11026541085779051,
+      "BPR": 0.14688607002566467,
+      "BSM2": 0.10824683225685305,
+      "BSM3": 0.08907224045384687
+     },
+     "seconds": 11.81,
+     "info": {
+      "pin_mode": "spread",
+      "group": 1,
+      "cut_classes": false,
+      "duplicate_vias": 0,
+      "overlapping_wires": 0,
+      "sources": 25,
+      "power_rows_used": 88832,
+      "powered_rows_without_pin": 0,
+      "total_current_a": 0.002494402559999999,
+      "nodes": 62862,
+      "edges": 71629
+     }
+    },
+    "VSS": {
+     "worst_mv": 0.14785993675531853,
+     "median_mv": 0.08403048243949386,
+     "worst_instance": "r412c51",
+     "worst_node_drop_by_layer_mv": {
+      "BSM1": 0.13392687035948123,
+      "BPR": 0.14785993675531853,
+      "BSM2": 0.13383025274061808,
+      "BSM3": 0.08210271926950836
+     },
+     "seconds": 11.81,
+     "info": {
+      "pin_mode": "spread",
+      "group": 1,
+      "cut_classes": false,
+      "duplicate_vias": 0,
+      "overlapping_wires": 0,
+      "sources": 25,
+      "power_rows_used": 88832,
+      "powered_rows_without_pin": 0,
+      "total_current_a": 0.0024944025599999992,
+      "nodes": 62684,
+      "edges": 71427
+     }
+    }
+   }
+  },
+  {
+   "case": "area_L50_p20",
+   "grid": {
+    "side_um": 50,
+    "feed": "area",
+    "bump_pitch_um": 20,
+    "tsv_cuts_cap": 5,
+    "hotspot": false,
+    "bpr_rho_source": "ict",
+    "nets": {
+     "VDD": {
+      "shapes": {
+       "BSM2": 17,
+       "BSM3": 2,
+       "BPR": 348,
+       "BSM1": 25
+      },
+      "vias_and_cuts": {
+       "TSV": [
+        8700,
+        43500
+       ],
+       "BSV1": [
+        425,
+        525
+       ],
+       "BSV2": [
+        34,
+        34
+       ]
+      }
+     },
+     "VSS": {
+      "shapes": {
+       "BSM2": 17,
+       "BSM3": 2,
+       "BPR": 347,
+       "BSM1": 25
+      },
+      "vias_and_cuts": {
+       "TSV": [
+        8675,
+        43375
+       ],
+       "BSV1": [
+        425,
+        525
+       ],
+       "BSV2": [
+        34,
+        34
+       ]
+      }
+     }
+    },
+    "cells": 88832,
+    "total_current_a": 0.002494402559996084
+   },
+   "nets": {
+    "VDD": {
+     "worst_mv": 1.0699396670781347,
+     "median_mv": 0.6946323640344421,
+     "worst_instance": "r677c127",
+     "worst_node_drop_by_layer_mv": {
+      "BSM1": 1.0537247617318224,
+      "BPR": 1.0699396670781347,
+      "BSM2": 1.051419060725145,
+      "BSM3": 1.0002828303045108
+     },
+     "seconds": 11.77,
+     "info": {
+      "pin_mode": "spread",
+      "group": 1,
+      "cut_classes": false,
+      "duplicate_vias": 0,
+      "overlapping_wires": 0,
+      "sources": 4,
+      "power_rows_used": 88832,
+      "powered_rows_without_pin": 0,
+      "total_current_a": 0.002494402559999999,
+      "nodes": 62862,
+      "edges": 71629
+     }
+    },
+    "VSS": {
+     "worst_mv": 1.1544696689268354,
+     "median_mv": 0.7174685856088308,
+     "worst_instance": "r660c92",
+     "worst_node_drop_by_layer_mv": {
+      "BSM1": 1.1407995726646956,
+      "BPR": 1.1544696689268354,
+      "BSM2": 1.1349015967539728,
+      "BSM3": 1.0733995622053916
+     },
+     "seconds": 12.18,
+     "info": {
+      "pin_mode": "spread",
+      "group": 1,
+      "cut_classes": false,
+      "duplicate_vias": 0,
+      "overlapping_wires": 0,
+      "sources": 4,
+      "power_rows_used": 88832,
+      "powered_rows_without_pin": 0,
+      "total_current_a": 0.0024944025599999992,
+      "nodes": 62684,
+      "edges": 71427
+     }
+    }
+   }
+  },
+  {
+   "case": "area_L100_p20",
+   "grid": {
+    "side_um": 100,
+    "feed": "area",
+    "bump_pitch_um": 20,
+    "tsv_cuts_cap": 5,
+    "hotspot": false,
+    "bpr_rho_source": "ict",
+    "nets": {
+     "VDD": {
+      "shapes": {
+       "BSM2": 33,
+       "BSM3": 2,
+       "BPR": 695,
+       "BSM1": 50
+      },
+      "vias_and_cuts": {
+       "TSV": [
+        34750,
+        173750
+       ],
+       "BSV1": [
+        1650,
+        1850
+       ],
+       "BSV2": [
+        66,
+        66
+       ]
+      }
+     },
+     "VSS": {
+      "shapes": {
+       "BSM2": 32,
+       "BSM3": 2,
+       "BPR": 694,
+       "BSM1": 50
+      },
+      "vias_and_cuts": {
+       "TSV": [
+        34700,
+        173500
+       ],
+       "BSV1": [
+        1600,
+        1800
+       ],
+       "BSV2": [
+        64,
+        64
+       ]
+      }
+     }
+    },
+    "cells": 355328,
+    "total_current_a": 0.009977610240075872
+   },
+   "nets": {
+    "VDD": {
+     "worst_mv": 0.5363863290652748,
+     "median_mv": 0.39843134476263975,
+     "worst_instance": "r281c110",
+     "worst_node_drop_by_layer_mv": {
+      "BSM1": 0.5222209067486938,
+      "BPR": 0.5363863290652748,
+      "BSM2": 0.515944415663605,
+      "BSM3": 0.42398784293318226
+     },
+     "seconds": 48.7,
+     "info": {
+      "pin_mode": "spread",
+      "group": 1,
+      "cut_classes": false,
+      "duplicate_vias": 0,
+      "overlapping_wires": 0,
+      "sources": 25,
+      "power_rows_used": 355328,
+      "powered_rows_without_pin": 0,
+      "total_current_a": 0.009977610239999992,
+      "nodes": 250852,
+      "edges": 286538
+     }
+    },
+    "VSS": {
+     "worst_mv": 0.539521131038441,
+     "median_mv": 0.3991210244452001,
+     "worst_instance": "r836c154",
+     "worst_node_drop_by_layer_mv": {
+      "BSM1": 0.5262523859203798,
+      "BPR": 0.539521131038441,
+      "BSM2": 0.5198085348834098,
+      "BSM3": 0.4277901496348008
+     },
+     "seconds": 47.17,
+     "info": {
+      "pin_mode": "spread",
+      "group": 1,
+      "cut_classes": false,
+      "duplicate_vias": 0,
+      "overlapping_wires": 0,
+      "sources": 25,
+      "power_rows_used": 355328,
+      "powered_rows_without_pin": 0,
+      "total_current_a": 0.009977610239999992,
+      "nodes": 250392,
+      "edges": 285978
+     }
+    }
+   }
+  },
+  {
+   "case": "area_L100_p40",
+   "grid": {
+    "side_um": 100,
+    "feed": "area",
+    "bump_pitch_um": 40,
+    "tsv_cuts_cap": 5,
+    "hotspot": false,
+    "bpr_rho_source": "ict",
+    "nets": {
+     "VDD": {
+      "shapes": {
+       "BSM2": 33,
+       "BSM3": 2,
+       "BPR": 695,
+       "BSM1": 50
+      },
+      "vias_and_cuts": {
+       "TSV": [
+        34750,
+        173750
+       ],
+       "BSV1": [
+        1650,
+        1850
+       ],
+       "BSV2": [
+        66,
+        66
+       ]
+      }
+     },
+     "VSS": {
+      "shapes": {
+       "BSM2": 32,
+       "BSM3": 2,
+       "BPR": 694,
+       "BSM1": 50
+      },
+      "vias_and_cuts": {
+       "TSV": [
+        34700,
+        173500
+       ],
+       "BSV1": [
+        1600,
+        1800
+       ],
+       "BSV2": [
+        64,
+        64
+       ]
+      }
+     }
+    },
+    "cells": 355328,
+    "total_current_a": 0.009977610240075872
+   },
+   "nets": {
+    "VDD": {
+     "worst_mv": 5.514829288245204,
+     "median_mv": 3.418011142974464,
+     "worst_instance": "r1349c182",
+     "worst_node_drop_by_layer_mv": {
+      "BSM1": 5.501341220673583,
+      "BPR": 5.514829288245204,
+      "BSM2": 5.496417329192482,
+      "BSM3": 5.315152423847502
+     },
+     "seconds": 49.42,
+     "info": {
+      "pin_mode": "spread",
+      "group": 1,
+      "cut_classes": false,
+      "duplicate_vias": 0,
+      "overlapping_wires": 0,
+      "sources": 4,
+      "power_rows_used": 355328,
+      "powered_rows_without_pin": 0,
+      "total_current_a": 0.009977610239999992,
+      "nodes": 250852,
+      "edges": 286538
+     }
+    },
+    "VSS": {
+     "worst_mv": 5.758699956394213,
+     "median_mv": 3.4920898079322793,
+     "worst_instance": "r1360c179",
+     "worst_node_drop_by_layer_mv": {
+      "BSM1": 5.745203447633643,
+      "BPR": 5.758699956394213,
+      "BSM2": 5.74225662737077,
+      "BSM3": 5.501219719400552
+     },
+     "seconds": 46.97,
+     "info": {
+      "pin_mode": "spread",
+      "group": 1,
+      "cut_classes": false,
+      "duplicate_vias": 0,
+      "overlapping_wires": 0,
+      "sources": 4,
+      "power_rows_used": 355328,
+      "powered_rows_without_pin": 0,
+      "total_current_a": 0.009977610239999992,
+      "nodes": 250392,
+      "edges": 285978
+     }
+    }
+   }
+  }
+ ],
+ "hand_estimate_vdd_mv": {
+  "ring_L25": {
+   "BPR": 0.0061995548906249994,
+   "TSV": 0.00066528,
+   "BSM1": 0.0064,
+   "BSV1": 0.0014784,
+   "BSM2": 0.11664,
+   "sum": 0.13138323489062498
+  },
+  "ring_L50": {
+   "BPR": 0.0061995548906249994,
+   "TSV": 0.00066528,
+   "BSM1": 0.0064,
+   "BSV1": 0.0014784,
+   "BSM2": 0.43264,
+   "sum": 0.44738323489062504
+  },
+  "ring_L100": {
+   "BPR": 0.0061995548906249994,
+   "TSV": 0.00066528,
+   "BSM1": 0.0064,
+   "BSV1": 0.0014784,
+   "BSM2": 1.66464,
+   "sum": 1.679383234890625
+  }
+ },
+ "tracemalloc_peak_mb": 1069.7,
+ "python": "3.10.0",
+ "numpy": "2.2.6"
+}
