@@ -1,7 +1,23 @@
-# C2: MATRIX-A5 cell leakage, SPICE against the kit's Liberty · VOID (runs 1-3), run 4 under Amendment 3
+# C2: MATRIX-A5 cell leakage, SPICE against the kit's Liberty · VOID (runs 1-4); run 4 has one FAIL, from the floor
 
-Registered 16 Nov 2026 (`registration.md`, Amendments 1-3). No run has given a verdict yet: V1 (every case reaches
-a DC point) fails in each. Records: `record-run1/`, `record-run2/`, `record-run3/`; `record/` holds the latest run.
+Registered 16 Nov 2026 (`registration.md`, Amendments 1-3). No run has given a valid verdict: V1 (every case reaches
+a DC point) fails in each. Records: `record-run1/` to `record-run4/`; `record/` holds the latest run (run 4).
+Waiting on the student (registration.md, "Result of run 4").
+
+## Run 4 (Amendment 3)
+
+| Library | Scored | Listed (below cut) | Ratio range (scored) | Verdict |
+|---|---|---|---|---|
+| 11 libraries (all at 25 and 125 C, lvt and ulvt FFG -40 C) | 756 each | 0 | 0.9988-1.0056 | EXACT |
+| ulvt SSG -40 C | 702 | 54 | 0.9931-1.0001 | EXACT |
+| svt SSG -40 C | 0 | 743 | - | LISTED ONLY |
+| svt FFG -40 C | 163 | 579 | - | VOID: one above-cut state (nand2_x3, A * !B * Y) hit the 2 min cap |
+| lvt SSG -40 C | 25 | 718 | 0.9590-1.0001 | FAIL |
+
+(`record-run4/summary.md`.) The lvt SSG -40 C FAIL comes from the floor. Every scored state below 0.98 is short of
+its Liberty value by 2 to 12 floors (7.0e-15 A x 0.7 V each, within 0.03 of a whole number). These are the
+multi-finger cells, one floor per off PMOS finger, while the cut allows for only one. The states without such a gap
+read 1.0000-1.0001. Run 4 also answers the run 3 probe's open question: only one above-cut state lacks a DC point.
 
 ## Run 3 (one deck per state, Amendment 2)
 

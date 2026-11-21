@@ -162,3 +162,20 @@ The question, cells, bars, floor cut and validity rules are unchanged. One chang
 
 Seen before run 4, so not unseen: every value of run 3 (`record-run3/`), and the 602 + 150 probe states above. Run 4
 reruns all 15 libraries.
+
+## Result of run 4 (18 Nov 2026, post-run)
+
+VOID (`record-run4/`). V1 fails in one library, on one state: svt FFG -40 C, `nand2_x3_svt (A * !B * Y)`, which is
+above the cut and hit the 2 min cap (exit 124). Twelve libraries are EXACT and svt SSG -40 C is LISTED ONLY. 39
+states below the cut have no DC point (13 each in svt SSG, svt FFG and lvt SSG at -40 C); under item 5 they do not
+void the run.
+
+**lvt SSG -40 C is FAIL:** 25 scored states, ratios 0.9590-1.0001. Its inv_x1 states are below the cut, so it can be
+only EXACT or FAIL (item 4). In every state below 0.98, the gap Liberty - SPICE is within 0.03 of a whole multiple of the floor
+(7.0e-15 A x 0.7 V), 2 to 12 times (`runs/GT_A5_lvt_SSG_m40C/result.json`; for example inv_x12 (A * !Y) is 12.00
+times). These are the multi-finger cells, with one floor per off PMOS finger. The cut assumed the floor is at most 1%
+of a scored state, which holds only for one off PMOS. The four states without an off PMOS gap read 1.0000-1.0001.
+
+So under these rules C2 does not pass. The FAIL comes from the stated Liberty floor, not from a device mismatch shown
+by these states. No further run or amendment is made without the student's decision (scale the cut, or subtract the
+floor, by the number of off PMOS; or accept the FAIL and use the c3 fallback).
