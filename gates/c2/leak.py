@@ -6,7 +6,8 @@ OSDI) against the kit's own Liberty, at that Liberty's temperature and voltage.
   python leak.py compare <out dir>       (reads <out>/cases.json and each s<i>.log and s<i>.rc, writes
                                          <out>/result.json)
 
-One deck per state (<out>/s<i>.cir for case i, sharing <out>/models.inc; Amendment 2): ngspice's gmin and source
+One deck per state (<out>/s<i>.cir for case i, sharing <out>/models.inc; Amendment 2), plus its retry s<i>r.cir
+(Amendment 4): ngspice's gmin and source
 stepping and its transient-op fallback act on the whole matrix, so one state that does not converge took a whole
 library down in run 1 and moved its cell's other states to a transient op in run 2 (diag/FINDINGS.md, finding 2).
 
@@ -28,6 +29,15 @@ UNITS = {"1uW": 1e-6, "1nW": 1e-9, "1pW": 1e-12}
 # Amendment 2 raised the iteration limits (diag finding 1); Amendment 3 removes gminsteps and srcsteps again, since
 # together they make Newton states fail (diag/a3_probe.py: without both, every state above the floor cut converges).
 OPTIONS = ".option gmin=1e-18 abstol=1e-18 reltol=1e-5 itl1=50000"
+# Amendment 4: a deck without a DC point at OPTIONS runs once more as s<i>r.cir with Amendment 2's stepping options
+# (registration.md, Amendment 4, item 2). The DC point does not depend on how it was reached (diag/a3/report.json:
+# no current change on the controls).
+RETRY_OPTIONS = OPTIONS + " gminsteps=200 srcsteps=200"
+# Finding 3: the kit's Liberty was characterised at gmin = 1e-14 S, which BSIM-CMG adds as V(e, si) * gmin and
+# V(e, di) * gmin on each BULKMOD != 0 device (the PMOS cards). compare() computes that current per state from the
+# operating point, and evaluate.py scales the floor cut by it (Amendment 4, item 1). It is exact without PMOS stacks
+# and an upper bound in them, where the kit's own operating point at 1e-14 S differs (diag/a4/floor_check.json).
+KIT_GMIN = 1e-14
 DC_METHODS = ("newton", "gmin stepping", "source stepping")
 
 
@@ -81,16 +91,17 @@ def read_cdl(path, vt):
     """One-cell CDL with continuation lines joined: (netlist for ngspice, ports, input pins). M devices become OSDI N
     instances (d g s e t), t grounded (exact while the cards' shmod = 0); svt names become vt names."""
     lines = []
-    for l in open(path).read().splitlines():
-        if l.startswith("+") and lines:
-            lines[-1] += " " + l[1:]
+    for ln in open(path).read().splitlines():
+        if ln.startswith("+") and lines:
+            lines[-1] += " " + ln[1:]
         else:
-            lines.append(l)
-    ports = next(l for l in lines if l.lower().startswith(".subckt")).split()[2:]
-    info = next((l for l in lines if l.startswith("*.PININFO")), "")
+            lines.append(ln)
+    ports = next(ln for ln in lines if ln.lower().startswith(".subckt")).split()[2:]
+    info = next((ln for ln in lines if ln.startswith("*.PININFO")), "")
     inputs = [p.split(":")[0] for p in info.split()[1:] if p.endswith(":I")]
-    out = [re.sub(r"^M(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)", r"N\1 \2 \3 \4 \5 0", l, flags=re.I) for l in lines]
-    if any(re.match(r"m", l, re.I) for l in out):
+    out = [re.sub(r"^M(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)", r"N\1 \2 \3 \4 \5 0", ln, flags=re.I)
+           for ln in lines]
+    if any(re.match(r"m", ln, re.I) for ln in out):
         raise ValueError(f"{path}: an M line was not converted")
     return "\n".join(out).replace("_svt", f"_{vt}") + "\n", ports, inputs
 
@@ -102,7 +113,7 @@ def liberty(lib_text):
     vdd = float(re.search(r"nom_voltage\s*:\s*(\S+);", lib_text)[1])
     starts = [(m.start(), m[1]) for m in re.finditer(r"\n  cell \((\S+)\)", lib_text)]
     cells = {}
-    for (s, name), (e, _) in zip(starts, starts[1:] + [(len(lib_text), "")]):
+    for (s, name), (e, _) in zip(starts, starts[1:] + [(len(lib_text), "")], strict=True):
         seg = lib_text[s:e]
         states = []
         for block in re.findall(r"leakage_power \(\) \{([^}]*)\}", seg):   # any field order
@@ -125,6 +136,24 @@ def products(when):
                 raise ValueError(f"unsupported when: {when}")
             lit[m[2]] = 0 if m[1] else 1
         out.append(lit)
+    return out
+
+
+def pmos_junctions(netlist, ports, nodes, i):
+    """[[m, e, di, si], ...] for each PMOS (bulkmod = 1) of instance x<i>, named as ngspice's `print all` names them:
+    a port becomes the deck node it is wired to, an internal net becomes x<i>.<net>. di and si are each a pair (the
+    device's internal node n.x<i>.<device>#di, then the drain node if the device has none)."""
+    wire = {p.lower(): n.lower() for p, n in zip(ports, nodes, strict=True)}
+
+    def node(n):
+        return wire.get(n.lower(), f"x{i}.{n.lower()}")
+    out = []
+    for line in netlist.splitlines():
+        f = line.split()
+        if len(f) > 6 and f[0][0] in "Nn" and f[6].lower().startswith("pmos"):
+            m = re.search(r"\bM\s*=\s*(\d+)", line, re.I)
+            dev = f"n.x{i}.{f[0].lower()}"
+            out.append([int(m[1]) if m else 1, node(f[4]), [f"{dev}#di", node(f[1])], [f"{dev}#si", node(f[3])]])
     return out
 
 
@@ -177,27 +206,71 @@ def deck(card_path, params_include, cdl_dir, lib, osdi, out, *names):
                     nodes.append(f"o{i}_{p}")
             lines += [f"vdd{i} vdd{i} 0 {vdd}", f"x{i} {' '.join(nodes)} {name}"]
             outs = {p: v for p, v in lit.items() if p not in inputs}
-            cases.append({"cell": name, "when": when, "lit": lit, "outs": outs, "liberty_w": ref})
+            cases.append({"cell": name, "when": when, "lit": lit, "outs": outs, "liberty_w": ref,
+                          "pmos": pmos_junctions(netlist, ports, nodes, i)})
             prt = f"print i(vdd{i})" + "".join(f" v(o{i}_{p})" for p in outs)
-            open(f"{out}/s{i:04d}.cir", "w").write("\n".join(
-                [f"* leakage of one state, {name} {when}, {lib}", f".temp {temp}", OPTIONS, ".include models.inc",
-                 netlist] + lines + [".control", "op", prt, ".endc", ".end"]) + "\n")
+            for suffix, options in (("", OPTIONS), ("r", RETRY_OPTIONS)):   # run.sh runs s<i>r only if needed
+                open(f"{out}/s{i:04d}{suffix}.cir", "w").write("\n".join(
+                    [f"* leakage of one state, {name} {when}, {lib}", f".temp {temp}", options, ".include models.inc",
+                     netlist] + lines + [".control", "op", prt, "print all", ".endc", ".end"]) + "\n")
     json.dump({"temp": temp, "vdd": vdd, "vt": vt, "dropped": sorted(dropped), "skipped": skipped, "cases": cases},
               open(f"{out}/cases.json", "w"), indent=1)
     print(f"{len(cases)} cases from {len({c['cell'] for c in cases})} cells; skipped {skipped}")
 
 
+PRINTED = re.compile(r"^\s*([\w.#()]+)\s*=\s*(\S+)\s*$", re.M)
+
+
+def printed(log):
+    """{name: float}, names lower case, of every `name = value` line ngspice printed: `print i(vdd<i>) v(...)` gives
+    i(...) and v(...) names, `print all` bare node names, n.x<i>.<device>#di and #si, and <source>#branch."""
+    out = {}
+    for k, v in PRINTED.findall(log):
+        try:
+            out[k.lower()] = float(v)
+        except ValueError:
+            pass
+    return out
+
+
+def kit_floor_w(pmos, volts, vdd):
+    """Power of the kit's gmin current in one state: KIT_GMIN x m x (V(e) - V(di) + V(e) - V(si)) summed over the
+    PMOS, times VDD. A junction's voltage is its internal node's, else its terminal's; node 0 is 0 V. None if a
+    voltage is missing."""
+    def v(names):
+        for n in names:
+            if n in volts:
+                return volts[n]
+            if n == "0":
+                return 0.0
+        return None
+    total = 0.0
+    for m, e, di, si in pmos:
+        ve, vd, vs = v([e]), v(di), v(si)
+        if None in (ve, vd, vs):
+            return None
+        total += m * (2 * ve - vd - vs)
+    return KIT_GMIN * total * vdd
+
+
 def compare(out):
     """SPICE power per case. A case is invalid (V1) if its deck's ngspice did not exit 0 (`<out>/s<i>.rc`, missing
     counts as failed), did not reach a DC point (`method`: the transient op exits 0 but is not one; Amendment 2), its
-    current or an output voltage is missing or not finite, or its supply does not source current. A state with several
-    product terms is scored as the mean of its terms against the Liberty's one value."""
+    current or an output voltage is missing or not finite, or its supply does not source current. Amendment 4: if
+    s<i> has no DC point and its retry s<i>r ran, the retry's log is used (`retry` true). A state with several product
+    terms is scored as the mean of its terms against the Liberty's one value; `floor_w` (kit_floor_w) is also the
+    mean of its terms."""
     meta = json.load(open(f"{out}/cases.json"))
-    read = lambda f, none: open(f, encoding="utf-8", errors="replace").read() if os.path.exists(f) else none
+    def read(f, none):
+        return open(f, encoding="utf-8", errors="replace").read() if os.path.exists(f) else none
     vdd = meta["vdd"]
     for i, c in enumerate(meta["cases"]):
         log, rc = read(f"{out}/s{i:04d}.log", ""), read(f"{out}/s{i:04d}.rc", "missing").strip()
-        vals = {k.lower(): float(v) for k, v in re.findall(r"^\s*([iv]\([\w.]+\))\s*=\s*(\S+)", log, re.M)}
+        c["first_method"], c["first_rc"] = method(log, rc), rc   # kept when the retry replaces them
+        c["retry"] = c["first_method"] not in DC_METHODS and os.path.exists(f"{out}/s{i:04d}r.rc")
+        if c["retry"]:
+            log, rc = read(f"{out}/s{i:04d}r.log", ""), read(f"{out}/s{i:04d}r.rc", "missing").strip()
+        vals = printed(log)
         c["method"] = method(log, rc)
         cur = vals.get(f"i(vdd{i})")
         volts = [vals.get(f"v(o{i}_{p.lower()})") for p in c["outs"]]
@@ -206,17 +279,23 @@ def compare(out):
                         "no current" if cur is None or None in volts else
                         "not finite" if not all(map(math.isfinite, [cur] + volts)) else
                         "supply sinks current" if cur >= 0 else None)
+        c["floor_w_term"] = kit_floor_w(c["pmos"], vals, vdd) if c["invalid"] is None else None
+        if c["invalid"] is None and c["floor_w_term"] is None:   # never fall back to the one-floor cut silently
+            c["invalid"] = "junction voltage missing (kit floor)"
         ok = c["invalid"] is None
         c["spice_w"] = -cur * vdd if ok else None
-        c["out_err_v"] = max((abs(v - vdd * b) for v, b in zip(volts, c["outs"].values())), default=0.0) if ok else None
+        c["out_err_v"] = max((abs(v - vdd * b) for v, b in zip(volts, c["outs"].values(), strict=True)),
+                          default=0.0) if ok else None
     groups = {}
     for c in meta["cases"]:
         groups.setdefault((c["cell"], c["when"]), []).append(c)
     for g in groups.values():
-        ws = [c["spice_w"] for c in g]
+        ws, fs = [c["spice_w"] for c in g], [c["floor_w_term"] for c in g]
         mean = sum(ws) / len(ws) if None not in ws else None
+        floor = sum(fs) / len(fs) if None not in fs else None
         for c in g:
             c["ratio"] = mean / c["liberty_w"] if mean is not None and c["liberty_w"] > 0 else None
+            c["floor_w"] = floor
     json.dump(meta, open(f"{out}/result.json", "w"), indent=1)
     bad = sum(c["invalid"] is not None for c in meta["cases"])
     print(f"{out}: {len(meta['cases'])} cases, {bad} invalid")

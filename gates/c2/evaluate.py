@@ -13,46 +13,66 @@ MIN_CELLS = 50
 # (floor share at most 1% per off PMOS); below that it is listed with its ratio.
 FLOOR_A = 7.0e-15
 FLOOR_FACTOR = 100
+# Amendment 4: the floor is per PMOS, not per state (run 4, lvt SSG -40 C). A state's cut is FLOOR_FACTOR x its own
+# kit floor power (leak.kit_floor_w, an upper bound from its operating point), never below Amendment 2's one-floor
+# cut; a state without an operating point (invalid) keeps the one-floor cut.
 LIBS = [f"GT_A5_{vt}_{pt}" for vt in ("svt", "lvt", "ulvt")
         for pt in ("TTG_25C", "SSG_m40C", "SSG_125C", "FFG_m40C", "FFG_125C")]
 
 
-def ref(cases, when, cut):
+def cut_w(c, vdd):
+    """The state's floor cut (Amendment 4): FLOOR_FACTOR x max(one floor, the state's kit floor power)."""
+    return FLOOR_FACTOR * max(FLOOR_A * vdd, c.get("floor_w") or 0.0)
+
+
+def ref(cases, when, vdd):
     """(ratio, problem) of inv_x1's state `when`. Missing, ambiguous or without a ratio is a problem (the library is
     VOID, as before Amendment 2); below the floor cut gives ratio None and no problem (a listed state cannot bound
     the others, so DEVICE OFFSET is not available)."""
     found = [c for c in cases if c["cell"].startswith("gtA5_cfet_11_inv_x1_") and c["when"] == when]
     if len(found) != 1:
         return None, f"reference {when}: {len(found)} cases"
-    if found[0]["liberty_w"] < cut:
+    if found[0]["liberty_w"] < cut_w(found[0], vdd):
         return None, None
     return found[0]["ratio"], (None if found[0]["ratio"] is not None else f"reference {when}: no ratio")
 
 
+def floor_check(compared):
+    """Diagnostic, not a bar (Amendment 4): (SPICE + kit floor) / Liberty over the compared states whose floor is
+    above 1% of Liberty. The kit floor is an upper bound (exact without PMOS stacks, high in them; diag/a4_floor.py),
+    so this reads 1 or above; a minimum well below 0.98 would mean the floor is undercounted and the cut too low."""
+    rs = [(c["ratio"] * c["liberty_w"] + c["floor_w"]) / c["liberty_w"] for c in compared
+          if c.get("floor_w") is not None and c["floor_w"] > c["liberty_w"] / FLOOR_FACTOR]
+    return {"states": len(rs), "min": min(rs, default=None), "max": max(rs, default=None)}
+
+
 def score(r):
-    cases = r["cases"]
-    cut = FLOOR_FACTOR * FLOOR_A * r["vdd"]
+    cases, vdd = r["cases"], r["vdd"]
+    def below(c):
+        return c["liberty_w"] < cut_w(c, vdd)
     compared = [c for c in cases if c["ratio"] is not None]
-    scored = [c for c in compared if c["liberty_w"] >= cut]
+    scored = [c for c in compared if not below(c)]
     s = {"temp": r["temp"], "vt": r["vt"], "cases": len(cases), "dropped": r["dropped"], "skipped": r["skipped"],
          # V1 covers states at or above the cut; an invalid state below it is named, not voiding (Amendment 2)
-         "invalid": [f'{c["cell"]} {c["when"]}: {c["invalid"]}' for c in cases if c["invalid"] and c["liberty_w"] >= cut],
+         "invalid": [f'{c["cell"]} {c["when"]}: {c["invalid"]}' for c in cases if c["invalid"] and not below(c)],
          "invalid_below_floor": [f'{c["cell"]} {c["when"]}: {c["invalid"]}' for c in cases
-                                 if c["invalid"] and c["liberty_w"] < cut],
+                                 if c["invalid"] and below(c)],
          "not_scored": [f'{c["cell"]} {c["when"]}: Liberty {c["liberty_w"]}' for c in cases
                         if c["invalid"] is None and c["liberty_w"] <= 0],
-         "floor_cut_w": cut,
-         "below_floor": [f'{c["cell"]} {c["when"]}: Liberty {c["liberty_w"]:.3e} ratio {c["ratio"]:.4f}'
-                         for c in compared if c["liberty_w"] < cut],
+         "floor_cut_w": FLOOR_FACTOR * FLOOR_A * vdd,   # the smallest cut; each state's own is cut_w
+         "below_floor": [f'{c["cell"]} {c["when"]}: Liberty {c["liberty_w"]:.3e} cut {cut_w(c, vdd):.3e} '
+                         f'ratio {c["ratio"]:.4f}' for c in compared if below(c)],
+         "retried": [f'{c["cell"]} {c["when"]}: {c["method"]}' for c in cases if c.get("retry")],
+         "floor_check": floor_check(compared),
          "cases_scored": len(scored), "cells_compared": len({c["cell"] for c in compared})}
-    (s["rN"], pn), (s["rP"], pp) = ref(cases, "(!A * Y)", cut), ref(cases, "(A * !Y)", cut)
+    (s["rN"], pn), (s["rP"], pp) = ref(cases, "(!A * Y)", vdd), ref(cases, "(A * !Y)", vdd)
     s["reference_problems"] = [p for p in (pn, pp) if p]
     s["V1"] = not s["invalid"]
     valid = [c for c in cases if c["invalid"] is None]
     # V2, like V1, covers states at or above the cut; an output off by more than 10% below it is named (Amendment 2)
-    s["V2"] = s["V1"] and all(c["out_err_v"] <= 0.1 * r["vdd"] for c in valid if c["liberty_w"] >= cut)
+    s["V2"] = s["V1"] and all(c["out_err_v"] <= 0.1 * vdd for c in valid if not below(c))
     s["out_err_below_floor"] = [f'{c["cell"]} {c["when"]}: {c["out_err_v"]:.3g} V' for c in valid
-                                if c["liberty_w"] < cut and c["out_err_v"] > 0.1 * r["vdd"]]
+                                if below(c) and c["out_err_v"] > 0.1 * vdd]
     s["V4"] = s["cells_compared"] >= MIN_CELLS
     s["unregistered_skips"] = {k: v for k, v in r["skipped"].items() if not v.startswith(SKIP_RULES)}
     if not s["V1"] or s["reference_problems"]:
@@ -74,9 +94,10 @@ def score(r):
 
 
 def main(runs):
-    missing = [l for l in LIBS if not (pathlib.Path(runs) / l / "result.json").exists()]
+    missing = [lib for lib in LIBS if not (pathlib.Path(runs) / lib / "result.json").exists()]
     extra = [p.parent.name for p in pathlib.Path(runs).glob("*/result.json") if p.parent.name not in LIBS]
-    libs = {l: score(json.load(open(pathlib.Path(runs) / l / "result.json"))) for l in LIBS if l not in missing}
+    libs = {lib: score(json.load(open(pathlib.Path(runs) / lib / "result.json"))) for lib in LIBS
+            if lib not in missing}
     same_dropped = len({tuple(s["dropped"]) for s in libs.values()}) == 1
     valid = (not missing and not extra and same_dropped
              and all(s["V1"] and s["V2"] and s["V4"] and not s["unregistered_skips"] and s["verdict"] != "VOID"
@@ -97,14 +118,17 @@ def main(runs):
            "c3_offset_depends_on_T": {k: v for k, v in temp_shift.items() if max(v.values()) > TOL}}
     json.dump(out, open(f"{runs}/summary.json", "w"), indent=1)
     print("| Library | Cells compared | Cases | Scored | Listed (below floor cut) | rN | rP | Ratio range (scored) "
-          "| Worst output error | Verdict |")
-    print("|---|---|---|---|---|---|---|---|---|---|")
-    f = lambda x: "-" if x is None else f"{x:.4f}"
+          "| Worst output error | Retried | Floor check (states: range) | Verdict |")
+    print("|---|---|---|---|---|---|---|---|---|---|---|---|")
+    def f(x):
+        return "-" if x is None else f"{x:.4f}"
     for k, s in libs.items():
         rng = f"{f(s.get('ratio_min'))}-{f(s.get('ratio_max'))}"
         err = "-" if s.get("worst_out_err_v") is None else f"{s['worst_out_err_v']:.2g} V"
+        fc = s["floor_check"]
         print(f"| {k} | {s['cells_compared']} | {s['cases']} | {s['cases_scored']} | {len(s['below_floor'])} "
-              f"| {f(s['rN'])} | {f(s['rP'])} | {rng} | {err} | {s['verdict']} |")
+              f"| {f(s['rN'])} | {f(s['rP'])} | {rng} | {err} | {len(s['retried'])} "
+              f"| {fc['states']}: {f(fc['min'])}-{f(fc['max'])} | {s['verdict']} |")
     print(f"missing {missing}; extra {extra}; V3 {same_dropped}; valid {valid}; C2 {out['c2']}"
           + (f"; LISTED ONLY (nothing scored): {', '.join(listed_only)}" if listed_only else ""))
     print("offset change -40 -> 125 C:", {k: {a: f"{b:.2%}" for a, b in v.items()} for k, v in temp_shift.items()})
