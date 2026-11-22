@@ -18,6 +18,8 @@ SESSIONS = {   # libs: files the script sources, shipped beside it; kernels: ear
                "kernels": ["open3d-rs-s1-build"]},
     "s3_ibex": {"slug": "open3d-rs-s3-ibex", "title": "open3d-rs-s3-ibex", "internet": True, "libs": ["rs_lib.sh"],
                 "kernels": ["open3d-rs-s1-build"]},
+    "s4_layer": {"slug": "open3d-rs-s4-layer", "title": "open3d-rs-s4-layer", "internet": True, "libs": ["rs_lib.sh"],
+                 "kernels": ["open3d-rs-s1-build"]},
 }
 
 
