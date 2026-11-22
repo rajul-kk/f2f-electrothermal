@@ -24,7 +24,7 @@ LIBS=$(cd "$KIT/lib/GT_A5_release" && ls GT_A5_*_nldm.lib | sed 's/_nldm.lib//')
 rm -rf runs record; mkdir -p runs record
 { docker image inspect "$IMG" --format "image $IMG {{.Id}}"; echo "matrix-a5 56b467142c870284eb0cec1e89a680522e7a171d"
   sha256sum "$OSDI" "$PARAMS" "$KIT"/models/GT_A5_{TTG,SSG,FFG}.inc "$KIT"/lib/GT_A5_release/GT_A5_*_nldm.lib \
-    "$CDL"/*.cdl leak.py evaluate.py run.sh registration.md
+    "$CDL"/*.cdl leak.py evaluate.py run.sh ngspice_states.sh registration.md
 } > record/sha256.txt
 for L in $LIBS; do
   CORNER=$(echo "$L" | cut -d_ -f4)          # GT_A5_<vt>_<corner>_<temp>
@@ -35,14 +35,15 @@ for L in $LIBS; do
   [ "$(tr -d '\r' < "runs/$L/.spiceinit")" = "osdi /osdi/bsimcmg_111_2_1.osdi" ] || { echo "bad .spiceinit in $L"; exit 1; }
 done
 sha256sum runs/*/*.cir runs/*/models.inc runs/*/cases.json runs/*/.spiceinit >> record/sha256.txt
-# one deck per state (Amendment 2); its exit code goes to runs/<lib>/s<i>.rc (missing = failed; 124 = over the 2 min
-# cap); leak.py compare marks a nonzero one, or a log without a DC point (transient op), invalid (V1)
-MSYS_NO_PATHCONV=1 docker run --rm --memory 1g -v "$(pwd -W)/runs:/runs" -v "$EXT/osdi:/osdi:ro" "$IMG" \
-  bash -c 'for d in /runs/*/; do cd "$d" || continue; for f in *.cir; do
-             timeout 120 ngspice -b "$f" > "${f%.cir}.log" 2>&1; echo $? > "${f%.cir}.rc"; done; done' \
+# one deck per state (Amendment 2) and its retry (Amendment 4), in ngspice_states.sh; exit codes go to
+# runs/<lib>/s<i>.rc (missing = failed; 124 = over the 2 min cap); leak.py compare marks a nonzero one, or a log
+# without a DC point (transient op), invalid (V1)
+MSYS_NO_PATHCONV=1 docker run --rm --memory 1g -v "$(pwd -W)/runs:/runs" -v "$EXT/osdi:/osdi:ro" \
+  -v "$(pwd -W)/ngspice_states.sh:/ngspice_states.sh:ro" "$IMG" bash -c 'bash /ngspice_states.sh /runs/*/' \
   || echo "container exit $?" >> record/ngspice_rc.txt
 for L in $LIBS; do
-  echo "$L decks $(ls runs/$L/*.cir | wc -l), exit 0: $(grep -lx 0 runs/$L/*.rc 2>/dev/null | wc -l)"
+  echo "$L decks $(ls runs/$L/s????.cir | wc -l), exit 0: $(grep -lx 0 runs/$L/s????.rc 2>/dev/null | wc -l)," \
+       "retried $(ls runs/$L/s????r.rc 2>/dev/null | wc -l), retry exit 0: $(grep -lx 0 runs/$L/s????r.rc 2>/dev/null | wc -l)"
 done >> record/ngspice_rc.txt
 for L in $LIBS; do python leak.py compare "runs/$L"; done
 python evaluate.py runs | tee record/summary.md

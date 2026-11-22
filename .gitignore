@@ -38,3 +38,6 @@ dry/c5/gen/
 dry/c5/run_c5.log
 gates/c2/run4.log
 gates/c2/diag/a3/GT_A5_*/
+gates/c2/a4_probe.log
+gates/c2/diag/a4/GT_A5_*/
+gates/c2/run5.log
