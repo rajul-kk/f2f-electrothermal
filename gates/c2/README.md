@@ -1,8 +1,25 @@
-# C2: MATRIX-A5 cell leakage, SPICE against the kit's Liberty · VOID (runs 1-4); run 4 has one FAIL, from the floor
+# C2: MATRIX-A5 cell leakage, SPICE against the kit's Liberty · PASS (run 5)
 
-Registered 16 Nov 2026 (`registration.md`, Amendments 1-3). No run has given a valid verdict: V1 (every case reaches
-a DC point) fails in each. Records: `record-run1/` to `record-run4/`; `record/` holds the latest run (run 4).
-Waiting on the student (registration.md, "Result of run 4").
+Registered 16 Nov 2026 (`registration.md`, Amendments 1-4). Runs 1-4 were VOID; run 5 passes. Records:
+`record-run1/` to `record-run5/`; `record/` holds the latest run (run 5).
+
+## Run 5 (Amendment 4)
+
+| Library | Scored | Listed (below cut) | Ratio range (scored) | Verdict |
+|---|---|---|---|---|
+| 8 of the 9 libraries at 25 and 125 C, and ulvt FFG -40 C | 756 each | 0 | 0.9991-1.0056 | EXACT |
+| svt TTG 25 C, lvt FFG -40 C | 753 each | 3 each | 0.9988-1.0001 | EXACT |
+| ulvt SSG -40 C | 547 | 209 | 0.9931-1.0001 | EXACT |
+| svt FFG -40 C | 112 | 634 | 0.9902-1.0001 | EXACT |
+| lvt SSG -40 C | 4 | 740 | 1.0000-1.0001 | EXACT |
+| svt SSG -40 C | 0 | 744 | - | LISTED ONLY |
+
+(`record-run5/summary.md`.) Amendment 4 sets each state's cut at 100 times its own kit floor, computed from its
+operating point, which is an upper bound in PMOS stacks; it also reruns a deck without a DC point once with stepping.
+Run 4's voiding nand2_x3 state reaches a DC point on the retry, and lvt SSG -40 C's multi-finger states drop below
+their cuts. The 34 states still without a DC point are all below their cuts. inv_x1's ratios change by at most 0.69%
+between -40 and 125 C where both are scored, so c3 has no temperature-dependent offset to carry.
+Not tested: svt SSG -40 C (nothing scored); lvt SSG -40 C rests on 4 states (registration.md, "Result of run 5").
 
 ## Run 4 (Amendment 3)
 
