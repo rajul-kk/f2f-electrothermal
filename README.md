@@ -33,7 +33,7 @@ As an installed package, never copied: `pip install -e ../FYP-search/fyp/opentse
 each result's manifest (`opentsense.manifest`). Changes OpenTSense needs go into OpenTSense through its own review
 and commit process, not into a fork here. Every result is a registered gate with its bars fixed before the run.
 
-## Status (17 Nov 2026)
+## Status (18 Nov 2026)
 
-Gate C2 (CFET leakage, SPICE against Liberty) ran twice, VOID both times on a -40 C convergence problem; see
+Gate C2 (CFET leakage, SPICE against Liberty) passed on its fifth run (14 libraries EXACT, svt SSG -40 C untested); see
 `gates/c2/`. The 3D flow work (gates G1 to G6) starts with a dry run of TaiWei-Pin-3D on Ibex.
