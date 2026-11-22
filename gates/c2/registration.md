@@ -179,3 +179,83 @@ of a scored state, which holds only for one off PMOS. The four states without an
 So under these rules C2 does not pass. The FAIL comes from the stated Liberty floor, not from a device mismatch shown
 by these states. No further run or amendment is made without the student's decision (scale the cut, or subtract the
 floor, by the number of off PMOS; or accept the FAIL and use the c3 fallback).
+
+## Amendment 4 (18 Nov 2026, after run 4 and the probe `diag/a4_probe.sh`; post-run)
+
+The student chose (18 Nov) to scale the cut by the floor each state carries, and to fix the state that voided run 4.
+The question, cells, skip rules, bars, references, cards, image and pinned hashes are unchanged. Changes:
+
+1. **Floor cut per state.** A state is scored only if its Liberty value is at least 100 x its own kit floor, and
+   never below Amendment 2's one-floor cut (4.9e-13 W at 0.7 V). The kit floor is the current the kit's gmin
+   (1e-14 S, finding 3) adds through BSIM-CMG's BULKMOD junction terms (`bsimcmg_body.include:2823-2824`),
+   computed from the state's own operating point: 1e-14 S x m x (V(e) - V(di) + V(e) - V(si)), summed over the PMOS,
+   times VDD (`leak.kit_floor_w`; the decks add `print all` for the junction voltages).
+   - The floor is computed from our operating point at gmin 1e-18, not the kit's at 1e-14. In the probe it is an
+     **upper bound**: over the 557 (lvt SSG -40 C) and 485 (svt FFG -40 C) states whose floor exceeds 1% of their
+     Liberty value, (SPICE + floor) / Liberty is 0.9997-1.3528 and 0.9995-1.3255 (`diag/a4/summary.json`,
+     `floor_check`). 304 and 249 of them read 0.98-1.02. The high ones are PMOS stacks (nor3, oai33, aoi211), where
+     mid-stack nodes sit differently at the kit's gmin (`diag/a4/floor_check.json`, `outside`). An upper bound makes
+     the cut conservative: a scored state's floor is at most 1% of it. The cost is that more states are listed.
+   - A state without an operating point (invalid) keeps the one-floor cut, so a state that does not converge is
+     never excused by an estimate. A valid state whose junction voltages are missing from its log is invalid
+     ("junction voltage missing (kit floor)"), not given the one-floor cut.
+   - `floor_check` is reported per library and is not a bar.
+2. **Retry deck.** A deck that may lack a DC point (nonzero exit, or "transient op" in its log) runs once more with
+   Amendment 2's options, `.option gmin=1e-18 abstol=1e-18 reltol=1e-5 itl1=50000 gminsteps=200 srcsteps=200`
+   (`ngspice_states.sh`). If the first deck has no DC point (`leak.method`), the retry's log is used; the first
+   method and exit code are kept in `result.json` (`first_method`, `first_rc`). The DC point does not depend on
+   how it was reached: in the Amendment 3 probe, valid controls kept their current under every option set
+   (`diag/a3/report.json`). The 2 min cap is unchanged. Run 4's voiding state, `nand2_x3_svt (A * !B * Y)` at
+   svt FFG -40 C, had failed Newton, gmin and source stepping and was in the transient op when it hit the cap
+   (`diag/a4/run4_s0373_nand2_x3_svt_FFG_m40C.log`), so a longer cap would not have made it valid. With the retry
+   it reaches a DC point by gmin stepping. Run 4's per-state logs are kept outside the repository
+   (`open3d-thermal-ext/c2_run4_runs`), as run 3's are.
+
+Probe (`diag/a4_probe.sh`, `diag/a4/summary.md`): Amendment 4's decks for lvt SSG -40 C and svt FFG -40 C.
+
+| Library | Retried | Retry reached a DC point | Invalid above cut | Invalid below cut | Scored | Listed | Ratio range (scored) | Verdict |
+|---|---|---|---|---|---|---|---|---|
+| svt FFG -40 C | 14 | 4 (nand2_x3 among them) | 0 | 10 | 112 | 634 | 0.9902-1.0001 | EXACT |
+| lvt SSG -40 C | 13 | 1 | 0 | 12 | 4 | 740 | 1.0000-1.0001 | EXACT |
+
+The probe's last deck in svt FFG -40 C (s0755) was cut short when `ngspice_states.sh` was edited while it ran. It
+was rerun alone with the same decks and steps, then compared again; the table includes the rerun.
+
+Limits added: in lvt SSG and svt FFG at -40 C most states are listed, not scored (lvt SSG -40 C scores 4 states,
+run 4 scored 25), because the floor bound is high in stacks. A floor from the kit's own operating point (a second
+deck at gmin 1e-14 per state) would list fewer; it is not used here.
+
+Seen before run 5, so not unseen: every value of run 4 (`record-run4/`) and every value of the probe above. Run 5
+reruns all 15 libraries.
+
+## Result of run 5 (18 Nov 2026, post-run)
+
+**PASS** (`record-run5/`; `record/` holds the same run). V1-V4 hold in all 15 libraries, with the same dropped cells
+in each and no unregistered skips. 14 libraries are EXACT and svt SSG -40 C is LISTED ONLY (no state at or above
+its cut), which under Amendment 2 neither passes nor fails C2. No library FAILs and none is DEVICE OFFSET.
+
+| Library | Scored | Listed (below cut) | Ratio range (scored) | Retried | Invalid (all below cut) | Verdict |
+|---|---|---|---|---|---|---|
+| 8 of the 9 libraries at 25 and 125 C, and ulvt FFG -40 C | 756 each | 0 | 0.9991-1.0056 | 0 | 0 | EXACT |
+| svt TTG 25 C | 753 | 3 | 0.9988-1.0000 | 0 | 0 | EXACT |
+| lvt FFG -40 C | 753 | 3 | 0.9989-1.0001 | 0 | 0 | EXACT |
+| ulvt SSG -40 C | 547 | 209 | 0.9931-1.0001 | 0 | 0 | EXACT |
+| svt FFG -40 C | 112 | 634 | 0.9902-1.0001 | 14 | 10 | EXACT |
+| lvt SSG -40 C | 4 | 740 | 1.0000-1.0001 | 13 | 12 | EXACT |
+| svt SSG -40 C | 0 | 744 | - | 13 | 12 | LISTED ONLY |
+
+(`record-run5/summary.md`, `record-run5/summary.json`; exit codes and retries per library in
+`record-run5/ngspice_rc.txt`.) svt FFG -40 C and lvt SSG -40 C repeat the Amendment 4 probe exactly (scored states,
+ratio ranges and floor checks). The 34 invalid states are all below their cut and are named in `summary.json`
+(`invalid_below_floor`); none voids the run (Amendment 2, item 5).
+
+The floor check (not a bar) reads 0.9894-4.7715 over 561 states in svt SSG -40 C and 1.0040-1.0589 over 195 in ulvt
+SSG -40 C. Its minimum in every library is above 0.98, so the floor is not undercounted by more than the tolerance.
+
+For c3: inv_x1's ratios at -40 C and at 125 C are both scored in three Vt and corner pairs (lvt FFG, ulvt SSG,
+ulvt FFG); rN changes by at most 0.02% and rP by at most 0.69% (ulvt SSG) between them (`offset_change_m40_to_125C`).
+None is above 2%, so no offset is shown to depend on temperature. In the other three pairs inv_x1 is below the cut at
+-40 C, so the comparison is not available there.
+
+Limits of this PASS: svt SSG -40 C is not tested at all, and lvt SSG -40 C rests on 4 states. Both follow from
+the floor cut (Amendment 4, limits), not from a mismatch shown by any state.

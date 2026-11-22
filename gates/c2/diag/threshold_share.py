@@ -1,6 +1,7 @@
 """For Amendment 2's floor cut: per library, how many leakage states would be listed rather than scored, i.e. have a
-Liberty value above 0 but below evaluate.py's cut (FLOOR_FACTOR x FLOOR_A x VDD). Reads cases.json, so it can run
-before ngspice. Usage: python threshold_share.py <runs dir>"""
+Liberty value above 0 but below the one-floor cut (FLOOR_FACTOR x FLOOR_A x VDD). Reads cases.json, so it can run
+before ngspice. Since Amendment 4 this is only the smallest cut: each state's own cut (evaluate.cut_w) needs its
+operating point, and the listed states are in summary.json's `below_floor`. Usage: python threshold_share.py <runs>"""
 import argparse
 import glob
 import json
@@ -9,7 +10,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-from evaluate import FLOOR_A, FLOOR_FACTOR  # noqa: E402  (one source of the cut, A9)
+from evaluate import FLOOR_A, FLOOR_FACTOR  # noqa: E402  (the one-floor cut's constants, A9)
 
 
 def main():
