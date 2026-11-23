@@ -43,6 +43,13 @@ def test_stacks_count_names_and_shared_layers():
     assert die["source_side"] == "top" and die["thickness_um"] == 0.5
 
 
+def test_each_stack_lists_only_the_materials_its_layers_use():
+    for name, st in c6.stacks().items():
+        used = {l["material"] for l in st["layers"]}
+        assert set(st["materials"]) - set(c6.BASE_MATERIALS) == used - set(c6.BASE_MATERIALS), name
+    assert c6.stacks(grid=8)["fs_kbeol0.6"]["grid"] == [8, 8]
+
+
 def test_one_d_estimate_by_hand():
     area = 1e-6
     fs = c6.stacks()["fs_kbeol1.2"]
@@ -61,26 +68,25 @@ def test_hotspot_keeps_the_total_and_is_ten_times_denser():
         c6.dyn_tiles("other")
 
 
-def test_margin_raises_the_upper_end_until_runaway():
+def test_margin_uses_designs_fixed_bracket_only():
     calls = []
 
-    class O:
-        def __init__(self, st):
-            self.status = st
-
-    def classify(R, dyn, leak, amb):
-        return O("converged" if leak < 5e3 else "runaway")
-
     def crit(R, dyn, make, amb, lo, hi, rtol):
-        calls.append(hi)
-        if make(hi) < 5e3:
-            raise RuntimeError("bracket")
-        return 4.9e3, 5.0e3, 20
-    m = c6.margin(classify, crit, None, None, lambda s: s)
-    assert calls == [1e3, 1e4] and m["s_lo"] == 4.9e3
-    assert "error" in c6.margin(classify, lambda *a, **k: (_ for _ in ()).throw(RuntimeError("x")),
-                                None, None, lambda s: 1.0 if s < 1e6 else 1e9)
-    assert np.isfinite(m["probes"])
+        calls.append((lo, hi))
+        return 9.9, 10.0, 20
+    m = c6.margin(crit, None, None, None)
+    assert calls == [c6.BRACKET] and m == {"s_lo": 9.9, "s_hi": 10.0, "probes": 20}
+
+
+def test_margin_returns_the_bracket_failure_and_lets_other_errors_through():
+    def outside(*a, **k):
+        raise RuntimeError("bracket [0.001, 1000] does not contain the boundary")
+    assert "does not contain" in c6.margin(outside, None, None, None)["error"]
+
+    def broken(*a, **k):
+        raise np.linalg.LinAlgError("singular")
+    with pytest.raises(np.linalg.LinAlgError):     # run_cases records it per case (A16), margin does not hide it
+        c6.margin(broken, None, None, None)
 
 
 def test_summary_ratios_against_the_matching_frontside_stack():
@@ -91,6 +97,20 @@ def test_summary_ratios_against_the_matching_frontside_stack():
            "checks": {"b_max_abs_diff_k": 0.004, "d_rel": 1e-5},
            "cases": [case("fs_kbeol1.2", 2.0, 40.0), case("bs_kbeol1.2_tc50_kbs71", 3.0, 20.0)]}
     md = c6.summary(res)
-    assert "| 1 of 2; outside: bs_kbeol1.2_tc50_kbs71 +20.0% |" in md
+    assert md.startswith("**Incomplete run")                  # no end marker
+    assert "| 1 of 2; outside: bs_kbeol1.2_tc50_kbs71 +20.0% | FAIL |" in md
+    assert "| 0.0040 K | PASS |" in md
     row = next(line for line in md.splitlines() if line.startswith("| bs_kbeol1.2_tc50_kbs71"))
     assert "| 1.50 |" in row and "| 0.50 |" in row
+
+
+def test_checks_fail_on_missing_or_out_of_limit_values():
+    base = {"stacks": {"fs_kbeol1.2": {"check_a_rel": 0.0}}, "checks": {"d_rel": 0.0}, "complete": True,
+            "cases": [{"stack": "fs_kbeol1.2", "workload": "uniform", "vt": "svt", "peak_rise_no_leak_k": 1.0,
+                       "error": "RuntimeError: bracket"}]}
+    rows = {name[0]: ok for name, _, ok in c6.check_rows(base)}
+    assert rows == {"a": True, "b": False, "c": False, "d": True}      # b missing, c has an error
+    base["checks"]["b_max_abs_diff_k"] = 0.006
+    assert not {n[0]: ok for n, _, ok in c6.check_rows(base)}["b"]
+    assert not c6.summary(base).startswith("**Incomplete")
+    assert not c6.check_rows({"stacks": {}, "checks": {"d_rel": 0.0}, "cases": []})[0][2]   # empty a fails
