@@ -10,8 +10,9 @@ IMG=opentsense:g93a
 LIB=$EXT/matrix-a5/MATRIX_A5_CFET_base/lib/GT_A5_release
 [ "$(git -C "$EXT/matrix-a5" rev-parse HEAD)" = 56b467142c870284eb0cec1e89a680522e7a171d ] || { echo "kit commit differs"; exit 2; }
 OTC=$(git -C "$OTR" rev-parse HEAD)
-OUT=record/$(date +%F)_c6_v1
+OUT=record/$(date +%F)_c6_${TAG:-v2}   # v1 (19 Nov) was stopped by hand, rc 137, before the review fixes
 [ -e "$OUT" ] && { echo "$OUT exists: results are append-only"; exit 2; }
+[ -e "$OUT.partial" ] && { echo "$OUT.partial exists: an earlier run did not finish; look at it, then move it aside"; exit 2; }
 rm -rf runs; mkdir -p runs/pkg runs/work "$OUT.partial"
 git -C "$OTR" archive "$OTC" opentsense | tar -x -C runs/pkg
 python c6.py leak ../c3/record/tables.json runs/leak.json \
@@ -28,6 +29,8 @@ MSYS_NO_PATHCONV=1 docker run --rm --memory 1500m --memory-swap 1500m -v "$(pwd 
 echo "rc=$rc after $(( $(date +%s) - s )) s" >> "$OUT.partial/run.log"
 [ -f runs/out/c6.json ] && cp runs/out/c6.json "$OUT.partial/"
 mv "$OUT.partial" "$OUT"                    # the record folder appears only once the run has ended
-[ "$rc" = 0 ] && python c6.py summary "$OUT/c6.json" "$OUT/summary.md"
+if [ -f "$OUT/c6.json" ]; then   # the summary marks an incomplete run itself; its failure must not hide the run rc
+  python c6.py summary "$OUT/c6.json" "$OUT/summary.md" || echo "summary failed (rc $?)" >> "$OUT/run.log"
+fi
 tail -1 "$OUT/run.log"
 exit $rc
