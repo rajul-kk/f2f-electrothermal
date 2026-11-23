@@ -1,0 +1,28 @@
+PRETTY_NAME="Ubuntu 24.04.5 LTS"
+NAME="Ubuntu"
+VERSION_ID="24.04"
+VERSION="24.04.5 LTS (Noble Numbat)"
+VERSION_CODENAME=noble
+ID=ubuntu
+ID_LIKE=debian
+HOME_URL="https://www.ubuntu.com/"
+SUPPORT_URL="https://help.ubuntu.com/"
+BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
+PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
+UBUNTU_CODENAME=noble
+LOGO=ubuntu-logo
+
+Linux a0dc37c5d344 6.18.55+ #1 SMP Thu Oct 22 16:37:21 UTC 2026 x86_64 x86_64 x86_64 GNU/Linux
+
+4
+               total        used        free      shared  buff/cache   available
+Mem:              31           1          26           0           4          30
+Swap:              0           0           0
+
+Filesystem      Size  Used Avail Use% Mounted on
+overlay         8.0T  5.6T  2.5T  70% /
+/dev/loop2       20G  172K   20G   1% /kaggle/working
+
+gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+
+model name	: Intel(R) Xeon(R) CPU @ 2.20GHz
