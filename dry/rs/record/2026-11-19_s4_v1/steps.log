@@ -1,0 +1,22 @@
+[2026-11-18T19:08:40Z] start clone (at most 37780s)
+[2026-11-18T19:09:58Z] end clone rc=0 after 78s
+[2026-11-18T19:09:58Z] start checkout (at most 37702s)
+[2026-11-18T19:14:16Z] end checkout rc=0 after 258s
+[2026-11-18T19:14:36Z] start setup (at most 37424s)
+[2026-11-18T19:24:33Z] end setup rc=0 after 597s
+[2026-11-18T19:24:48Z] start versions (at most 36812s)
+[2026-11-18T19:24:48Z] end versions rc=0 after 0s
+[2026-11-18T19:24:48Z] start clone_pin3d (at most 36812s)
+[2026-11-18T19:25:01Z] end clone_pin3d rc=0 after 13s
+[2026-11-18T19:25:01Z] MAX_ROUTING_LAYER=M1_m (S4 override)
+[2026-11-18T19:25:01Z] start gcd_asap7_3D (at most 36799s)
+[2026-11-18T19:31:02Z] end gcd_asap7_3D rc=0 after 361s
+[2026-11-18T19:31:02Z] gcd_asap7_3D: run_experiments.py last status '[STATUS] failed=1'
+[2026-11-18T19:31:02Z] gcd failed in 1 of 1 techs
+[2026-11-18T19:31:02Z] start ibex_asap7_3D (at most 36438s)
+[2026-11-18T20:05:33Z] end ibex_asap7_3D rc=0 after 2071s
+[2026-11-18T20:05:33Z] ibex_asap7_3D: run_experiments.py last status '[STATUS] failed=1'
+[2026-11-18T20:05:33Z] ibex failed in 1 of 1 techs
+[2026-11-18T20:05:33Z] exit status 2
+[2026-11-18T20:05:43Z] results tar rc=0
+peak machine memory in use MiB 22008
