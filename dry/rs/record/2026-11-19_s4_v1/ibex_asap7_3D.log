@@ -1,0 +1,285 @@
+[MAIN] repo_root=/tmp/rs/pin3d
+[MAIN] flows=['ord'] techs=['asap7_3D'] cases=['ibex'] jobs=9
+[MAIN] stages: run=True eval=False
+[MAIN] shard=0/1
+[MAIN] total_tasks=1 logs under run_logs/<tech>/<flow>/...
+[MAIN] live status files under /tmp/rs/pin3d/run_logs/status
+[submit] a0dc37c5d344 ord/asap7_3D/ibex job=task.3296880.1795030262968 status=running phase=run
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG
+[TASK] --------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  -        
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG        
+[TASK] ----------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  1_1_yosys.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG        
+[TASK] ----------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  1_1_yosys.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG            
+[TASK] --------------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  2_1_floorplan.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG           
+[TASK] -------------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  2_tritonpart.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG           
+[TASK] -------------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  2_tritonpart.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG           
+[TASK] -------------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  2_tritonpart.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG           
+[TASK] -------------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  2_tritonpart.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG           
+[TASK] -------------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  2_tritonpart.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG           
+[TASK] -------------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  2_tritonpart.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG           
+[TASK] -------------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  2_tritonpart.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG           
+[TASK] -------------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  2_tritonpart.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG           
+[TASK] -------------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  2_tritonpart.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG           
+[TASK] -------------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  2_tritonpart.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG           
+[TASK] -------------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  2_tritonpart.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG           
+[TASK] -------------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  2_tritonpart.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG           
+[TASK] -------------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  2_tritonpart.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG           
+[TASK] -------------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  2_tritonpart.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG           
+[TASK] -------------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  2_tritonpart.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG           
+[TASK] -------------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  2_tritonpart.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG           
+[TASK] -------------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  2_tritonpart.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG           
+[TASK] -------------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  2_tritonpart.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG           
+[TASK] -------------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  2_tritonpart.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG           
+[TASK] -------------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  2_tritonpart.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG           
+[TASK] -------------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  2_tritonpart.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG           
+[TASK] -------------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  2_tritonpart.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG           
+[TASK] -------------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  2_tritonpart.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG           
+[TASK] -------------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  2_tritonpart.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG           
+[TASK] -------------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  2_tritonpart.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG           
+[TASK] -------------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  2_tritonpart.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG           
+[TASK] -------------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  2_tritonpart.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG           
+[TASK] -------------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  2_tritonpart.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG           
+[TASK] -------------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  2_tritonpart.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG           
+[TASK] -------------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  2_tritonpart.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG           
+[TASK] -------------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  2_tritonpart.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG           
+[TASK] -------------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  2_tritonpart.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG           
+[TASK] -------------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  2_tritonpart.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG           
+[TASK] -------------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  2_tritonpart.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG           
+[TASK] -------------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  2_tritonpart.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG           
+[TASK] -------------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  2_tritonpart.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG           
+[TASK] -------------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  2_tritonpart.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG           
+[TASK] -------------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  2_tritonpart.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG           
+[TASK] -------------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  2_tritonpart.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG               
+[TASK] -----------------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  2_4_floorplan_io.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG                     
+[TASK] -----------------------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  2_5_place_macro_bottom.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG           
+[TASK] -------------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  3_place_init.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG                  
+[TASK] --------------------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  3_place_init_bottom.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG            
+[TASK] --------------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  3_place_upper.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG            
+[TASK] --------------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  3_place_upper.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG            
+[TASK] --------------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  3_place_upper.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG             
+[TASK] ---------------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  3_place_bottom.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG             
+[TASK] ---------------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  3_place_bottom.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG             
+[TASK] ---------------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  3_place_bottom.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG           
+[TASK] -------------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  3_5_lg_upper.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG           
+[TASK] -------------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  3_5_lg_upper.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG           
+[TASK] -------------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  3_5_lg_upper.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG           
+[TASK] -------------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  3_5_lg_upper.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG           
+[TASK] -------------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  3_5_lg_upper.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG           
+[TASK] -------------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  3_5_lg_upper.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG            
+[TASK] --------------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  3_4_lg_bottom.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG            
+[TASK] --------------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  3_4_lg_bottom.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG      
+[TASK] --------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  4_0_cts.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG      
+[TASK] --------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  4_0_cts.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG      
+[TASK] --------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  4_0_cts.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG      
+[TASK] --------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  4_0_cts.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG           
+[TASK] -------------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  4_1_cts_post.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG           
+[TASK] -------------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  4_1_cts_post.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG           
+[TASK] -------------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  4_1_cts_post.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK              STATUS  PHASE DISPATCH JOB                            PID ALIVE STAGE_LOG      
+[TASK] --------------------------------------------------------------------------------------------------------------
+[TASK] a0dc37c5d344 ord/asap7_3D/ibex running run   running  task.3296880.1795030262968 3296891 True  5_1_grt.log.tmp
+[STATUS] failed=1
+[MAIN] All experiments completed.
