@@ -20,6 +20,8 @@ SESSIONS = {   # libs: files the script sources, shipped beside it; kernels: ear
                 "kernels": ["open3d-rs-s1-build"]},
     "s4_layer": {"slug": "open3d-rs-s4-layer", "title": "open3d-rs-s4-layer", "internet": True, "libs": ["rs_lib.sh"],
                  "kernels": ["open3d-rs-s1-build"]},
+    "s5_add": {"slug": "open3d-rs-s5-add", "title": "open3d-rs-s5-add", "internet": True,
+               "libs": ["rs_lib.sh", "add_layers.py"], "kernels": ["open3d-rs-s1-build"]},
 }
 
 
