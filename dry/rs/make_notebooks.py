@@ -3,26 +3,24 @@
 The notebook runs the script unchanged (embedded as text, written to disk, run with bash) and keeps its exit code,
 so what runs on Kaggle is exactly the reviewed file; its sha256 is printed in the notebook and kept in the record.
 
-  python make_notebooks.py <kernel dir parent> [--owner OWNER]
+  python make_notebooks.py <kernel dir parent> <session...> [--owner OWNER]
 """
 import argparse
 import hashlib
 import json
+import re
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-SESSIONS = {   # libs: files the script sources, shipped beside it; kernels: earlier sessions' outputs attached
-    "s1_build": {"slug": "open3d-rs-s1-build", "title": "open3d-rs-s1-build", "internet": True, "libs": [],
-                 "kernels": []},
-    "s2_gcd": {"slug": "open3d-rs-s2-gcd", "title": "open3d-rs-s2-gcd", "internet": True, "libs": ["rs_lib.sh"],
-               "kernels": ["open3d-rs-s1-build"]},
-    "s3_ibex": {"slug": "open3d-rs-s3-ibex", "title": "open3d-rs-s3-ibex", "internet": True, "libs": ["rs_lib.sh"],
-                "kernels": ["open3d-rs-s1-build"]},
-    "s4_layer": {"slug": "open3d-rs-s4-layer", "title": "open3d-rs-s4-layer", "internet": True, "libs": ["rs_lib.sh"],
-                 "kernels": ["open3d-rs-s1-build"]},
-    "s5_add": {"slug": "open3d-rs-s5-add", "title": "open3d-rs-s5-add", "internet": True,
-               "libs": ["rs_lib.sh", "add_layers.py"], "kernels": ["open3d-rs-s1-build"]},
+SESSIONS = {   # session script stem: the earlier sessions whose output is attached
+    "s1_build": [], "s2_gcd": ["s1_build"], "s3_ibex": ["s1_build"], "s4_layer": ["s1_build"],
+    "s5_add": ["s1_build"], "s6_add": ["s1_build"],
 }
+LIB = re.compile(r'"\$\(dirname "\$0"\)/([\w.]+)"')   # files a script sources or runs from its own folder
+
+
+def slug(name):
+    return "open3d-rs-" + name.replace("_", "-")
 
 
 def script_text(path):
@@ -62,20 +60,24 @@ def notebook(script_name, text, sha, libs=()):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("parent")
+    ap.add_argument("sessions", nargs="+", choices=sorted(SESSIONS),
+                    help="the sessions to build: a session that has run keeps the libs it ran with, so it is not rebuilt")
     ap.add_argument("--owner", default="rajulkabir")
     a = ap.parse_args()
-    for name, s in SESSIONS.items():
+    for name in a.sessions:
         text, sha = script_text(HERE / f"{name}.sh")
-        libs = [(n, *script_text(HERE / n)) for n in s["libs"]]
+        libs = [(n, *script_text(HERE / n)) for n in dict.fromkeys(LIB.findall(text))]
+        if any(LIB.search(t) for _, t, _ in libs):     # libs are written flat beside the script, one level only
+            raise SystemExit(f"{name}: a lib calls another file from its folder; ship it from the script instead")
         nb, _ = notebook(f"{name}.sh", text, sha, libs)
-        k = Path(a.parent) / s["slug"]
+        k = Path(a.parent) / slug(name)
         k.mkdir(parents=True, exist_ok=True)
         (k / f"{name}.ipynb").write_text(json.dumps(nb, indent=1), encoding="utf-8")
         (k / "kernel-metadata.json").write_text(json.dumps({
-            "id": f"{a.owner}/{s['slug']}", "title": s["title"], "code_file": f"{name}.ipynb", "language": "python",
+            "id": f"{a.owner}/{slug(name)}", "title": slug(name), "code_file": f"{name}.ipynb", "language": "python",
             "kernel_type": "notebook", "is_private": True, "enable_gpu": False, "enable_tpu": False,
-            "enable_internet": s["internet"], "dataset_sources": [], "competition_sources": [],
-            "kernel_sources": [f"{a.owner}/{src}" for src in s["kernels"]]},
+            "enable_internet": True, "dataset_sources": [], "competition_sources": [],
+            "kernel_sources": [f"{a.owner}/{slug(src)}" for src in SESSIONS[name]]},
             indent=1), encoding="utf-8")
         print(k, sha)
 
