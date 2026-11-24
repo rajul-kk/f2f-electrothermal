@@ -14,7 +14,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 SESSIONS = {   # session script stem: the earlier sessions whose output is attached
     "s1_build": [], "s2_gcd": ["s1_build"], "s3_ibex": ["s1_build"], "s4_layer": ["s1_build"],
-    "s5_add": ["s1_build"], "s6_add": ["s1_build"], "s7_grt": ["s1_build"],
+    "s5_add": ["s1_build"], "s6_add": ["s1_build"], "s7_grt": ["s1_build"], "s8_direct": ["s1_build"],
 }
 LIB = re.compile(r'"\$\(dirname "\$0"\)/([\w.]+)"')   # files a script sources or runs from its own folder
 
