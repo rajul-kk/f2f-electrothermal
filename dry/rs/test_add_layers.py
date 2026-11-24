@@ -1,6 +1,7 @@
 """Tests for add_layers.py on miniature copies of the two platforms' files, and on the real Pin-3D checkout at
 51a19d6f when it is present locally (OPEN3D_PIN3D, default D:/Work/open3d-thermal-ext/pin3d; skipped otherwise)."""
 import os
+import re
 import subprocess
 from pathlib import Path
 
@@ -96,23 +97,50 @@ def test_tracks_refuse_an_unexpected_count():
         al.append_lines(HYB_TRACKS, "", al.TRACK, 7, "tracks")
 
 
-CONFIG = "\n".join(old for old, _ in al.CONFIG_EDITS) + "\nexport OTHER ?= 1\n"
+HBRDL = al.config_edits("hbrdl")                           # without the -gcell_size line
+CONFIG = "\n".join(old for old, _ in HBRDL) + "\nexport OTHER ?= 1\n"
 
 
 def test_config_edits_each_line_once_and_nothing_else():
-    out = al.patch_config(CONFIG, al.config_edits(False))
-    assert out.splitlines() == [new for _, new in al.CONFIG_EDITS] + ["export OTHER ?= 1"]
+    out = al.patch_config(CONFIG, al.config_edits("hbrdl"))
+    assert out.splitlines() == [new for _, new in HBRDL] + ["export OTHER ?= 1"]
     assert "MAX_ROUTING_LAYER ?= M3_add" in out and "lef/asap7_tech_1x_2A6M7M_hbrdl_add.lef" in out
     assert "export ASAP7_HBT_RDL_RCX_RULES ?=\n" in out
 
 
 def test_config_refuses_a_missing_or_repeated_line():
     with pytest.raises(SystemExit):
-        al.patch_config(CONFIG.replace("M2_m", "M4_m"), al.config_edits(False))
+        al.patch_config(CONFIG.replace("M2_m", "M4_m"), al.config_edits("hbrdl"))
     with pytest.raises(SystemExit):
-        al.patch_config(CONFIG + al.CONFIG_EDITS[-1][0] + "\n", al.config_edits(False))
+        al.patch_config(CONFIG + HBRDL[-1][0] + "\n", al.config_edits("hbrdl"))
     with pytest.raises(SystemExit):                            # --drop-gcell needs the -gcell_size line
-        al.patch_config(CONFIG, al.config_edits(True))
+        al.patch_config(CONFIG, al.config_edits("hbrdl", True))
+    with pytest.raises(SystemExit):                            # and applies to hbrdl only
+        al.config_edits("direct", True)
+
+
+def test_direct_view_is_pinned_and_extracts_on_the_2a_deck():
+    news = [new for _, new in al.config_edits("direct")]
+    assert news[0] == "override export ASAP7_HBT_RDL := 0"
+    assert news[-1] == "override export RCX_RULES := $(PLATFORM_DIR)/asap7_tech_1x_2A6M7M.rcx_patterns.rules"
+    assert "export PIN3D_REQUIRE_RCX_LAYER_MATCH := 1" in news   # the flow checks the deck against the tech
+    assert all("_hbrdl" not in new and "gcell" not in new for new in news)
+
+
+ROUTING = re.compile(r"^LAYER (\S+)\n(?:(?!^END ).*\n)*?\s*TYPE ROUTING ;", re.MULTILINE)
+
+
+@real
+def test_direct_layers_and_deck_match_the_kits_2a_stack():
+    kit = (PIN3D / "platforms/rc_extract/input/asap7_tech_1x_2A6M7M.lef").read_text(encoding="utf-8")
+    ours = al.build(PIN3D, with_config=False, view="direct")[al.a7_files("direct", "_add")["lef"]]
+    for layer in ("V1_add", "M2_add", "V2_add", "M3_add"):
+        block = re.compile(rf"^LAYER {layer}\n.*?^END {layer}\n", re.MULTILINE | re.DOTALL)
+        assert block.search(ours).group(0) == block.search(kit).group(0), layer
+    layers = ROUTING.findall(ours)            # what final_report.tcl's check counts, in the order the deck models
+    assert layers == ROUTING.findall(kit) and len(layers) == 15
+    deck = (PIN3D / al.DIRECT_DECK).read_text(encoding="utf-8")
+    assert re.search(r"LayerCount\s+15\b", deck)
 
 
 @real
@@ -122,19 +150,22 @@ def test_real_checkout_is_the_pinned_commit():
 
 
 @real
-@pytest.mark.parametrize("drop_gcell", [False, True])
-def test_real_files_take_every_edit_and_only_those(drop_gcell):
-    out = al.build(PIN3D, with_config=True, drop_gcell=drop_gcell)   # builds in memory, writes nothing
+@pytest.mark.parametrize("view, drop_gcell", [("hbrdl", False), ("hbrdl", True), ("direct", False)])
+def test_real_files_take_every_edit_and_only_those(view, drop_gcell):
+    out = al.build(PIN3D, with_config=True, drop_gcell=drop_gcell, view=view)   # builds in memory, writes nothing
     cfg = (PIN3D / al.CONFIG).read_text(encoding="utf-8").splitlines()
     new = out[al.CONFIG].splitlines()
     changed = [(a, b) for a, b in zip(cfg, new, strict=True) if a != b]
-    assert changed == al.config_edits(drop_gcell)
-    assert ("-gcell_size $(" in out[al.CONFIG]) != drop_gcell
-    lef = out[al.OUT["lef"]]
+    assert changed == al.config_edits(view, drop_gcell)
+    if view == "hbrdl":
+        assert ("-gcell_size $(" in out[al.CONFIG]) != drop_gcell
+    else:                                     # the line stays, inside the hbrdl block the pin switches off
+        assert "override export ASAP7_HBT_RDL := 0" in new
+    lef = out[al.a7_files(view, "_add")["lef"]]
     order = [lef.index(s) for s in ("END M1_m", "LAYER V1_add", "END M3_add", "VIA VIA_M1m_M2add",
                                     "VIA VIA_M2add_M3add", "VIARULE ")]
     assert order == sorted(order)
-    orig = (PIN3D / al.SRC["lef"][1]).read_text(encoding="utf-8")
+    orig = (PIN3D / al.a7_files(view)["lef"]).read_text(encoding="utf-8")
     assert lef.count("\n") - orig.count("\n") == 101          # 4 layers + 2 vias, nothing else
-    for p in al.OUT.values():
+    for p in al.a7_files(view, "_add").values():
         assert not (PIN3D / p).exists()                        # the tracked checkout is untouched
