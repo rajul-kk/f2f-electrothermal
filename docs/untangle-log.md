@@ -28,3 +28,12 @@ comparing them with `diff -r` (no difference); the folders and the output were n
 **Tests:** `test_lef_refuses_a_second_application` removed. It tested a guard `main` could never reach, which was
 deleted. The config tests that only checked `CONFIG_EDITS` against itself are now backed by tests on the real
 checkout.
+
+## 19 Nov 2026: dry/rs S7 (add_layers.py --drop-gcell, s7_grt.sh)
+
+**Kept: a separate `--drop-gcell` flag instead of adding the edit to `CONFIG_EDITS`.** It looks like a parameter for
+one caller (S7), but each session's record must stay rebuildable as it ran: with the edit folded into `--config`, a
+rebuilt S6 notebook would no longer reproduce S6's STA-0562 (code review round 1). `--config` alone still prints
+the same hashes as S6's recorded `add_layers.py` (checked by hand on 19 Nov, not kept).
+**Kept:** `s7_grt.sh` repeats `s6_add.sh` except for the flag and the header; both are run records.
+**Tests:** none removed; the real-checkout test now runs with and without `--drop-gcell`.
