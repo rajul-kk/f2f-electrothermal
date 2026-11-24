@@ -1,0 +1,16 @@
+tarball /kaggle/input/notebooks/rajulkabir/open3d-rs-s1-build/orfs_install.tgz b003f6fcf73a5d96ee38bc14124d44976a8b47e69b1444f823d631e76ec78fed (S1 b003f6fcf73a5d96ee38bc14124d44976a8b47e69b1444f823d631e76ec78fed)
+== before setup.sh
+5dacbf4700823c5ef87186910ab97d1f921c925245f32c8ced02161916801e3b  /tmp/rs/orfs/tools/install/OpenROAD/bin/openroad
+af7339bae0527cdb4ca9d70895eadca8e0e133e05f78e21cdbf6e496136abc75  /tmp/rs/orfs/tools/install/yosys/bin/yosys
+libraries not found: 6
+	libtclreadline-2.3.8.so => not found
+	libQt5Charts.so.5 => not found
+	libQt5Widgets.so.5 => not found
+	libQt5Gui.so.5 => not found
+	libQt5Core.so.5 => not found
+	libyaml-cpp.so.0.8 => not found
+tarball /kaggle/input/notebooks/rajulkabir/open3d-rs-s1-build/orfs_install.tgz b003f6fcf73a5d96ee38bc14124d44976a8b47e69b1444f823d631e76ec78fed (S1 b003f6fcf73a5d96ee38bc14124d44976a8b47e69b1444f823d631e76ec78fed)
+== after setup.sh
+5dacbf4700823c5ef87186910ab97d1f921c925245f32c8ced02161916801e3b  /tmp/rs/orfs/tools/install/OpenROAD/bin/openroad
+af7339bae0527cdb4ca9d70895eadca8e0e133e05f78e21cdbf6e496136abc75  /tmp/rs/orfs/tools/install/yosys/bin/yosys
+libraries not found: 0
