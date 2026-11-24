@@ -1,0 +1,22 @@
+[2026-11-19T08:25:15Z] start clone (at most 37745s)
+[2026-11-19T08:26:23Z] end clone rc=0 after 68s
+[2026-11-19T08:26:23Z] start checkout (at most 37677s)
+[2026-11-19T08:30:40Z] end checkout rc=0 after 257s
+[2026-11-19T08:30:48Z] start setup (at most 37412s)
+[2026-11-19T08:44:30Z] end setup rc=0 after 822s
+[2026-11-19T08:44:39Z] start versions (at most 36581s)
+[2026-11-19T08:44:39Z] end versions rc=0 after 0s
+[2026-11-19T08:44:39Z] start clone_pin3d (at most 36581s)
+[2026-11-19T08:44:49Z] end clone_pin3d rc=0 after 10s
+[2026-11-19T08:44:49Z] S6: asap7_3D config.mk patched (add_layers.py --config); no environment overrides
+[2026-11-19T08:44:49Z] start gcd_asap7_3D (at most 36571s)
+[2026-11-19T08:49:20Z] end gcd_asap7_3D rc=0 after 271s
+[2026-11-19T08:49:20Z] gcd_asap7_3D: run_experiments.py last status '[STATUS] failed=1'
+[2026-11-19T08:49:20Z] gcd failed in 1 of 1 techs
+[2026-11-19T08:49:20Z] start ibex_asap7_3D (at most 36300s)
+[2026-11-19T09:18:50Z] end ibex_asap7_3D rc=0 after 1770s
+[2026-11-19T09:18:50Z] ibex_asap7_3D: run_experiments.py last status '[STATUS] failed=1'
+[2026-11-19T09:18:50Z] ibex failed in 1 of 1 techs
+[2026-11-19T09:18:50Z] exit status 2
+[2026-11-19T09:18:58Z] results tar rc=0
+peak machine memory in use MiB 13443
