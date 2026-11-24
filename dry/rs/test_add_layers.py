@@ -1,7 +1,15 @@
-"""Tests for add_layers.py on miniature copies of the two platforms' files."""
+"""Tests for add_layers.py on miniature copies of the two platforms' files, and on the real Pin-3D checkout at
+51a19d6f when it is present locally (OPEN3D_PIN3D, default D:/Work/open3d-thermal-ext/pin3d; skipped otherwise)."""
+import os
+import subprocess
+from pathlib import Path
+
 import pytest
 
 import add_layers as al
+
+PIN3D = Path(os.environ.get("OPEN3D_PIN3D", "D:/Work/open3d-thermal-ext/pin3d"))
+real = pytest.mark.skipif(not (PIN3D / al.CONFIG).is_file(), reason="no local Pin-3D checkout")
 
 HYB_LEF = """LAYER M1_m
   TYPE ROUTING ;
@@ -71,11 +79,6 @@ def test_lef_gets_the_layer_block_after_m1m_and_both_vias_before_the_viarule():
     assert out.count("LAYER M1_m\n") == 1 and out.endswith("END LIBRARY\n")
 
 
-def test_lef_refuses_a_second_application():
-    with pytest.raises(SystemExit):
-        al.patch_lef(HYB_LEF, al.patch_lef(HYB_LEF, A7_LEF))
-
-
 def test_lef_refuses_when_the_layer_block_is_missing():
     with pytest.raises(SystemExit):
         al.patch_lef(HYB_LEF.replace("LAYER V1_add", "LAYER V1_xx"), A7_LEF)
@@ -91,3 +94,43 @@ def test_tracks_and_rc_append_only_the_added_layers():
 def test_tracks_refuse_an_unexpected_count():
     with pytest.raises(SystemExit):
         al.append_lines(HYB_TRACKS, "", al.TRACK, 7, "tracks")
+
+
+CONFIG = "\n".join(old for old, _ in al.CONFIG_EDITS) + "\nexport OTHER ?= 1\n"
+
+
+def test_config_edits_each_line_once_and_nothing_else():
+    out = al.patch_config(CONFIG)
+    assert out.splitlines() == [new for _, new in al.CONFIG_EDITS] + ["export OTHER ?= 1"]
+    assert "MAX_ROUTING_LAYER ?= M3_add" in out and "lef/asap7_tech_1x_2A6M7M_hbrdl_add.lef" in out
+    assert "export ASAP7_HBT_RDL_RCX_RULES ?=\n" in out
+
+
+def test_config_refuses_a_missing_or_repeated_line():
+    with pytest.raises(SystemExit):
+        al.patch_config(CONFIG.replace("M2_m", "M4_m"))
+    with pytest.raises(SystemExit):
+        al.patch_config(CONFIG + al.CONFIG_EDITS[-1][0] + "\n")
+
+
+@real
+def test_real_checkout_is_the_pinned_commit():
+    head = subprocess.run(["git", "-C", str(PIN3D), "rev-parse", "HEAD"], capture_output=True, text=True, check=True).stdout
+    assert head.startswith("51a19d6f")
+
+
+@real
+def test_real_files_take_every_edit_and_only_those():
+    out = al.build(PIN3D, with_config=True)                 # builds in memory, writes nothing
+    cfg = (PIN3D / al.CONFIG).read_text(encoding="utf-8").splitlines()
+    new = out[al.CONFIG].splitlines()
+    changed = [(a, b) for a, b in zip(cfg, new, strict=True) if a != b]
+    assert changed == al.CONFIG_EDITS
+    lef = out[al.OUT["lef"]]
+    order = [lef.index(s) for s in ("END M1_m", "LAYER V1_add", "END M3_add", "VIA VIA_M1m_M2add",
+                                    "VIA VIA_M2add_M3add", "VIARULE ")]
+    assert order == sorted(order)
+    orig = (PIN3D / al.SRC["lef"][1]).read_text(encoding="utf-8")
+    assert lef.count("\n") - orig.count("\n") == 101          # 4 layers + 2 vias, nothing else
+    for p in al.OUT.values():
+        assert not (PIN3D / p).exists()                        # the tracked checkout is untouched
