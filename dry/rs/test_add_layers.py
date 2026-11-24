@@ -100,7 +100,7 @@ CONFIG = "\n".join(old for old, _ in al.CONFIG_EDITS) + "\nexport OTHER ?= 1\n"
 
 
 def test_config_edits_each_line_once_and_nothing_else():
-    out = al.patch_config(CONFIG)
+    out = al.patch_config(CONFIG, al.config_edits(False))
     assert out.splitlines() == [new for _, new in al.CONFIG_EDITS] + ["export OTHER ?= 1"]
     assert "MAX_ROUTING_LAYER ?= M3_add" in out and "lef/asap7_tech_1x_2A6M7M_hbrdl_add.lef" in out
     assert "export ASAP7_HBT_RDL_RCX_RULES ?=\n" in out
@@ -108,9 +108,11 @@ def test_config_edits_each_line_once_and_nothing_else():
 
 def test_config_refuses_a_missing_or_repeated_line():
     with pytest.raises(SystemExit):
-        al.patch_config(CONFIG.replace("M2_m", "M4_m"))
+        al.patch_config(CONFIG.replace("M2_m", "M4_m"), al.config_edits(False))
     with pytest.raises(SystemExit):
-        al.patch_config(CONFIG + al.CONFIG_EDITS[-1][0] + "\n")
+        al.patch_config(CONFIG + al.CONFIG_EDITS[-1][0] + "\n", al.config_edits(False))
+    with pytest.raises(SystemExit):                            # --drop-gcell needs the -gcell_size line
+        al.patch_config(CONFIG, al.config_edits(True))
 
 
 @real
@@ -120,12 +122,14 @@ def test_real_checkout_is_the_pinned_commit():
 
 
 @real
-def test_real_files_take_every_edit_and_only_those():
-    out = al.build(PIN3D, with_config=True)                 # builds in memory, writes nothing
+@pytest.mark.parametrize("drop_gcell", [False, True])
+def test_real_files_take_every_edit_and_only_those(drop_gcell):
+    out = al.build(PIN3D, with_config=True, drop_gcell=drop_gcell)   # builds in memory, writes nothing
     cfg = (PIN3D / al.CONFIG).read_text(encoding="utf-8").splitlines()
     new = out[al.CONFIG].splitlines()
     changed = [(a, b) for a, b in zip(cfg, new, strict=True) if a != b]
-    assert changed == al.CONFIG_EDITS
+    assert changed == al.config_edits(drop_gcell)
+    assert ("-gcell_size $(" in out[al.CONFIG]) != drop_gcell
     lef = out[al.OUT["lef"]]
     order = [lef.index(s) for s in ("END M1_m", "LAYER V1_add", "END M3_add", "VIA VIA_M1m_M2add",
                                     "VIA VIA_M2add_M3add", "VIARULE ")]

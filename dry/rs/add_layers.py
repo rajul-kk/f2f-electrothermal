@@ -1,4 +1,4 @@
-"""S5/S6 (GRT0029.md, section S4): give asap7_3D the two routing layers above M1_m that asap7_nangate45_3D ships.
+"""S5 to S7 (GRT0029.md, section S4): give asap7_3D the two routing layers above M1_m that asap7_nangate45_3D ships.
 
 Copies, from the hybrid platform of the same Pin-3D checkout, the LEF layers V1_add, M2_add, V2_add and M3_add (one
 contiguous block ending at END M3_add) and the vias that use them, into a new asap7_3D tech LEF right after M1_m;
@@ -10,9 +10,13 @@ With --config (S6) it also points asap7_3D's own config.mk at those copies, sets
 empties ASAP7_HBT_RDL_RCX_RULES (the kit's 15-layer extraction rules do not cover the new layers; config.mk then
 unexports RCX_RULES). This keeps the change inside the 3D platform: Pin-3D runs synthesis and the first floorplan on
 the 2D asap7 platform, which environment overrides would also reach (S5 v1: its floorplan sourced the 3D RC script).
+With --drop-gcell as well (S7) it also drops the kit's `GLOBAL_ROUTE_ARGS += -gcell_size` line: the pinned
+OpenROAD's global_route rejects that flag (STA-0562), and Pin-3D catches the error and goes on with no route
+(record/2026-11-19_s6_v1/NOTE.md, which cites the upstream definition). Global routing then uses OpenROAD's default
+gcell size, not the kit's 1.1 um. Without it, --config makes exactly the edits S6 ran with.
 The original config.mk is kept beside it as config.mk.orig; only the clone is changed, never a tracked file.
 
-  python add_layers.py <pin3d dir> [--config]     prints the sha256 of every input and output
+  python add_layers.py <pin3d dir> [--config [--drop-gcell]]     prints the sha256 of every input and output
 """
 import argparse
 import hashlib
@@ -65,7 +69,7 @@ def append_lines(hyb, a7, pattern, n_expected, what):
 
 
 CONFIG = f"{A7}/config.mk"
-CONFIG_EDITS = [   # (exact line in asap7_3D's config.mk at Pin-3D 51a19d6f, its replacement)
+CONFIG_EDITS = [   # (exact line in asap7_3D's config.mk at Pin-3D 51a19d6f, its replacement), in file order
     ("export ASAP7_HBT_RDL_RCX_RULES ?= $(PLATFORM_DIR)/asap7_tech_1x_2A6M7M_hbrdl.rcx_patterns.rules",
      "export ASAP7_HBT_RDL_RCX_RULES ?="),
     ("  ASAP7_OPENROAD_TECH_LEF := $(PLATFORM_DIR)/lef/asap7_tech_1x_2A6M7M_hbrdl.lef",
@@ -76,12 +80,19 @@ CONFIG_EDITS = [   # (exact line in asap7_3D's config.mk at Pin-3D 51a19d6f, its
      f"  ASAP7_OPENROAD_MAKE_TRACKS := $(PLATFORM_DIR)/{OUT['tracks'].removeprefix(A7 + '/')}"),
     ("  export MAX_ROUTING_LAYER ?= M2_m", "  export MAX_ROUTING_LAYER ?= M3_add"),
 ]
+GCELL_EDIT = ("  export GLOBAL_ROUTE_ARGS += -gcell_size $(ASAP7_HBT_RDL_GCELL_SIZE_UM)",
+              "  # -gcell_size dropped: not a global_route flag in the pinned OpenROAD")   # S7, --drop-gcell
 
 
-def patch_config(text):
-    """Each CONFIG_EDITS line must occur exactly once as a whole line; returns the edited text."""
+def config_edits(drop_gcell):
+    """The edits in file order (the -gcell_size line sits above MAX_ROUTING_LAYER)."""
+    return CONFIG_EDITS[:4] + [GCELL_EDIT] + CONFIG_EDITS[4:] if drop_gcell else list(CONFIG_EDITS)
+
+
+def patch_config(text, edits):
+    """Each edit's line must occur exactly once as a whole line; returns the edited text."""
     lines = text.split("\n")
-    for old, new in CONFIG_EDITS:
+    for old, new in edits:
         idx = [i for i, line in enumerate(lines) if line == old]
         if len(idx) != 1:
             raise SystemExit(f"config.mk: {len(idx)} lines equal to {old!r}, expected 1")
@@ -89,14 +100,14 @@ def patch_config(text):
     return "\n".join(lines)
 
 
-def build(root, with_config):
+def build(root, with_config, drop_gcell=False):
     """{path: new text} for every output, all computed (and every anchor checked) before anything is written."""
     text = {k: tuple((root / p).read_text(encoding="utf-8") for p in v) for k, v in SRC.items()}
     out = {OUT["lef"]: patch_lef(*text["lef"]),
            OUT["tracks"]: append_lines(*text["tracks"], TRACK, 8, "hybrid M2_add/M3_add tracks"),
            OUT["rc"]: append_lines(*text["rc"], RC, 4, "hybrid *_add RC lines")}
-    if with_config:
-        out[CONFIG] = patch_config((root / CONFIG).read_text(encoding="utf-8"))   # written last (see main)
+    if with_config:   # config.mk is written last (see main)
+        out[CONFIG] = patch_config((root / CONFIG).read_text(encoding="utf-8"), config_edits(drop_gcell))
     return out
 
 
@@ -104,8 +115,11 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("pin3d", type=Path)
     ap.add_argument("--config", action="store_true", help="also patch asap7_3D's config.mk (S6)")
+    ap.add_argument("--drop-gcell", action="store_true", help="with --config: also drop -gcell_size (S7)")
     a = ap.parse_args()
-    out = build(a.pin3d, a.config)
+    if a.drop_gcell and not a.config:
+        ap.error("--drop-gcell needs --config")
+    out = build(a.pin3d, a.config, a.drop_gcell)
     inputs = [q for v in SRC.values() for q in v]
     if a.config:
         shutil.copyfile(a.pin3d / CONFIG, a.pin3d / f"{CONFIG}.orig")   # byte-identical original
