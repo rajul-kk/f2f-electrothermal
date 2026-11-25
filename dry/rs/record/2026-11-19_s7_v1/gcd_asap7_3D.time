@@ -1,0 +1,24 @@
+	Command being timed: "timeout -k 120 36066 bash -c cd "$1" && export ORFS_DIR="$2" NUM_CORES=$(nproc) && source env.sh && shift 2 \
+    && python3 run_experiments.py "$@" _ /tmp/rs/pin3d /tmp/rs/orfs --flow ord --tech asap7_3D --case gcd --run-only"
+	User time (seconds): 251.57
+	System time (seconds): 206.58
+	Percent of CPU this job got: 152%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 5:00.42
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 556976
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 38
+	Minor (reclaiming a frame) page faults: 2745162
+	Voluntary context switches: 5674913
+	Involuntary context switches: 547845
+	Swaps: 0
+	File system inputs: 4264
+	File system outputs: 113336
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
