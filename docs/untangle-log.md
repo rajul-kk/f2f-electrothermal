@@ -37,3 +37,16 @@ rebuilt S6 notebook would no longer reproduce S6's STA-0562 (code review round 1
 the same hashes as S6's recorded `add_layers.py` (checked by hand on 19 Nov, not kept).
 **Kept:** `s7_grt.sh` repeats `s6_add.sh` except for the flag and the header; both are run records.
 **Tests:** none removed; the real-checkout test now runs with and without `--drop-gcell`.
+
+## 20 Nov 2026: dry/rs S8 (add_layers.py --view, s8_direct.sh)
+
+**Changed: the two tech views are data.** `VIEWS` (file suffix) and `a7_files(view, add)` name every input and
+output, and `CONFIG_EDITS` holds one edit list per view in file order. The S5-S7 `SRC`/`OUT` tables and the
+`edits.insert(4, ...)` index are gone; the `-gcell_size` edit sits in the hbrdl list and is filtered unless
+`--drop-gcell`. `--config` and `--config --drop-gcell` on hbrdl print S6's and S7's recorded config.mk hashes
+(bb9d5dff, b6a4df9c) byte for byte, now also on Windows (outputs written with LF).
+**Kept:** the added layers are still copied from the hybrid platform's LEF, not from the kit's own
+`rc_extract/input/asap7_tech_1x_2A6M7M.lef`: S5-S7 used that source, and a real-checkout test proves the two give
+identical `*_add` blocks and the same 15 routing layers in order.
+**Kept:** `s8_direct.sh` repeats `s7_grt.sh` except for the arguments and the header; both are run records.
+**Tests:** none removed; the real-checkout test runs on hbrdl (with and without `--drop-gcell`) and direct.
