@@ -1,0 +1,85 @@
+[MAIN] repo_root=/tmp/rs/pin3d
+[MAIN] flows=['ord'] techs=['asap7_3D'] cases=['gcd'] jobs=9
+[MAIN] stages: run=True eval=False
+[MAIN] shard=0/1
+[MAIN] total_tasks=1 logs under run_logs/<tech>/<flow>/...
+[MAIN] live status files under /tmp/rs/pin3d/run_logs/status
+[submit] 748721baa2fa ord/asap7_3D/gcd job=task.25659.1795148507515 status=running phase=run
+[STATUS] running=1
+[TASK] HOST         TASK             STATUS  PHASE DISPATCH JOB                        PID ALIVE STAGE_LOG
+[TASK] ---------------------------------------------------------------------------------------------------
+[TASK] 748721baa2fa ord/asap7_3D/gcd running run   running  task.25659.1795148507515 25670 True  -        
+[STATUS] running=1
+[TASK] HOST         TASK             STATUS  PHASE DISPATCH JOB                        PID ALIVE STAGE_LOG           
+[TASK] --------------------------------------------------------------------------------------------------------------
+[TASK] 748721baa2fa ord/asap7_3D/gcd running run   running  task.25659.1795148507515 25670 True  2_tritonpart.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK             STATUS  PHASE DISPATCH JOB                        PID ALIVE STAGE_LOG           
+[TASK] --------------------------------------------------------------------------------------------------------------
+[TASK] 748721baa2fa ord/asap7_3D/gcd running run   running  task.25659.1795148507515 25670 True  2_tritonpart.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK             STATUS  PHASE DISPATCH JOB                        PID ALIVE STAGE_LOG           
+[TASK] --------------------------------------------------------------------------------------------------------------
+[TASK] 748721baa2fa ord/asap7_3D/gcd running run   running  task.25659.1795148507515 25670 True  2_tritonpart.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK             STATUS  PHASE DISPATCH JOB                        PID ALIVE STAGE_LOG           
+[TASK] --------------------------------------------------------------------------------------------------------------
+[TASK] 748721baa2fa ord/asap7_3D/gcd running run   running  task.25659.1795148507515 25670 True  2_tritonpart.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK             STATUS  PHASE DISPATCH JOB                        PID ALIVE STAGE_LOG           
+[TASK] --------------------------------------------------------------------------------------------------------------
+[TASK] 748721baa2fa ord/asap7_3D/gcd running run   running  task.25659.1795148507515 25670 True  2_tritonpart.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK             STATUS  PHASE DISPATCH JOB                        PID ALIVE STAGE_LOG           
+[TASK] --------------------------------------------------------------------------------------------------------------
+[TASK] 748721baa2fa ord/asap7_3D/gcd running run   running  task.25659.1795148507515 25670 True  2_tritonpart.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK             STATUS  PHASE DISPATCH JOB                        PID ALIVE STAGE_LOG           
+[TASK] --------------------------------------------------------------------------------------------------------------
+[TASK] 748721baa2fa ord/asap7_3D/gcd running run   running  task.25659.1795148507515 25670 True  2_tritonpart.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK             STATUS  PHASE DISPATCH JOB                        PID ALIVE STAGE_LOG           
+[TASK] --------------------------------------------------------------------------------------------------------------
+[TASK] 748721baa2fa ord/asap7_3D/gcd running run   running  task.25659.1795148507515 25670 True  2_tritonpart.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK             STATUS  PHASE DISPATCH JOB                        PID ALIVE STAGE_LOG           
+[TASK] --------------------------------------------------------------------------------------------------------------
+[TASK] 748721baa2fa ord/asap7_3D/gcd running run   running  task.25659.1795148507515 25670 True  2_tritonpart.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK             STATUS  PHASE DISPATCH JOB                        PID ALIVE STAGE_LOG                  
+[TASK] ---------------------------------------------------------------------------------------------------------------------
+[TASK] 748721baa2fa ord/asap7_3D/gcd running run   running  task.25659.1795148507515 25670 True  2_4_floorplan_split.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK             STATUS  PHASE DISPATCH JOB                        PID ALIVE STAGE_LOG           
+[TASK] --------------------------------------------------------------------------------------------------------------
+[TASK] 748721baa2fa ord/asap7_3D/gcd running run   running  task.25659.1795148507515 25670 True  3_place_init.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK             STATUS  PHASE DISPATCH JOB                        PID ALIVE STAGE_LOG           
+[TASK] --------------------------------------------------------------------------------------------------------------
+[TASK] 748721baa2fa ord/asap7_3D/gcd running run   running  task.25659.1795148507515 25670 True  3_5_lg_upper.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK             STATUS  PHASE DISPATCH JOB                        PID ALIVE STAGE_LOG      
+[TASK] ---------------------------------------------------------------------------------------------------------
+[TASK] 748721baa2fa ord/asap7_3D/gcd running run   running  task.25659.1795148507515 25670 True  5_1_grt.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK             STATUS  PHASE DISPATCH JOB                        PID ALIVE STAGE_LOG        
+[TASK] -----------------------------------------------------------------------------------------------------------
+[TASK] 748721baa2fa ord/asap7_3D/gcd running run   running  task.25659.1795148507515 25670 True  5_2_route.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK             STATUS  PHASE DISPATCH JOB                        PID ALIVE STAGE_LOG        
+[TASK] -----------------------------------------------------------------------------------------------------------
+[TASK] 748721baa2fa ord/asap7_3D/gcd running run   running  task.25659.1795148507515 25670 True  5_2_route.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK             STATUS  PHASE DISPATCH JOB                        PID ALIVE STAGE_LOG        
+[TASK] -----------------------------------------------------------------------------------------------------------
+[TASK] 748721baa2fa ord/asap7_3D/gcd running run   running  task.25659.1795148507515 25670 True  5_2_route.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK             STATUS  PHASE DISPATCH JOB                        PID ALIVE STAGE_LOG        
+[TASK] -----------------------------------------------------------------------------------------------------------
+[TASK] 748721baa2fa ord/asap7_3D/gcd running run   running  task.25659.1795148507515 25670 True  5_2_route.log.tmp
+[STATUS] running=1
+[TASK] HOST         TASK             STATUS  PHASE DISPATCH JOB                        PID ALIVE STAGE_LOG        
+[TASK] -----------------------------------------------------------------------------------------------------------
+[TASK] 748721baa2fa ord/asap7_3D/gcd running run   running  task.25659.1795148507515 25670 True  5_2_route.log.tmp
+[STATUS] ok=1
+[MAIN] All experiments completed.
