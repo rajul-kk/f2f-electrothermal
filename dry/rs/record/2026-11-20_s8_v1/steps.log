@@ -1,0 +1,22 @@
+[2026-11-20T04:07:01Z] start clone (at most 37780s)
+[2026-11-20T04:08:29Z] end clone rc=0 after 88s
+[2026-11-20T04:08:29Z] start checkout (at most 37692s)
+[2026-11-20T04:12:18Z] end checkout rc=0 after 229s
+[2026-11-20T04:12:33Z] start setup (at most 37448s)
+[2026-11-20T04:21:22Z] end setup rc=0 after 529s
+[2026-11-20T04:21:36Z] start versions (at most 36905s)
+[2026-11-20T04:21:36Z] end versions rc=0 after 0s
+[2026-11-20T04:21:36Z] start clone_pin3d (at most 36905s)
+[2026-11-20T04:21:47Z] end clone_pin3d rc=0 after 11s
+[2026-11-20T04:21:47Z] S8: asap7_3D direct view patched (add_layers.py --view direct --config); no environment overrides
+[2026-11-20T04:21:47Z] start gcd_asap7_3D (at most 36894s)
+[2026-11-20T04:31:18Z] end gcd_asap7_3D rc=0 after 571s
+[2026-11-20T04:31:18Z] gcd asap7_3D ok
+[2026-11-20T04:31:18Z] gcd failed in 0 of 1 techs
+[2026-11-20T04:31:18Z] start ibex_asap7_3D (at most 36323s)
+[2026-11-20T07:02:21Z] end ibex_asap7_3D rc=0 after 9063s
+[2026-11-20T07:02:21Z] ibex asap7_3D ok
+[2026-11-20T07:02:21Z] ibex failed in 0 of 1 techs
+[2026-11-20T07:02:21Z] exit status 0
+[2026-11-20T07:02:40Z] results tar rc=0
+peak machine memory in use MiB 25104

@@ -1,0 +1,7 @@
+clone 0
+checkout 0
+setup 0
+versions 0
+clone_pin3d 0
+gcd_asap7_3D 0
+ibex_asap7_3D 0
