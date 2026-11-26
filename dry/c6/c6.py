@@ -190,10 +190,12 @@ def run(leak_path, workdir, out, grid=GRID, only=None):
     leak = read_json(leak_path)
     os.makedirs(out, exist_ok=True)
     n = grid * grid
-    res = {"leak": leak, "grid": grid, "cases": [], "stacks": {}, "checks": {"d_rel": check_d(et, runaway)}}
+    planned = [n for n in stacks(grid) if not only or n in only]     # check c's denominator (C6-4)
+    res = {"leak": leak, "grid": grid, "planned": planned, "cases": [], "stacks": {},
+           "checks": {"d_rel": check_d(et, runaway)}}
     target = os.path.join(out, "c6.json")
     for name, st in stacks(grid).items():
-        if only and name not in only:
+        if name not in planned:
             continue
         wd = os.path.join(workdir, name)
         os.makedirs(wd, exist_ok=True)
@@ -236,14 +238,20 @@ def check_rows(res):
     a_out = [f"{n} {v['check_a_rel']:+.1%}" for n, v in st.items()
              if "error" not in v and abs(v["check_a_rel"]) > A_TOL]
     bad = [f"{c['stack']} {c['workload']} {c['vt']}: {c['error']}" for c in cases if "error" in c]
+    planned = res.get("planned", list(st))          # a failed or never-reached stack leaves no case rows (C6-4)
+    have = {(c["stack"], c["workload"], c["vt"]) for c in cases}
+    bad += [f"{n} {wl} {vt}: no case row" for n in planned for wl in WORKLOADS for vt in VTS if (n, wl, vt) not in have]
+    if not res.get("complete"):
+        bad.append("no end marker: the run did not finish")
     b = ch.get("b_max_abs_diff_k")
     a_txt = f"{len(st) - len(a_out) - len(err)} of {len(st)}" + (f"; outside: {', '.join(a_out)}" if a_out else "") \
         + (f"; solver failed: {', '.join(err)}" if err else "")
     return [("a: mean rise within 10% of the 1-D estimate", a_txt, bool(st) and not a_out and not err),
             ("b: R column against a direct PACT run, max abs difference <= 0.005 K",
              "missing" if b is None else f"{b:.4f} K", b is not None and b <= B_TOL_K),
-            ("c: margin located with every probe converged",
-             f"{len(cases) - len(bad)} of {len(cases)}" + (f"; not located: {'; '.join(bad)}" if bad else ""),
+            ("c: margin located: bracket closed with every probe classified",
+             f"{sum('error' not in c for c in cases)} of {len(planned) * len(WORKLOADS) * len(VTS)}"
+             + (f"; not located: {'; '.join(bad)}" if bad else ""),
              bool(cases) and not bad),
             ("d: one-tile margin against the analytic boundary, abs relative difference <= 1e-3", f"{ch['d_rel']:+.2e}",
              abs(ch["d_rel"]) <= D_TOL)]

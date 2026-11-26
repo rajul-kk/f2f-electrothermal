@@ -114,3 +114,30 @@ def test_checks_fail_on_missing_or_out_of_limit_values():
     assert not {n[0]: ok for n, _, ok in c6.check_rows(base)}["b"]
     assert not c6.summary(base).startswith("**Incomplete")
     assert not c6.check_rows({"stacks": {}, "checks": {"d_rel": 0.0}, "cases": []})[0][2]   # empty a fails
+
+
+def test_check_c_fails_on_a_stack_that_left_no_case_rows():
+    """C6-4: a stack whose operator failed adds no cases; c must not pass on the cases that remain."""
+    ok_cases = [{"stack": "fs_kbeol1.2", "workload": wl, "vt": vt, "peak_rise_no_leak_k": 1.0, "s_lo": 1.0}
+                for wl in c6.WORKLOADS for vt in c6.VTS]
+    res = {"stacks": {"fs_kbeol1.2": {"check_a_rel": 0.0}, "bs_x": {"error": "RuntimeError: PACT"}},
+           "checks": {"d_rel": 0.0, "b_max_abs_diff_k": 0.0}, "cases": ok_cases, "complete": True}
+    _, txt, ok = c6.check_rows(res)[2]
+    assert not ok and txt.startswith(f"{len(ok_cases)} of {2 * len(ok_cases)}") and "bs_x uniform svt: no case row" in txt
+    res["stacks"].pop("bs_x")
+    assert c6.check_rows(res)[2][2]
+
+
+def test_check_c_fails_on_an_interrupted_run():
+    """C6-4 (round 3): a run stopped after its first good stack has no end marker and unreached planned stacks."""
+    ok_cases = [{"stack": "fs_kbeol1.2", "workload": wl, "vt": vt, "peak_rise_no_leak_k": 1.0, "s_lo": 1.0}
+                for wl in c6.WORKLOADS for vt in c6.VTS]
+    res = {"planned": ["fs_kbeol1.2", "bs_x"], "stacks": {"fs_kbeol1.2": {"check_a_rel": 0.0}},
+           "checks": {"d_rel": 0.0, "b_max_abs_diff_k": 0.0}, "cases": ok_cases}
+    _, txt, ok = c6.check_rows(res)[2]
+    assert not ok and txt.startswith(f"{len(ok_cases)} of {2 * len(ok_cases)}")
+    assert "bs_x uniform svt: no case row" in txt and "no end marker" in txt
+    res["planned"] = ["fs_kbeol1.2"]
+    assert not c6.check_rows(res)[2][2]                     # still no end marker
+    res["complete"] = True
+    assert c6.check_rows(res)[2][2]
