@@ -1,0 +1,16 @@
+ M opentsense/bench/estimators.py
+ M opentsense/bench/score.py
+ M opentsense/estimate/placement.py
+ M opentsense/estimate/sensor.py
+ M opentsense/manifest.py
+ M opentsense/power/leak.py
+ M opentsense/stack/model.py
+ M opentsense/stack/to_3dice.py
+ M opentsense/thermal/electrothermal.py
+ M opentsense/thermal/run.py
+ M opentsense/thermal/runaway.py
+?? opentsense/bench/readings.py
+?? opentsense/estimate/fault.py
+?? opentsense/estimate/sensor_circuit.py
+?? opentsense/estimate/sensor_spice.py
+?? opentsense/power/pdnsim.py
