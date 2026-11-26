@@ -1,0 +1,99 @@
+| Check | Result | Verdict |
+|---|---|---|
+| a: mean rise within 10% of the 1-D estimate | 15 of 15 | PASS |
+| b: R column against a direct PACT run, max abs difference <= 0.005 K | 0.0050 K | PASS |
+| c: margin located: bracket closed with every probe classified | 90 of 90 | PASS |
+| d: one-tile margin against the analytic boundary, abs relative difference <= 1e-3 | -3.71e-08 | PASS |
+
+| Stack | Workload | Vt | Peak rise, no leakage (K) | x FS | Status at nominal | Peak T (K) | rho | s_crit | x FS | Critical leakage at 25 C (W/mm^2) |
+|---|---|---|---|---|---|---|---|---|---|---|
+| fs_kbeol0.6 | uniform | svt | 13.942 | - | converged | 313.97 | 0.0018 | 223.6 | - | 0.1051 |
+| fs_kbeol0.6 | uniform | lvt | 13.942 | - | converged | 314.35 | 0.0198 | 20.91 | - | 0.1408 |
+| fs_kbeol0.6 | uniform | ulvt | 13.942 | - | converged | 316.13 | 0.0933 | 4.773 | - | 0.1737 |
+| fs_kbeol0.6 | hotspot | svt | 16.547 | - | converged | 316.58 | 0.0018 | 223.5 | - | 0.1051 |
+| fs_kbeol0.6 | hotspot | lvt | 16.547 | - | converged | 316.96 | 0.0198 | 20.9 | - | 0.1408 |
+| fs_kbeol0.6 | hotspot | ulvt | 16.547 | - | converged | 318.74 | 0.0932 | 4.772 | - | 0.1737 |
+| bs_kbeol0.6_tc50_kbs71 | uniform | svt | 18.467 | 1.32 | converged | 318.52 | 0.0028 | 134.7 | 0.60 | 0.06332 |
+| bs_kbeol0.6_tc50_kbs71 | uniform | lvt | 18.467 | 1.32 | converged | 319.15 | 0.0291 | 13.01 | 0.62 | 0.08765 |
+| bs_kbeol0.6_tc50_kbs71 | uniform | ulvt | 18.467 | 1.32 | converged | 322.14 | 0.1394 | 3.039 | 0.64 | 0.1106 |
+| bs_kbeol0.6_tc50_kbs71 | hotspot | svt | 40.786 | 2.46 | converged | 340.86 | 0.0030 | 130.5 | 0.58 | 0.06136 |
+| bs_kbeol0.6_tc50_kbs71 | hotspot | lvt | 40.786 | 2.46 | converged | 341.64 | 0.0301 | 12.71 | 0.61 | 0.08563 |
+| bs_kbeol0.6_tc50_kbs71 | hotspot | ulvt | 40.786 | 2.46 | converged | 345.27 | 0.1414 | 2.989 | 0.63 | 0.1088 |
+| bs_kbeol0.6_tc50_kbs10 | uniform | svt | 18.467 | 1.32 | converged | 318.52 | 0.0028 | 134.7 | 0.60 | 0.06332 |
+| bs_kbeol0.6_tc50_kbs10 | uniform | lvt | 18.467 | 1.32 | converged | 319.15 | 0.0291 | 13.01 | 0.62 | 0.08765 |
+| bs_kbeol0.6_tc50_kbs10 | uniform | ulvt | 18.467 | 1.32 | converged | 322.14 | 0.1394 | 3.039 | 0.64 | 0.1106 |
+| bs_kbeol0.6_tc50_kbs10 | hotspot | svt | 47.901 | 2.89 | converged | 347.99 | 0.0031 | 113.8 | 0.51 | 0.05349 |
+| bs_kbeol0.6_tc50_kbs10 | hotspot | lvt | 47.901 | 2.89 | converged | 348.92 | 0.0309 | 11.57 | 0.55 | 0.07792 |
+| bs_kbeol0.6_tc50_kbs10 | hotspot | ulvt | 47.901 | 2.89 | converged | 353.16 | 0.1443 | 2.823 | 0.59 | 0.1028 |
+| bs_kbeol0.6_tc200_kbs71 | uniform | svt | 19.043 | 1.37 | converged | 319.10 | 0.0029 | 127 | 0.57 | 0.0597 |
+| bs_kbeol0.6_tc200_kbs71 | uniform | lvt | 19.043 | 1.37 | converged | 319.76 | 0.0308 | 12.31 | 0.59 | 0.08293 |
+| bs_kbeol0.6_tc200_kbs71 | uniform | ulvt | 19.043 | 1.37 | converged | 322.95 | 0.1483 | 2.883 | 0.60 | 0.1049 |
+| bs_kbeol0.6_tc200_kbs71 | hotspot | svt | 40.823 | 2.47 | converged | 340.90 | 0.0030 | 123.8 | 0.55 | 0.05819 |
+| bs_kbeol0.6_tc200_kbs71 | hotspot | lvt | 40.823 | 2.47 | converged | 341.71 | 0.0313 | 12.08 | 0.58 | 0.08138 |
+| bs_kbeol0.6_tc200_kbs71 | hotspot | ulvt | 40.823 | 2.47 | converged | 345.50 | 0.1501 | 2.844 | 0.60 | 0.1035 |
+| bs_kbeol0.6_tc200_kbs10 | uniform | svt | 19.043 | 1.37 | converged | 319.10 | 0.0029 | 127 | 0.57 | 0.0597 |
+| bs_kbeol0.6_tc200_kbs10 | uniform | lvt | 19.043 | 1.37 | converged | 319.76 | 0.0308 | 12.31 | 0.59 | 0.08293 |
+| bs_kbeol0.6_tc200_kbs10 | uniform | ulvt | 19.043 | 1.37 | converged | 322.95 | 0.1483 | 2.883 | 0.60 | 0.1049 |
+| bs_kbeol0.6_tc200_kbs10 | hotspot | svt | 47.800 | 2.89 | converged | 347.89 | 0.0031 | 111.1 | 0.50 | 0.05226 |
+| bs_kbeol0.6_tc200_kbs10 | hotspot | lvt | 47.800 | 2.89 | converged | 348.84 | 0.0320 | 11.24 | 0.54 | 0.07575 |
+| bs_kbeol0.6_tc200_kbs10 | hotspot | ulvt | 47.800 | 2.89 | converged | 353.23 | 0.1526 | 2.729 | 0.57 | 0.09933 |
+| fs_kbeol1.2 | uniform | svt | 13.942 | - | converged | 313.97 | 0.0018 | 223.6 | - | 0.1051 |
+| fs_kbeol1.2 | uniform | lvt | 13.942 | - | converged | 314.35 | 0.0198 | 20.91 | - | 0.1408 |
+| fs_kbeol1.2 | uniform | ulvt | 13.942 | - | converged | 316.13 | 0.0933 | 4.773 | - | 0.1737 |
+| fs_kbeol1.2 | hotspot | svt | 16.546 | - | converged | 316.58 | 0.0018 | 223.5 | - | 0.1051 |
+| fs_kbeol1.2 | hotspot | lvt | 16.546 | - | converged | 316.96 | 0.0198 | 20.9 | - | 0.1408 |
+| fs_kbeol1.2 | hotspot | ulvt | 16.546 | - | converged | 318.74 | 0.0932 | 4.772 | - | 0.1737 |
+| bs_kbeol1.2_tc50_kbs71 | uniform | svt | 16.383 | 1.18 | converged | 316.43 | 0.0024 | 168.4 | 0.75 | 0.07917 |
+| bs_kbeol1.2_tc50_kbs71 | uniform | lvt | 16.383 | 1.18 | converged | 316.93 | 0.0263 | 16.03 | 0.77 | 0.108 |
+| bs_kbeol1.2_tc50_kbs71 | uniform | ulvt | 16.383 | 1.18 | converged | 319.31 | 0.1111 | 3.705 | 0.78 | 0.1348 |
+| bs_kbeol1.2_tc50_kbs71 | hotspot | svt | 31.921 | 1.93 | converged | 331.97 | 0.0024 | 167.1 | 0.75 | 0.07857 |
+| bs_kbeol1.2_tc50_kbs71 | hotspot | lvt | 31.921 | 1.93 | converged | 332.53 | 0.0262 | 15.94 | 0.76 | 0.1074 |
+| bs_kbeol1.2_tc50_kbs71 | hotspot | ulvt | 31.921 | 1.93 | converged | 335.15 | 0.1116 | 3.688 | 0.77 | 0.1342 |
+| bs_kbeol1.2_tc50_kbs10 | uniform | svt | 16.383 | 1.18 | converged | 316.43 | 0.0024 | 168.4 | 0.75 | 0.07917 |
+| bs_kbeol1.2_tc50_kbs10 | uniform | lvt | 16.383 | 1.18 | converged | 316.93 | 0.0263 | 16.03 | 0.77 | 0.108 |
+| bs_kbeol1.2_tc50_kbs10 | uniform | ulvt | 16.383 | 1.18 | converged | 319.31 | 0.1111 | 3.705 | 0.78 | 0.1348 |
+| bs_kbeol1.2_tc50_kbs10 | hotspot | svt | 35.152 | 2.12 | converged | 335.21 | 0.0024 | 166.1 | 0.74 | 0.07811 |
+| bs_kbeol1.2_tc50_kbs10 | hotspot | lvt | 35.152 | 2.12 | converged | 335.80 | 0.0263 | 15.87 | 0.76 | 0.1069 |
+| bs_kbeol1.2_tc50_kbs10 | hotspot | ulvt | 35.152 | 2.12 | converged | 338.53 | 0.1119 | 3.677 | 0.77 | 0.1338 |
+| bs_kbeol1.2_tc200_kbs71 | uniform | svt | 16.960 | 1.22 | converged | 317.01 | 0.0026 | 158 | 0.71 | 0.0743 |
+| bs_kbeol1.2_tc200_kbs71 | uniform | lvt | 16.960 | 1.22 | converged | 317.54 | 0.0281 | 15.11 | 0.72 | 0.1018 |
+| bs_kbeol1.2_tc200_kbs71 | uniform | ulvt | 16.960 | 1.22 | converged | 320.08 | 0.1184 | 3.502 | 0.73 | 0.1274 |
+| bs_kbeol1.2_tc200_kbs71 | hotspot | svt | 31.868 | 1.93 | converged | 331.92 | 0.0026 | 157 | 0.70 | 0.07385 |
+| bs_kbeol1.2_tc200_kbs71 | hotspot | lvt | 31.868 | 1.93 | converged | 332.51 | 0.0279 | 15.04 | 0.72 | 0.1013 |
+| bs_kbeol1.2_tc200_kbs71 | hotspot | ulvt | 31.868 | 1.93 | converged | 335.26 | 0.1189 | 3.489 | 0.73 | 0.127 |
+| bs_kbeol1.2_tc200_kbs10 | uniform | svt | 16.960 | 1.22 | converged | 317.01 | 0.0026 | 158 | 0.71 | 0.0743 |
+| bs_kbeol1.2_tc200_kbs10 | uniform | lvt | 16.960 | 1.22 | converged | 317.54 | 0.0281 | 15.11 | 0.72 | 0.1018 |
+| bs_kbeol1.2_tc200_kbs10 | uniform | ulvt | 16.960 | 1.22 | converged | 320.08 | 0.1184 | 3.502 | 0.73 | 0.1274 |
+| bs_kbeol1.2_tc200_kbs10 | hotspot | svt | 34.991 | 2.11 | converged | 335.05 | 0.0026 | 156.3 | 0.70 | 0.07351 |
+| bs_kbeol1.2_tc200_kbs10 | hotspot | lvt | 34.991 | 2.11 | converged | 335.66 | 0.0280 | 14.98 | 0.72 | 0.101 |
+| bs_kbeol1.2_tc200_kbs10 | hotspot | ulvt | 34.991 | 2.11 | converged | 338.53 | 0.1192 | 3.48 | 0.73 | 0.1267 |
+| fs_kbeol3.0 | uniform | svt | 13.942 | - | converged | 313.97 | 0.0018 | 223.6 | - | 0.1051 |
+| fs_kbeol3.0 | uniform | lvt | 13.942 | - | converged | 314.35 | 0.0198 | 20.91 | - | 0.1408 |
+| fs_kbeol3.0 | uniform | ulvt | 13.942 | - | converged | 316.13 | 0.0933 | 4.773 | - | 0.1737 |
+| fs_kbeol3.0 | hotspot | svt | 16.542 | - | converged | 316.57 | 0.0018 | 223.5 | - | 0.1051 |
+| fs_kbeol3.0 | hotspot | lvt | 16.542 | - | converged | 316.95 | 0.0198 | 20.9 | - | 0.1408 |
+| fs_kbeol3.0 | hotspot | ulvt | 16.542 | - | converged | 318.74 | 0.0932 | 4.772 | - | 0.1737 |
+| bs_kbeol3.0_tc50_kbs71 | uniform | svt | 15.133 | 1.09 | converged | 315.17 | 0.0021 | 194 | 0.87 | 0.09124 |
+| bs_kbeol3.0_tc50_kbs71 | uniform | lvt | 15.133 | 1.09 | converged | 315.61 | 0.0228 | 18.31 | 0.88 | 0.1233 |
+| bs_kbeol3.0_tc50_kbs71 | uniform | ulvt | 15.133 | 1.09 | converged | 317.67 | 0.1079 | 4.205 | 0.88 | 0.153 |
+| bs_kbeol3.0_tc50_kbs71 | hotspot | svt | 25.004 | 1.51 | converged | 325.04 | 0.0021 | 193.6 | 0.87 | 0.09103 |
+| bs_kbeol3.0_tc50_kbs71 | hotspot | lvt | 25.004 | 1.51 | converged | 325.50 | 0.0227 | 18.27 | 0.87 | 0.1231 |
+| bs_kbeol3.0_tc50_kbs71 | hotspot | ulvt | 25.004 | 1.51 | converged | 327.64 | 0.1070 | 4.199 | 0.88 | 0.1528 |
+| bs_kbeol3.0_tc50_kbs10 | uniform | svt | 15.133 | 1.09 | converged | 315.17 | 0.0021 | 194 | 0.87 | 0.09124 |
+| bs_kbeol3.0_tc50_kbs10 | uniform | lvt | 15.133 | 1.09 | converged | 315.61 | 0.0228 | 18.31 | 0.88 | 0.1233 |
+| bs_kbeol3.0_tc50_kbs10 | uniform | ulvt | 15.133 | 1.09 | converged | 317.67 | 0.1079 | 4.205 | 0.88 | 0.153 |
+| bs_kbeol3.0_tc50_kbs10 | hotspot | svt | 26.127 | 1.58 | converged | 326.17 | 0.0021 | 193.5 | 0.87 | 0.09097 |
+| bs_kbeol3.0_tc50_kbs10 | hotspot | lvt | 26.127 | 1.58 | converged | 326.63 | 0.0228 | 18.26 | 0.87 | 0.123 |
+| bs_kbeol3.0_tc50_kbs10 | hotspot | ulvt | 26.127 | 1.58 | converged | 328.79 | 0.1071 | 4.197 | 0.88 | 0.1527 |
+| bs_kbeol3.0_tc200_kbs71 | uniform | svt | 15.710 | 1.13 | converged | 315.75 | 0.0023 | 181.6 | 0.81 | 0.08539 |
+| bs_kbeol3.0_tc200_kbs71 | uniform | lvt | 15.710 | 1.13 | converged | 316.22 | 0.0244 | 17.2 | 0.82 | 0.1159 |
+| bs_kbeol3.0_tc200_kbs71 | uniform | ulvt | 15.710 | 1.13 | converged | 318.42 | 0.1059 | 3.963 | 0.83 | 0.1442 |
+| bs_kbeol3.0_tc200_kbs71 | hotspot | svt | 24.876 | 1.50 | converged | 324.92 | 0.0022 | 181.3 | 0.81 | 0.08524 |
+| bs_kbeol3.0_tc200_kbs71 | hotspot | lvt | 24.876 | 1.50 | converged | 325.40 | 0.0243 | 17.18 | 0.82 | 0.1157 |
+| bs_kbeol3.0_tc200_kbs71 | hotspot | ulvt | 24.876 | 1.50 | converged | 327.68 | 0.1080 | 3.959 | 0.83 | 0.1441 |
+| bs_kbeol3.0_tc200_kbs10 | uniform | svt | 15.710 | 1.13 | converged | 315.75 | 0.0023 | 181.6 | 0.81 | 0.08539 |
+| bs_kbeol3.0_tc200_kbs10 | uniform | lvt | 15.710 | 1.13 | converged | 316.22 | 0.0244 | 17.2 | 0.82 | 0.1159 |
+| bs_kbeol3.0_tc200_kbs10 | uniform | ulvt | 15.710 | 1.13 | converged | 318.42 | 0.1059 | 3.963 | 0.83 | 0.1442 |
+| bs_kbeol3.0_tc200_kbs10 | hotspot | svt | 25.923 | 1.57 | converged | 325.97 | 0.0023 | 181.2 | 0.81 | 0.08519 |
+| bs_kbeol3.0_tc200_kbs10 | hotspot | lvt | 25.923 | 1.57 | converged | 326.45 | 0.0243 | 17.17 | 0.82 | 0.1157 |
+| bs_kbeol3.0_tc200_kbs10 | hotspot | ulvt | 25.923 | 1.57 | converged | 328.75 | 0.1081 | 3.958 | 0.83 | 0.144 |
