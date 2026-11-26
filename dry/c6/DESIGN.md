@@ -67,3 +67,34 @@ footprint, sink, grid, power and leakage; only the listed layers differ), A6 (c6
 `stack`, `thermal.response`, `electrothermal`, `runaway`), A9 (leakage from c3's record, not recomputed), A10 (15
 stacks x 1,024 basis solves on a 32 x 32 grid, G101's timings: minutes), A11 (detached, in a slot), A14 (record/
 append-only), A25 (README numbers cite record/).
+
+## Amendment 1 (20 Nov 2026, before v3; v1 stopped by hand, v2 not used for a verdict)
+
+Reason: a review (C6-3) showed `runaway.classify` could call a case runaway past a real stable fixed point, because
+Newton's runaway test assumes leakage convex in T and the Liberty tables are not (the SVT log slope falls at 45 and
+65 C; one-tile control at R = 30 K/W: stable root 319.80 K, Newton said runaway). OpenTSense's `runaway` now confirms
+every runaway by fixed-point iteration from ambient (no convexity needed; task runaway-fix), and v3 runs with it
+(`PKG=worktree`, the package recorded in the record folder).
+- "Runaway" now means no operating point at or below T_cap = 1000 K (classify's default); the margin is the largest
+  leakage scale with an operating point at or below 1000 K.
+- The checks run on R with round-off negatives set to 0 (`runaway.operator`) and on floating-point evaluations of
+  the loop map. "Converged" requires an upper solution at or below 1000 K (a U with H(U) <= U in every tile);
+  "runaway" requires an iterate of the fixed-point iteration from ambient with a finite component above 1000 K
+  (another tile may be non-finite in the same iterate). A probe that is neither
+  is undecided and blocks its bracket (the case is listed under c). The reported s_crit is the closed bracket's
+  s_lo, an estimate of the largest scale to within rtol 1e-4 (and the limit stated in `runaway`'s docstring).
+- Check c also requires a case row for every stack x workload x Vt in the run's planned stack list (recorded in
+  c6.json), and the end marker; a stack whose operator failed, or that an interrupted run never reached, is listed
+  by its missing cases (C6-4).
+- Check c reads "the bracket closes with every probe classified" (a probe the fixed-point check cannot decide within
+  its budget is not classified and is listed); v2's wording "every probe converges" was wrong, since s_hi's probe
+  is runaway by construction.
+- Check d stays (the analytic exponential case, convex); the package's tests add a solver-free boundary on the SVT
+  table (`tests/test_runaway.py`).
+- The run script launches by the image ID it records, holds a lock on runs/, and stages c6.py, leak.json and the
+  package once in runs/stage: mounted read only in the container (only work/ and out/ are writable), hashed into
+  `stage.sha256` (every regular file in the staged tree; a symlink or special file there stops the script with exit
+  2), and that manifest is regenerated and compared in full before the run, after it, and after the summary, which
+  uses the same staged c6.py. A mismatch before the run exits 2 and leaves the `.partial` folder; after the run, an
+  added, removed or changed file sets rc 3, is logged, and suppresses the summary. The final rc line is written after these checks, and the record
+  folder appears only after that (C6-1, C6-2).

@@ -50,3 +50,17 @@ output, and `CONFIG_EDITS` holds one edit list per view in file order. The S5-S7
 identical `*_add` blocks and the same 15 routing layers in order.
 **Kept:** `s8_direct.sh` repeats `s7_grt.sh` except for the arguments and the header; both are run records.
 **Tests:** none removed; the real-checkout test runs on hbrdl (with and without `--drop-gcell`) and direct.
+
+## 20 Nov 2026: dry/c6 v3 (run_c6.sh, c6.py, test_c6.py; Amendment 1)
+
+**Changed: one integrity check, run three times.** `manifest()` makes the staged tree's full sorted hash list, and
+`staged()` compares it with `stage.sha256` before the run, after it and after the summary. The per-path
+`sha256sum -c` (which missed added files) and the record-folder copy of the check are gone. The wrapper writes its
+own final rc after every check, apart from Docker's rc.
+**Changed: check c's population is recorded, not inferred.** `run()` writes `planned` (the stacks it will attempt),
+and `check_rows` counts against it and the end marker, instead of against the stacks that happen to be in c6.json.
+**Kept: `run(..., only=)`**, used by `measure_c6.sh` for the one-stack timing run.
+**Kept: `check_rows` falls back to the stacks keys when `planned` is absent**, so v1/v2 records can still be
+summarised as they ran.
+**Tests:** none removed; added test_check_c_fails_on_a_stack_that_left_no_case_rows and
+test_check_c_fails_on_an_interrupted_run.
